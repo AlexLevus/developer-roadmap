@@ -1,0 +1,116 @@
+<div class="sign-form">
+	<mat-tab-group mat-align-tabs="center" animationDuration="0ms">
+		<mat-tab label="Вход">
+			<div class="sign-form__wrapper">
+				<form [formGroup]="loginForm" (ngSubmit)="login()">
+					<app-input
+						controlName="email"
+						inputName="email"
+						label="Email"
+						type="email"
+						required="true"
+						autocomplete="email"
+						[customStyle]="inputStyles"
+					></app-input>
+					<app-input
+						controlName="password"
+						inputName="password"
+						label="Пароль"
+						type="password"
+						required="true"
+						autocomplete="new-password"
+						[customStyle]="inputStyles"
+					></app-input>
+					<div *ngIf="error" class="sign-form__login-error">
+						Неверный email или пароль
+					</div>
+					<section class="sign-form__recovery-group">
+						<a class="sign-form__password-recovery" href="">Забыли пароль?</a>
+					</section>
+					<button class="sign-form__button" type="submit">
+						<div *ngIf="submitted; else buttonText" class="lds-hourglass"></div>
+            <ng-template #buttonText>Войти</ng-template>
+					</button>
+				</form>
+			</div>
+		</mat-tab>
+		<mat-tab label="Регистрация">
+			<div class="sign-form__wrapper">
+				<form [formGroup]="registrationForm" (ngSubmit)="register()">
+					<app-input
+						controlName="email"
+						inputName="reg-email"
+						label="Email"
+						type="email"
+						required="true"
+						autocomplete="email"
+						placeholder="example@site.com"
+						[customStyle]="inputStyles"
+					></app-input>
+					<app-input
+						controlName="password"
+						inputName="reg-password"
+						label="Пароль"
+						type="password"
+						required="true"
+						autocomplete="new-password"
+						[customStyle]="inputStyles"
+					></app-input>
+					<app-input
+						controlName="confirmPassword"
+						inputName="confirm-password"
+						label="Подтверждение пароля"
+						type="password"
+						required="true"
+						autocomplete="new-password"
+						[customStyle]="inputStyles"
+					></app-input>
+					<button class="sign-form__button" type="submit">
+						Создать аккаунт
+					</button>
+				</form>
+			</div>
+		</mat-tab>
+	</mat-tab-group>
+
+	<div class="social-auth">
+		<p class="social-auth__label">Или продолжить с</p>
+		<div class="social-auth__buttons">
+			<button class="social-button">
+				<img
+					class="social-button__icon"
+					src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNMTIgMTAuNXYzaDQuNTM3Yy0uMTgzIDEuMTc3LTEuMzcgMy41NS00LjUzNyAzLjU1LTIuNzMgMC00Ljk2LTIuMjYtNC45Ni01LjA1UzkuMjcgNi45NSAxMiA2Ljk1YzEuNTUzIDAgMi41OTQuNjYgMy4xOSAxLjIzM2wyLjE3LTIuMDkyQzE1Ljk2NSA0Ljc5MSAxNC4xNiA0IDEyIDRjLTQuNDIzIDAtOCAzLjU3Ny04IDhzMy41NzcgOCA4IDhjNC42MTcgMCA3LjY4LTMuMjQ2IDcuNjgtNy44MTcgMC0uNTI2LS4wNTctMS4yODQtLjEyNi0xLjY4M0gxMnoiLz48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+PHVzZSB4bGluazpocmVmPSIjYSIvPjwvbWFzaz48dXNlIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz48ZyBtYXNrPSJ1cmwoI2IpIj48cGF0aCBmaWxsPSIjRkJCQzA2IiBkPSJNOSAxMkwzIDZ2MTJ6Ii8+PHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTkgMTJsMy0zaDdWM0gyLjk2OXYzeiIvPjxwYXRoIGZpbGw9IiMzM0E4NTMiIGQ9Ik05IDEybC02IDYgNCA0aDEyLjUxTDE3IDE5bC01LTV6Ii8+PC9nPjwvZz48L3N2Zz4="
+					alt="login google"
+				/>
+			</button>
+			<button class="social-button">
+				<img
+					class="social-button__icon"
+					src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNMTIgMTAuNXYzaDQuNTM3Yy0uMTgzIDEuMTc3LTEuMzcgMy41NS00LjUzNyAzLjU1LTIuNzMgMC00Ljk2LTIuMjYtNC45Ni01LjA1UzkuMjcgNi45NSAxMiA2Ljk1YzEuNTUzIDAgMi41OTQuNjYgMy4xOSAxLjIzM2wyLjE3LTIuMDkyQzE1Ljk2NSA0Ljc5MSAxNC4xNiA0IDEyIDRjLTQuNDIzIDAtOCAzLjU3Ny04IDhzMy41NzcgOCA4IDhjNC42MTcgMCA3LjY4LTMuMjQ2IDcuNjgtNy44MTcgMC0uNTI2LS4wNTctMS4yODQtLjEyNi0xLjY4M0gxMnoiLz48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+PHVzZSB4bGluazpocmVmPSIjYSIvPjwvbWFzaz48dXNlIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz48ZyBtYXNrPSJ1cmwoI2IpIj48cGF0aCBmaWxsPSIjRkJCQzA2IiBkPSJNOSAxMkwzIDZ2MTJ6Ii8+PHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTkgMTJsMy0zaDdWM0gyLjk2OXYzeiIvPjxwYXRoIGZpbGw9IiMzM0E4NTMiIGQ9Ik05IDEybC02IDYgNCA0aDEyLjUxTDE3IDE5bC01LTV6Ii8+PC9nPjwvZz48L3N2Zz4="
+					alt="login google"
+				/>
+			</button>
+			<button class="social-button">
+				<img
+					class="social-button__icon"
+					src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNMTIgMTAuNXYzaDQuNTM3Yy0uMTgzIDEuMTc3LTEuMzcgMy41NS00LjUzNyAzLjU1LTIuNzMgMC00Ljk2LTIuMjYtNC45Ni01LjA1UzkuMjcgNi45NSAxMiA2Ljk1YzEuNTUzIDAgMi41OTQuNjYgMy4xOSAxLjIzM2wyLjE3LTIuMDkyQzE1Ljk2NSA0Ljc5MSAxNC4xNiA0IDEyIDRjLTQuNDIzIDAtOCAzLjU3Ny04IDhzMy41NzcgOCA4IDhjNC42MTcgMCA3LjY4LTMuMjQ2IDcuNjgtNy44MTcgMC0uNTI2LS4wNTctMS4yODQtLjEyNi0xLjY4M0gxMnoiLz48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+PHVzZSB4bGluazpocmVmPSIjYSIvPjwvbWFzaz48dXNlIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz48ZyBtYXNrPSJ1cmwoI2IpIj48cGF0aCBmaWxsPSIjRkJCQzA2IiBkPSJNOSAxMkwzIDZ2MTJ6Ii8+PHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTkgMTJsMy0zaDdWM0gyLjk2OXYzeiIvPjxwYXRoIGZpbGw9IiMzM0E4NTMiIGQ9Ik05IDEybC02IDYgNCA0aDEyLjUxTDE3IDE5bC01LTV6Ii8+PC9nPjwvZz48L3N2Zz4="
+					alt="login google"
+				/>
+			</button>
+			<button class="social-button">
+				<img
+					class="social-button__icon"
+					src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNMTIgMTAuNXYzaDQuNTM3Yy0uMTgzIDEuMTc3LTEuMzcgMy41NS00LjUzNyAzLjU1LTIuNzMgMC00Ljk2LTIuMjYtNC45Ni01LjA1UzkuMjcgNi45NSAxMiA2Ljk1YzEuNTUzIDAgMi41OTQuNjYgMy4xOSAxLjIzM2wyLjE3LTIuMDkyQzE1Ljk2NSA0Ljc5MSAxNC4xNiA0IDEyIDRjLTQuNDIzIDAtOCAzLjU3Ny04IDhzMy41NzcgOCA4IDhjNC42MTcgMCA3LjY4LTMuMjQ2IDcuNjgtNy44MTcgMC0uNTI2LS4wNTctMS4yODQtLjEyNi0xLjY4M0gxMnoiLz48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+PHVzZSB4bGluazpocmVmPSIjYSIvPjwvbWFzaz48dXNlIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz48ZyBtYXNrPSJ1cmwoI2IpIj48cGF0aCBmaWxsPSIjRkJCQzA2IiBkPSJNOSAxMkwzIDZ2MTJ6Ii8+PHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTkgMTJsMy0zaDdWM0gyLjk2OXYzeiIvPjxwYXRoIGZpbGw9IiMzM0E4NTMiIGQ9Ik05IDEybC02IDYgNCA0aDEyLjUxTDE3IDE5bC01LTV6Ii8+PC9nPjwvZz48L3N2Zz4="
+					alt="login google"
+				/>
+			</button>
+			<button class="social-button">
+				<img
+					class="social-button__icon"
+					src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiPjxkZWZzPjxwYXRoIGlkPSJhIiBkPSJNMTIgMTAuNXYzaDQuNTM3Yy0uMTgzIDEuMTc3LTEuMzcgMy41NS00LjUzNyAzLjU1LTIuNzMgMC00Ljk2LTIuMjYtNC45Ni01LjA1UzkuMjcgNi45NSAxMiA2Ljk1YzEuNTUzIDAgMi41OTQuNjYgMy4xOSAxLjIzM2wyLjE3LTIuMDkyQzE1Ljk2NSA0Ljc5MSAxNC4xNiA0IDEyIDRjLTQuNDIzIDAtOCAzLjU3Ny04IDhzMy41NzcgOCA4IDhjNC42MTcgMCA3LjY4LTMuMjQ2IDcuNjgtNy44MTcgMC0uNTI2LS4wNTctMS4yODQtLjEyNi0xLjY4M0gxMnoiLz48L2RlZnM+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48bWFzayBpZD0iYiIgZmlsbD0iI2ZmZiI+PHVzZSB4bGluazpocmVmPSIjYSIvPjwvbWFzaz48dXNlIGZpbGw9IiM0Mjg1RjQiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz48ZyBtYXNrPSJ1cmwoI2IpIj48cGF0aCBmaWxsPSIjRkJCQzA2IiBkPSJNOSAxMkwzIDZ2MTJ6Ii8+PHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTkgMTJsMy0zaDdWM0gyLjk2OXYzeiIvPjxwYXRoIGZpbGw9IiMzM0E4NTMiIGQ9Ik05IDEybC02IDYgNCA0aDEyLjUxTDE3IDE5bC01LTV6Ii8+PC9nPjwvZz48L3N2Zz4="
+					alt="login google"
+				/>
+			</button>
+		</div>
+	</div>
+</div>
