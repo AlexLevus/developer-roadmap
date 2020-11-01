@@ -74,9 +74,7 @@
       }
     },
     "typedef": [
-      true,
-      "call-signature"
-    ],
+      true],
     "typedef-whitespace": {
       "options": [
         {
@@ -122,6 +120,7 @@
     "no-output-native": true,
     "no-output-on-prefix": true,
     "no-output-rename": true,
+    "no-implicit-any": true,
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
     "template-no-negated-async": true,
