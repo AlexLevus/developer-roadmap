@@ -40,6 +40,23 @@ export class UserResolver {
   }
 
   @Mutation()
+  async login(@Args('input') input: LoginUserInput): Promise<LoginResponse> {
+    const { email, password } = input;
+
+    const user = await getRepository(User).findOne({
+      where: {
+        email: email
+      }
+    });
+
+    if (user && (await comparePassword(password, user.password))) {
+      return await tradeToken(user);
+    }
+
+    throw new AuthenticationError('Login failed.');
+  }
+
+  @Mutation()
   async createUser(
     @Args('input') input: CreateUserInput,
     @Context('pubsub') pubsub: any,
@@ -103,23 +120,6 @@ export class UserResolver {
     } else {
       throw new ForbiddenError('Your email has been verified.');
     }
-  }
-
-  @Mutation()
-  async login(@Args('input') input: LoginUserInput): Promise<LoginResponse> {
-    const { email, password } = input;
-
-    const user = await getRepository(User).findOne({
-      where: {
-        email: email
-      }
-    });
-
-    if (user && (await comparePassword(password, user.password))) {
-      return await tradeToken(user);
-    }
-
-    throw new AuthenticationError('Login failed.');
   }
 
   @Mutation()
@@ -239,7 +239,6 @@ export class UserResolver {
         ...user,
         email: user.email,
         password: await hashPassword(password),
-        resetPasswordToken: null,
         resetPasswordExpires: null
       })
     );

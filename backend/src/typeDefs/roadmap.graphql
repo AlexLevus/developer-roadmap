@@ -1,0 +1,22 @@
+type Roadmap {
+  id: ID!
+  name: String!
+  description: String!
+  content: String!
+  rating: Int!
+  isActive: Boolean!
+}
+
+type Query {
+  roadmaps: [Roadmap]
+  roadmapById(id: String): Roadmap
+}
+
+type Mutation {
+  createRoadmap(input: CreateRoadmapInput): Roadmap
+}
+
+input CreateRoadmapInput {
+  name: String!
+  description: String!
+}

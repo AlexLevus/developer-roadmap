@@ -3,11 +3,6 @@ enum Type {
   FORGOT_PASSWORD
 }
 
-input CreateEmailInput {
-  userId: ID!
-  type: Type!
-}
-
 type Email {
   id: ID!
   userId: ID!
@@ -15,6 +10,11 @@ type Email {
   isOpened: Boolean!
   createdAt: Float!
   updatedAt: Float!
+}
+
+input CreateEmailInput {
+  userId: ID!
+  type: Type!
 }
 
 type Query {

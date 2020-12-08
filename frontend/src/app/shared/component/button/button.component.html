@@ -1,0 +1,4 @@
+<button class="button {{size}}" [type]="type">
+  <div *ngIf="submitted; else buttonText" class="lds-hourglass"></div>
+  <ng-template #buttonText>{{text}}</ng-template>
+</button>

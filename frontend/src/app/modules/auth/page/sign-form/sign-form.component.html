@@ -27,10 +27,12 @@
 					<section class="sign-form__recovery-group">
 						<a class="sign-form__password-recovery" href="">Забыли пароль?</a>
 					</section>
-					<button class="sign-form__button" type="submit">
-						<div *ngIf="submitted; else buttonText" class="lds-hourglass"></div>
-            <ng-template #buttonText>Войти</ng-template>
-					</button>
+					<app-button
+						text="Войти"
+						type="submit"
+						size="block"
+						[submitted]="submitted"
+					></app-button>
 				</form>
 			</div>
 		</mat-tab>
@@ -65,9 +67,12 @@
 						autocomplete="new-password"
 						[customStyle]="inputStyles"
 					></app-input>
-					<button class="sign-form__button" type="submit">
-						Создать аккаунт
-					</button>
+					<app-button
+						text="Создать аккаунт"
+						type="submit"
+						size="block"
+						[submitted]="submitted"
+					></app-button>
 				</form>
 			</div>
 		</mat-tab>

@@ -1,0 +1,20 @@
+type Stage {
+  id: ID!
+  name: String!
+  description: String!
+  content: String!
+  rating: Int!
+  isActive: Boolean!
+}
+
+type Query {
+  stages: [Stage]
+}
+
+type Mutation {
+  createStage(input: CreateStageInput): Roadmap
+}
+
+input CreateStageInput {
+  text: String!
+}

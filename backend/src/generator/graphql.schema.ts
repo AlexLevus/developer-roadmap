@@ -16,6 +16,15 @@ export class CreateEmailInput {
     type: Type;
 }
 
+export class CreateRoadmapInput {
+    name: string;
+    description: string;
+}
+
+export class CreateStageInput {
+    text: string;
+}
+
 export class CreateUserInput {
     firstName: string;
     lastName: string;
@@ -40,6 +49,12 @@ export class Email {
 export abstract class IQuery {
     abstract emails(): Email[] | Promise<Email[]>;
 
+    abstract roadmaps(): Roadmap[] | Promise<Roadmap[]>;
+
+    abstract roadmapById(id?: string): Roadmap | Promise<Roadmap>;
+
+    abstract stages(): Stage[] | Promise<Stage[]>;
+
     abstract user(id: string): User | Promise<User>;
 }
 
@@ -47,6 +62,10 @@ export abstract class IMutation {
     abstract createEmail(input: CreateEmailInput): Email | Promise<Email>;
 
     abstract openEmail(id: string): boolean | Promise<boolean>;
+
+    abstract createRoadmap(input?: CreateRoadmapInput): Roadmap | Promise<Roadmap>;
+
+    abstract createStage(input?: CreateStageInput): Roadmap | Promise<Roadmap>;
 
     abstract createUser(input: CreateUserInput): User | Promise<User>;
 
@@ -61,6 +80,24 @@ export abstract class IMutation {
     abstract forgotPassword(email: string): boolean | Promise<boolean>;
 
     abstract resetPassword(resetPasswordToken: string, password: string): boolean | Promise<boolean>;
+}
+
+export class Roadmap {
+    id: string;
+    name: string;
+    description: string;
+    content: string;
+    rating: number;
+    isActive: boolean;
+}
+
+export class Stage {
+    id: string;
+    name: string;
+    description: string;
+    content: string;
+    rating: number;
+    isActive: boolean;
 }
 
 export class User {

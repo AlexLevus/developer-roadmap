@@ -3,6 +3,7 @@ import { Subject } from "rxjs";
 import { Apollo } from "apollo-angular";
 import gql from "graphql-tag";
 import { tap } from "rxjs/operators";
+import { User } from "@app/data/schema/user";
 
 const login = gql`
 	mutation login($input: LoginUserInput!) {
@@ -13,10 +14,16 @@ const login = gql`
 	}
 `;
 
-export interface User {
-	email: string;
-	password: string;
-}
+const createUser = gql`
+	mutation createUser($input: CreateUserInput!) {
+		createUser(input: $input) {
+			firstName
+			lastName
+			email
+			password
+		}
+	}
+`;
 
 interface LoginResponse {
 	refreshToken: string;
@@ -40,6 +47,19 @@ export class AuthService {
 			.pipe(tap(result => this.setToken(result.data)));
 	}
 
+	register(user: User) {
+		return this.apollo.mutate({
+			mutation: createUser,
+			variables: {
+				input: {
+					...user,
+					firstName: "Alex",
+					lastName: "Levus"
+				}
+			}
+		});
+	}
+
 	isAuthenticated(): boolean {
 		const token = localStorage.getItem("access");
 		return !!token;
@@ -48,7 +68,6 @@ export class AuthService {
 	private setToken(response: any): void {
 		if (response) {
 			const loginRes: LoginResponse = response.login;
-			console.log(loginRes);
 			localStorage.setItem("access", loginRes.accessToken);
 			localStorage.setItem("refresh", loginRes.refreshToken);
 		} else {

@@ -25,6 +25,10 @@ const routes: Routes = [
 		loadChildren: () =>
 			import("@modules/auth/auth.module").then(m => m.AuthModule)
 	},
+	{
+		path: "verify/:emailToken",
+		component: LoginPageComponent
+	},
 	{ path: "**", redirectTo: "/auth/login", pathMatch: "full" }
 ];
 

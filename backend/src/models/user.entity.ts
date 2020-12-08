@@ -1,12 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import * as uuid from 'uuid';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
+import { UserRoadmap } from './userRoadmap.entity';
+import { DepartmentUser } from './departmentUser.entity';
 
 @Entity({
-  name: 'users',
-  orderBy: {
-    createdAt: 'ASC'
-  }
+  name: 'users'
 })
 export class User {
   @Expose()
@@ -29,22 +27,7 @@ export class User {
   @Column()
   lastName: string;
 
-  @Expose()
-  @Column({ nullable: true })
-  resetPasswordToken: string;
-
-  @Expose()
-  @Column({ type: 'bigint', nullable: true })
-  resetPasswordExpires: number;
-
-  @Expose()
-  @Column({ type: 'bigint', default: +new Date() })
-  createdAt: number;
-
-  @Expose()
-  @Column({ type: 'bigint', nullable: true })
-  lastLogin: number;
-
+  // TODO: убрать и оставить только isActive
   @Expose()
   @Column({ default: false })
   isVerified: boolean;
@@ -55,7 +38,31 @@ export class User {
 
   @Expose()
   @Column({ default: false })
-  isSuperuser: boolean;
+  isAdmin: boolean;
+
+  @Expose()
+  @Column({ type: 'bigint', default: +new Date() })
+  createdAt: number;
+
+  @Expose()
+  @Column({ type: 'bigint', nullable: true })
+  lastLogin: number;
+
+  // TODO: выделить в отдельную таблицу, если это и правда надо
+  @Expose()
+  @Column({ nullable: true })
+  resetPasswordToken: string;
+
+  // TODO: выделить в отдельную таблицу, если это и правда надо
+  @Expose()
+  @Column({ type: 'bigint', nullable: true })
+  resetPasswordExpires: number;
+
+  @OneToMany(() => UserRoadmap, (userRoadmap) => userRoadmap.user)
+  public userRoadmaps!: UserRoadmap[];
+
+  @OneToMany(() => DepartmentUser, (departmentUser) => departmentUser.user)
+  public departmentUser!: DepartmentUser[];
 
   constructor(user: Partial<User>) {
     if (user) {

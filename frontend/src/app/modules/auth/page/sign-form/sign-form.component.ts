@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "@app/service/auth.service";
 import { User } from "@app/data/schema/user";
@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 	templateUrl: "./sign-form.component.html",
 	styleUrls: ["./sign-form.component.scss"]
 })
-export class SignFormComponent implements OnInit {
+export class SignFormComponent {
 	inputStyles = {
 		marginBottom: "24px"
 	};
@@ -69,6 +69,28 @@ export class SignFormComponent implements OnInit {
 	}
 
 	register() {
-		console.log(this.registrationForm.value);
+		if (this.registrationForm.invalid) {
+			this.registrationForm.markAllAsTouched();
+			return;
+		}
+
+		const { email, password, confirmPassword } = this.registrationForm.value;
+
+		if (password === confirmPassword) {
+			this.submitted = true;
+			const user: User = { email, password };
+
+			this.authService.register(user).subscribe(
+				() => {
+					this.registrationForm.reset();
+					this.router.navigate(["/home"]);
+					this.submitted = false;
+				},
+				() => {
+					this.error = true;
+					this.submitted = false;
+				}
+			);
+		}
 	}
 }

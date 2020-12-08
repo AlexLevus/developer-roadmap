@@ -5,11 +5,12 @@ import { RouterModule } from "@angular/router";
 
 import { MaterialModule } from "./material.module";
 
-import { InputComponent } from "./component/input/input.component";
+import { InputComponent } from "@shared/component/input/input.component";
+import { ButtonComponent } from "@shared/component/button/button.component";
 
 @NgModule({
 	imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-	declarations: [InputComponent],
+	declarations: [InputComponent, ButtonComponent],
 	exports: [
 		CommonModule,
 		FormsModule,
@@ -18,7 +19,8 @@ import { InputComponent } from "./component/input/input.component";
 
 		MaterialModule,
 
-		InputComponent
+		InputComponent,
+		ButtonComponent
 	]
 })
 export class SharedModule {

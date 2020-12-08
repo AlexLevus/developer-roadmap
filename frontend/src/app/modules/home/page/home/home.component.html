@@ -1,1 +1,70 @@
-<p>home works!</p>
+<div class="form">
+	<div class="block">
+		<form [formGroup]="roadmapForm" (ngSubmit)="createRoadmap()">
+			<app-input
+				controlName="name"
+				inputName="reg-email"
+				label="Название"
+				type="text"
+				required="true"
+			></app-input>
+			<app-input
+				controlName="description"
+				inputName="reg-email"
+				label="Описание"
+				type="text"
+				required="true"
+			></app-input>
+			<app-button
+				text="Создать план развития"
+				type="submit"
+				size="sm"
+			></app-button>
+		</form>
+	</div>
+
+	<div class="block">
+		<form [formGroup]="stageForm" (ngSubmit)="createStage()">
+			<app-input
+				controlName="name"
+				inputName="reg-email"
+				label="Название"
+				type="text"
+				required="true"
+			></app-input>
+			<app-input
+				controlName="description"
+				inputName="reg-email"
+				label="Описание"
+				type="text"
+				required="true"
+			></app-input>
+			<app-button text="Создать этап" type="submit" size="sm"></app-button>
+		</form>
+	</div>
+</div>
+
+<div>
+	<p *ngIf="loading; else roadmapContent">Загружается...</p>
+	<ng-template #roadmapContent>
+		<table mat-table [dataSource]="roadmaps" class="mat-elevation-z8">
+			<ng-container matColumnDef="position">
+				<th mat-header-cell *matHeaderCellDef>Идентификатор</th>
+				<td mat-cell *matCellDef="let roadmap">{{ roadmap.id }}</td>
+			</ng-container>
+
+			<ng-container matColumnDef="name">
+				<th mat-header-cell *matHeaderCellDef>Название</th>
+				<td mat-cell *matCellDef="let roadmap">{{ roadmap.name }}</td>
+			</ng-container>
+
+			<ng-container matColumnDef="description">
+				<th mat-header-cell *matHeaderCellDef>Описание</th>
+				<td mat-cell *matCellDef="let roadmap">{{ roadmap.description }}</td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="getRecord(row)"></tr>
+		</table>
+	</ng-template>
+</div>
