@@ -2,9 +2,12 @@ export interface Roadmap {
 	id: string;
 	name: string;
 	description: string;
+	stages: Stage[];
 }
 
 export interface Stage {
 	name: string;
-	description: string;
+	path: string;
+	newId?: string;
+	roadmapId: string;
 }

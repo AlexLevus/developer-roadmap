@@ -20,42 +20,42 @@ export class User {
   password: string;
 
   @Expose()
-  @Column()
+  @Column({ name: 'first_name' })
   firstName: string;
 
   @Expose()
-  @Column()
+  @Column({ name: 'last_name' })
   lastName: string;
 
   // TODO: убрать и оставить только isActive
   @Expose()
-  @Column({ default: false })
+  @Column({ name: 'is_verified', default: false })
   isVerified: boolean;
 
   @Expose()
-  @Column({ default: true })
+  @Column({ name: 'is_active', default: true })
   isActive: boolean;
 
   @Expose()
-  @Column({ default: false })
+  @Column({ name: 'is_admin', default: false })
   isAdmin: boolean;
 
   @Expose()
-  @Column({ type: 'bigint', default: +new Date() })
+  @Column({ name: 'created_at', type: 'bigint', default: +new Date() })
   createdAt: number;
 
   @Expose()
-  @Column({ type: 'bigint', nullable: true })
+  @Column({ name: 'last_login', type: 'bigint', nullable: true })
   lastLogin: number;
 
   // TODO: выделить в отдельную таблицу, если это и правда надо
   @Expose()
-  @Column({ nullable: true })
+  @Column({ name: 'reset_password_token', nullable: true })
   resetPasswordToken: string;
 
   // TODO: выделить в отдельную таблицу, если это и правда надо
   @Expose()
-  @Column({ type: 'bigint', nullable: true })
+  @Column({ name: 'reset_password_expire', type: 'bigint', nullable: true })
   resetPasswordExpires: number;
 
   @OneToMany(() => UserRoadmap, (userRoadmap) => userRoadmap.user)

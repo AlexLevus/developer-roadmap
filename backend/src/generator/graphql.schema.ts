@@ -22,7 +22,10 @@ export class CreateRoadmapInput {
 }
 
 export class CreateStageInput {
-    text: string;
+    name: string;
+    path: string;
+    newId: string;
+    roadmapId: string;
 }
 
 export class CreateUserInput {
@@ -65,7 +68,7 @@ export abstract class IMutation {
 
     abstract createRoadmap(input?: CreateRoadmapInput): Roadmap | Promise<Roadmap>;
 
-    abstract createStage(input?: CreateStageInput): Roadmap | Promise<Roadmap>;
+    abstract createStage(input?: CreateStageInput): Stage | Promise<Stage>;
 
     abstract createUser(input: CreateUserInput): User | Promise<User>;
 
@@ -89,15 +92,14 @@ export class Roadmap {
     content: string;
     rating: number;
     isActive: boolean;
+    stages?: Stage[];
 }
 
 export class Stage {
     id: string;
     name: string;
-    description: string;
-    content: string;
-    rating: number;
-    isActive: boolean;
+    path: string;
+    roadmapId: string;
 }
 
 export class User {

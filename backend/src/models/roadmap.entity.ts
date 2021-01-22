@@ -24,13 +24,13 @@ export class Roadmap {
   rating: number;
 
   @Expose()
-  @Column({ default: false })
+  @Column({ name: 'is_active', default: false })
   isActive: boolean;
 
   @OneToMany(() => UserRoadmap, (userRoadmap) => userRoadmap.roadmap)
   userRoadmaps!: UserRoadmap[];
 
-  @OneToMany(() => Stage, (stage) => stage.roadmap)
+  @OneToMany(() => Stage, (stage) => stage.roadmap, { eager: true })
   stages: Stage[];
 
   constructor(roadmap: Partial<Roadmap>) {

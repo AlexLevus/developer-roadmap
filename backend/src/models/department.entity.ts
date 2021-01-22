@@ -3,7 +3,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { DepartmentUser } from './departmentUser.entity';
@@ -26,11 +27,11 @@ export class Department {
   description: string;
 
   @Expose()
-  @Column({ default: false })
+  @Column({ name: 'is_active', default: false })
   isActive: boolean;
 
   @Expose()
-  @Column()
+  @Column({ name: 'manager_id' })
   managerId: string;
 
   @OneToMany(
@@ -40,6 +41,7 @@ export class Department {
   public departmentUser!: DepartmentUser[];
 
   @ManyToOne(() => Organization, (org) => org.departments)
+  @JoinColumn({ name: 'org_id' })
   org: Organization;
 
   constructor(department: Partial<Department>) {

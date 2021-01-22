@@ -3,7 +3,13 @@ import { Subject } from "rxjs";
 import { Apollo } from "apollo-angular";
 import gql from "graphql-tag";
 import { tap } from "rxjs/operators";
-import { User } from "@app/data/schema/user";
+import { User } from "@data/schema/user";
+
+const verify = gql`
+	mutation verifyEmail($emailToken: String!) {
+		verifyEmail(emailToken: $emailToken)
+	}
+`;
 
 const login = gql`
 	mutation login($input: LoginUserInput!) {
@@ -45,6 +51,15 @@ export class AuthService {
 				}
 			})
 			.pipe(tap(result => this.setToken(result.data)));
+	}
+
+	verify(token: string) {
+		return this.apollo.mutate({
+			mutation: verify,
+			variables: {
+				emailToken: token
+			}
+		});
 	}
 
 	register(user: User) {

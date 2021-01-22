@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Apollo } from "apollo-angular";
 import gql from "graphql-tag";
-import { Roadmap, Stage } from "@app/data/schema/roadmap";
+import { Roadmap, Stage } from "@data/schema/roadmap";
 
 const createRoadmap = gql`
 	mutation createRoadmap($input: CreateRoadmapInput!) {
@@ -18,7 +18,8 @@ const createStage = gql`
 	mutation createStage($input: CreateStageInput!) {
 		createStage(input: $input) {
 			name
-			description
+			path
+			roadmapId
 		}
 	}
 `;
@@ -29,6 +30,10 @@ const GET_ALL_ROADMAPS = gql`
 			id
 			name
 			description
+			stages {
+				name
+				path
+			}
 		}
 	}
 `;
@@ -39,6 +44,9 @@ const GET_ROADMAP = gql`
 			id
 			name
 			description
+			stages {
+				name
+			}
 		}
 	}
 `;
@@ -48,7 +56,11 @@ type Response = {
 };
 
 type RoadmapByIdResponse = {
-	roadmapById: Roadmap;
+	roadmapById: {
+		id: string;
+		description: string;
+		stages: Stage[];
+	};
 };
 
 @Injectable({ providedIn: "root" })

@@ -4,11 +4,11 @@ import { SharedModule } from "@shared/shared.module";
 
 import { AuthRoutingModule } from "./auth.routing";
 import { SignFormComponent } from "app/modules/auth/page/sign-form/sign-form.component";
-import { LoginPageComponent } from "app/modules/auth/page/login-page/login-page.component";
+import { VerifyComponent } from "./page/verify/verify.component";
 
 @NgModule({
-	declarations: [SignFormComponent, LoginPageComponent],
+	declarations: [SignFormComponent, VerifyComponent],
 	imports: [CommonModule, AuthRoutingModule, SharedModule],
-	exports: [LoginPageComponent]
+	exports: []
 })
 export class AuthModule {}

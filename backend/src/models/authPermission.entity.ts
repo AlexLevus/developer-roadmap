@@ -26,7 +26,15 @@ export class AuthPermission {
 
   @ManyToMany(() => AuthGroup)
   @JoinTable({
-    name: 'auth_group_permissions'
+    name: 'auth_group_permissions',
+    joinColumn: {
+      name: 'group_id',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'permission_id',
+      referencedColumnName: 'id'
+    }
   })
   authGroups: AuthGroup[];
 

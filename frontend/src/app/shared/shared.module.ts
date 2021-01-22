@@ -7,10 +7,11 @@ import { MaterialModule } from "./material.module";
 
 import { InputComponent } from "@shared/component/input/input.component";
 import { ButtonComponent } from "@shared/component/button/button.component";
+import { StateComponent } from "./component/state/state.component";
 
 @NgModule({
 	imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
-	declarations: [InputComponent, ButtonComponent],
+	declarations: [InputComponent, ButtonComponent, StateComponent],
 	exports: [
 		CommonModule,
 		FormsModule,
@@ -20,7 +21,8 @@ import { ButtonComponent } from "@shared/component/button/button.component";
 		MaterialModule,
 
 		InputComponent,
-		ButtonComponent
+		ButtonComponent,
+		StateComponent
 	]
 })
 export class SharedModule {

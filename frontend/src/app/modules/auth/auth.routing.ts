@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { LoginPageComponent } from "@modules/auth/page/login-page/login-page.component";
+import { SignFormComponent } from "@modules/auth/page/sign-form/sign-form.component";
 
 const routes: Routes = [
 	{
@@ -13,7 +13,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: "login",
-				component: LoginPageComponent
+				component: SignFormComponent
 			}
 		]
 	}

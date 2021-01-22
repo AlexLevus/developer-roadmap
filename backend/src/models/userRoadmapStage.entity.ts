@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { UserRoadmap } from './userRoadmap.entity';
 
@@ -11,14 +17,15 @@ export class UserRoadmapStage {
   id: string;
 
   @Expose()
-  @Column()
+  @Column({ name: 'stage_id' })
   stageId: string;
 
   @Expose()
-  @Column()
+  @Column({ name: 'is_completed' })
   isCompleted: boolean;
 
   @ManyToOne(() => UserRoadmap, (userRoadmap) => userRoadmap.userRoadmapStages)
+  @JoinColumn({ name: 'user_roadmap_id' })
   userRoadmap!: UserRoadmap;
 
   constructor(userRoadmapStage: Partial<UserRoadmapStage>) {

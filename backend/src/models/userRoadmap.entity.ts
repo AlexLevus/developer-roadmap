@@ -14,22 +14,26 @@ import { UserRoadmapStage } from './userRoadmapStage.entity';
   name: 'user_roadmaps'
 })
 export class UserRoadmap {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'user_roadmap_id' })
   userRoadmapId!: number;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId!: string;
 
-  @Column()
+  @Column({ name: 'roadmap_id' })
   roadmapId!: string;
 
   @Expose()
-  @Column({ type: 'bigint', default: +new Date() })
+  @Column({ name: 'start_date', type: 'bigint', default: +new Date() })
   startDate: number;
 
   @Expose()
-  @Column({ default: false })
+  @Column({ name: 'is_completed', default: false })
   isCompleted: boolean;
+
+  @Expose()
+  @Column()
+  rating: number;
 
   @ManyToOne(() => User, (user) => user.userRoadmaps)
   user!: User;

@@ -15,18 +15,14 @@ import { Position } from './position.entity';
   name: 'department_users'
 })
 export class DepartmentUser {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'department_user_id' })
   departmentUserId!: number;
 
-  @Column()
+  @Column({ name: 'department_id' })
   departmentId!: string;
 
-  @Column()
+  @Column({ name: 'user_id' })
   userId!: string;
-
-  @Expose()
-  @Column({ default: false })
-  isActive: boolean;
 
   @ManyToOne(() => Department, (department) => department)
   department!: Department;

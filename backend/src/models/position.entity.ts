@@ -19,7 +19,7 @@ export class Position {
   description: string;
 
   @Expose()
-  @Column({ default: false })
+  @Column({ name: 'is_active', default: false })
   isActive: boolean;
 
   @OneToMany(() => DepartmentUser, (departmentUser) => departmentUser.position)

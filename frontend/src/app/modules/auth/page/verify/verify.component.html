@@ -1,0 +1,7 @@
+<p *ngIf="isLoading; else text">Загрузка...</p>
+<ng-template #text>
+	<p *ngIf="!error; else errorMessage">Учетная запись успешно подтверждена!</p>
+	<ng-template #errorMessage>
+		<p>{{ error }}</p>
+	</ng-template>
+</ng-template>

@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { LoginPageComponent } from "@modules/auth/page/login-page/login-page.component";
 import { HomeComponent } from "@modules/home/page/home/home.component";
 import { AuthGuard } from "@app/guard/auth.guard";
-import { NoAuthGuard } from "@app/guard/noauth.guard";
+import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
+import { VerifyComponent } from "@modules/auth/page/verify/verify.component";
 
 const routes: Routes = [
 	{
@@ -20,14 +20,13 @@ const routes: Routes = [
 	},
 	{
 		path: "auth",
-		component: LoginPageComponent,
-		canActivate: [NoAuthGuard],
+		component: AuthLayoutComponent,
 		loadChildren: () =>
 			import("@modules/auth/auth.module").then(m => m.AuthModule)
 	},
 	{
 		path: "verify/:emailToken",
-		component: LoginPageComponent
+		component: VerifyComponent
 	},
 	{ path: "**", redirectTo: "/auth/login", pathMatch: "full" }
 ];

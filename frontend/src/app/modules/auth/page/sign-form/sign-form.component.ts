@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "@app/service/auth.service";
-import { User } from "@app/data/schema/user";
+import { User } from "@data/schema/user";
 import { Router } from "@angular/router";
 
 @Component({
@@ -10,12 +10,14 @@ import { Router } from "@angular/router";
 	styleUrls: ["./sign-form.component.scss"]
 })
 export class SignFormComponent {
+	state = "";
+	isRegistrationProcessed = false;
 	inputStyles = {
 		marginBottom: "24px"
 	};
 	submitted = false;
 	error = false;
-
+	tabIndex = 0;
 	message = "";
 
 	loginForm = new FormGroup({
@@ -51,21 +53,22 @@ export class SignFormComponent {
 			password: this.loginForm.value.password
 		};
 
-		this.authService.login(user).subscribe(
-			() => {
-				this.loginForm.reset();
-				this.router.navigate(["/home"]);
+		this.authService
+			.login(user)
+			.subscribe(
+				() => {
+					this.loginForm.reset();
+					this.router.navigate(["/home"]);
+				},
+				() => {
+					this.error = true;
+				}
+			)
+			.add(() =>
 				setTimeout(() => {
 					this.submitted = false;
-				}, 700);
-			},
-			() => {
-				this.error = true;
-				setTimeout(() => {
-					this.submitted = false;
-				}, 700);
-			}
-		);
+				}, 700)
+			);
 	}
 
 	register() {
@@ -80,17 +83,25 @@ export class SignFormComponent {
 			this.submitted = true;
 			const user: User = { email, password };
 
-			this.authService.register(user).subscribe(
-				() => {
-					this.registrationForm.reset();
-					this.router.navigate(["/home"]);
-					this.submitted = false;
-				},
-				() => {
-					this.error = true;
-					this.submitted = false;
-				}
-			);
+			this.authService
+				.register(user)
+				.subscribe(
+					() => {
+						this.registrationForm.reset();
+						this.state = "success";
+					},
+					() => {
+						// TODO: обработать, если регистрация не удалась
+						this.state = "error";
+						this.error = true;
+					}
+				)
+				.add(() => (this.submitted = false));
 		}
+	}
+
+	closeState(): void {
+		this.tabIndex = 1;
+		this.state = "";
 	}
 }

@@ -22,7 +22,15 @@ export class AuthGroup {
 
   @ManyToMany(() => User)
   @JoinTable({
-    name: 'user_groups'
+    name: 'user_groups',
+    joinColumn: {
+      name: 'auth_group_id',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id'
+    }
   })
   users: User[];
 

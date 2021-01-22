@@ -5,6 +5,7 @@ type Roadmap {
   content: String!
   rating: Int!
   isActive: Boolean!
+  stages: [Stage]
 }
 
 type Query {

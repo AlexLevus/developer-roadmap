@@ -1,10 +1,8 @@
 type Stage {
   id: ID!
   name: String!
-  description: String!
-  content: String!
-  rating: Int!
-  isActive: Boolean!
+  path: String!
+  roadmapId: String!
 }
 
 type Query {
@@ -12,9 +10,12 @@ type Query {
 }
 
 type Mutation {
-  createStage(input: CreateStageInput): Roadmap
+  createStage(input: CreateStageInput): Stage
 }
 
 input CreateStageInput {
-  text: String!
+  name: String!
+  path: String!
+  newId: String!
+  roadmapId: String!
 }
