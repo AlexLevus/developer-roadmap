@@ -9,5 +9,12 @@ export interface Stage {
 	name: string;
 	path: string;
 	newId?: string;
-	roadmapId: string;
+	roadmapId?: string;
+}
+
+export interface StageNode {
+	[key: string]: any;
+	name: string;
+	path: string;
+	children?: StageNode[];
 }

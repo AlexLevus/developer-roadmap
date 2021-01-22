@@ -69,15 +69,6 @@
 	</ng-template>
 </div>
 
-<div class="stage">
-  <div *ngFor="let map of roadmaps">
-    {{map.name}}
-    <div *ngFor="let stage of map.stages">
-      {{stage.name}} - {{stage.path}}
-    </div>
-  </div>
-</div>
-
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
   <!-- This is the tree node template for leaf nodes -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>

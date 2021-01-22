@@ -31,8 +31,10 @@ const GET_ALL_ROADMAPS = gql`
 			name
 			description
 			stages {
+				id
 				name
 				path
+				roadmapId
 			}
 		}
 	}

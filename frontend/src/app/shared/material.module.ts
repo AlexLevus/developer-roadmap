@@ -6,11 +6,7 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatTableModule } from "@angular/material/table";
 import { MatSelectModule } from "@angular/material/select";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import {
-	MatTreeModule,
-	MatTreeNode,
-	MatNestedTreeNode
-} from "@angular/material/tree";
+import { MatTreeModule } from "@angular/material/tree";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 
@@ -25,9 +21,7 @@ import { MatButtonModule } from "@angular/material/button";
 		MatCheckboxModule,
 		MatTreeModule,
 		MatIconModule,
-		MatButtonModule,
-		MatTreeNode,
-		MatNestedTreeNode
+		MatButtonModule
 	],
 	exports: [
 		MatTabsModule,
@@ -38,9 +32,7 @@ import { MatButtonModule } from "@angular/material/button";
 		MatCheckboxModule,
 		MatTreeModule,
 		MatIconModule,
-		MatButtonModule,
-		MatTreeNode,
-		MatNestedTreeNode
+		MatButtonModule
 	]
 })
 export class MaterialModule {}

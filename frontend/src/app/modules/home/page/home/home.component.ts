@@ -1,34 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Roadmap, Stage } from "@data/schema/roadmap";
+import { Roadmap, Stage, StageNode } from "@data/schema/roadmap";
 import { RoadmapService } from "@app/service/roadmap.service";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { MatTreeNestedDataSource } from "@angular/material/tree";
-
-interface FoodNode {
-	name: string;
-	children?: FoodNode[];
-}
-
-const TREE_DATA: FoodNode[] = [
-	{
-		name: "Fruit",
-		children: [{ name: "Apple" }, { name: "Banana" }, { name: "Fruit loops" }]
-	},
-	{
-		name: "Vegetables",
-		children: [
-			{
-				name: "Green",
-				children: [{ name: "Broccoli" }, { name: "Brussels sprouts" }]
-			},
-			{
-				name: "Orange",
-				children: [{ name: "Pumpkins" }, { name: "Carrots" }]
-			}
-		]
-	}
-];
 
 @Component({
 	selector: "app-home",
@@ -36,8 +11,8 @@ const TREE_DATA: FoodNode[] = [
 	styleUrls: ["./home.component.scss"]
 })
 export class HomeComponent implements OnInit {
-	treeControl = new NestedTreeControl<FoodNode>(node => node.children);
-	dataSource = new MatTreeNestedDataSource<FoodNode>();
+	treeControl = new NestedTreeControl<StageNode>(node => node.children);
+	dataSource = new MatTreeNestedDataSource<StageNode>();
 	stages: Stage[] = [];
 	roadmaps: Roadmap[] = [];
 	submitted = false;
@@ -57,21 +32,68 @@ export class HomeComponent implements OnInit {
 		roadmapId: new FormControl(null, [Validators.required])
 	});
 
-	constructor(private roadmapService: RoadmapService) {
-		this.dataSource.data = TREE_DATA;
-	}
+	constructor(private roadmapService: RoadmapService) {}
 
-	hasChild = (_: number, node: FoodNode) =>
+	hasChild = (_: number, node: StageNode) =>
 		!!node.children && node.children.length > 0;
 
 	ngOnInit(): void {
 		this.roadmapService
 			.getRoadmaps()
 			.valueChanges.subscribe(({ data, loading }) => {
-				console.log(data);
 				this.roadmaps = data.roadmaps;
+				this.dataSource.data = this.arrangeIntoTree(this.roadmaps);
+				console.log(this.roadmaps);
 				this.loading = loading;
 			});
+	}
+
+	findWhere(array: StageNode[], key: string, value: string): StageNode | null {
+		let t = 0;
+		while (
+			t < array.length &&
+			array[t][key][array[t][key].length - 1] !== value
+		) {
+			t++;
+		}
+		if (t < array.length) {
+			return array[t];
+		}
+
+		return null;
+	}
+
+	private arrangeIntoTree(roadmaps: Roadmap[]): StageNode[] {
+		const stages: Stage[] = [];
+		roadmaps.forEach(map => map.stages.forEach(stage => stages.push(stage)));
+
+		const tree: StageNode[] = [];
+
+		stages.forEach(stage => {
+			const paths: any[] = [[...stage.path.split(".")]];
+			paths.forEach((path: string[]) => {
+				let currentLevel = tree;
+				path.forEach((part: string) => {
+					const existingPath = this.findWhere(currentLevel, "path", part);
+
+					if (existingPath?.children) {
+						currentLevel = existingPath.children;
+					} else {
+						const newPart = {
+							name: stage.name,
+							path: stage.path,
+							roadmaoId: stage.roadmapId,
+							children: []
+						};
+
+						currentLevel.push(newPart);
+						currentLevel = newPart.children;
+					}
+				});
+			});
+		});
+
+		return tree;
 	}
 
 	createRoadmap() {
@@ -81,8 +103,6 @@ export class HomeComponent implements OnInit {
 		}
 
 		const { name, description } = this.roadmapForm.value;
-
-		console.log(name, description);
 
 		const roadmap: Partial<Roadmap> = {
 			name,
