@@ -15,7 +15,7 @@ export class RoadmapResolver {
   }
 
   @Query()
-  async roadmapById(@Args('id') id: string): Promise<Roadmap> {
+  async roadmap(@Args('id') id: string): Promise<Roadmap> {
     try {
       const roadmap = await getRepository(Roadmap).findOne({ id });
       const stages = await getRepository(Stage).find({

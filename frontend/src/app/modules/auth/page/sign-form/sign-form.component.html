@@ -3,24 +3,22 @@
 		<mat-tab-group [(selectedIndex)]="tabIndex" mat-align-tabs="center" animationDuration="0ms">
 			<mat-tab label="Вход">
 				<div class="sign-form__wrapper">
-					<form [formGroup]="loginForm" (ngSubmit)="login()">
+					<form class="sign-form__form" [formGroup]="loginForm" (ngSubmit)="login()">
 						<app-input
+              class="sign-form__input"
 							controlName="email"
 							inputName="email"
 							label="Email"
 							type="email"
-							required="true"
 							autocomplete="email"
-							[customStyle]="inputStyles"
 						></app-input>
 						<app-input
-							controlName="password"
+              class="sign-form__input"
+              controlName="password"
 							inputName="password"
 							label="Пароль"
 							type="password"
-							required="true"
 							autocomplete="new-password"
-							[customStyle]="inputStyles"
 						></app-input>
 						<div *ngIf="error" class="sign-form__login-error">
 							Неверный email или пароль
@@ -41,32 +39,29 @@
 				<div class="sign-form__wrapper">
 					<form [formGroup]="registrationForm" (ngSubmit)="register()">
 						<app-input
-							controlName="email"
+              class="sign-form__input"
+              controlName="email"
 							inputName="reg-email"
 							label="Email"
 							type="email"
-							required="true"
 							autocomplete="email"
 							placeholder="example@site.com"
-							[customStyle]="inputStyles"
 						></app-input>
 						<app-input
-							controlName="password"
+              class="sign-form__input"
+              controlName="password"
 							inputName="reg-password"
 							label="Пароль"
 							type="password"
-							required="true"
 							autocomplete="new-password"
-							[customStyle]="inputStyles"
 						></app-input>
 						<app-input
-							controlName="confirmPassword"
+              class="sign-form__input"
+              controlName="confirmPassword"
 							inputName="confirm-password"
 							label="Подтверждение пароля"
 							type="password"
-							required="true"
 							autocomplete="new-password"
-							[customStyle]="inputStyles"
 						></app-input>
 						<app-button
 							text="Создать аккаунт"

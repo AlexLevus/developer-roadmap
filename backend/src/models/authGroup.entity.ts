@@ -24,7 +24,7 @@ export class AuthGroup {
   @JoinTable({
     name: 'user_groups',
     joinColumn: {
-      name: 'auth_group_id',
+      name: 'group_id',
       referencedColumnName: 'id'
     },
     inverseJoinColumn: {

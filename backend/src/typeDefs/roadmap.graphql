@@ -10,7 +10,7 @@ type Roadmap {
 
 type Query {
   roadmaps: [Roadmap]
-  roadmapById(id: String): Roadmap
+  roadmap(id: String): Roadmap
 }
 
 type Mutation {

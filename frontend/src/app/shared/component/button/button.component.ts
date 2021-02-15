@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from "@angular/core";
 export class ButtonComponent implements OnInit {
 	@Input() text = "";
 	@Input() type = "button";
-	@Input() size = "";
+	@Input() size: "block" = "block";
 	@Input() submitted = false;
 
 	constructor() {}

@@ -1,0 +1,42 @@
+.roadmap-board {
+  padding: 20px 30px;
+
+  width: 60%;
+
+  background-color: #fff;
+  border-radius: 30px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 24px;
+  }
+
+  &__counter-list {
+    margin-bottom: 30px;
+
+    display: flex;
+  }
+
+  .counter-item {
+    margin-right: 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    &__amount {
+      font-size: 20px;
+      font-weight: 700;
+    }
+  }
+
+  &__items-row {
+    margin-bottom: 20px;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+}

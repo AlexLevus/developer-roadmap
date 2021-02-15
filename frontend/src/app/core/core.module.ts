@@ -19,7 +19,8 @@ import { TokenInterceptor } from "@app/interceptor/token.interceptor";
 			multi: true
 		},
 		{ provide: LOCALE_ID, useValue: "ru-RU" }
-	]
+	],
+	declarations: []
 })
 export class CoreModule {
 	constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

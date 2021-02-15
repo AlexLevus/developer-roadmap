@@ -1,0 +1,81 @@
+<section class="create-employee">
+	<h1>Создать сотрудника</h1>
+	<form [formGroup]="employeeForm" (ngSubmit)="createEmployee()">
+		<fieldset>
+			<legend><h2>Основная информация</h2></legend>
+			<app-input
+				class="create-employee__input"
+				controlName="secondName"
+				inputName="second-name"
+				label="Фамилия"
+				type="text"
+			></app-input>
+			<app-input
+				class="create-employee__input"
+				controlName="firstName"
+				inputName="first-name"
+				label="Имя"
+				type="text"
+			></app-input>
+			<app-input
+				class="create-employee__input"
+				controlName="middleName"
+				inputName="middle-name"
+				label="Отчество"
+				type="text"
+			></app-input>
+		</fieldset>
+
+		<fieldset>
+			<legend><h2>Рабочая информация</h2></legend>
+			<app-select
+				class="create-employee__input"
+				label="Позиция"
+				controlName="position"
+				[items]="positions"
+			></app-select>
+			<app-select
+				class="create-employee__input"
+				label="Департамент"
+				controlName="department"
+				[items]="departments"
+			></app-select>
+      <app-chips label="Навыки" controlName="skills" [items]="skills" [autocompleteItems]="autocompleteSkills"></app-chips>
+		</fieldset>
+
+		<fieldset>
+			<legend><h2>Данные для входа</h2></legend>
+			<app-input
+				class="create-employee__input"
+				controlName="email"
+				inputName="email"
+				label="Почта"
+				type="text"
+			></app-input>
+			<app-input
+				class="create-employee__input"
+				controlName="password"
+				inputName="password"
+				label="Пароль"
+				type="password"
+			></app-input>
+		</fieldset>
+
+		<div class="create-employee__buttons">
+			<app-button
+				text="Сгенерировать пароль"
+				type="button"
+				size="block"
+				(click)="generatePassword()"
+				[submitted]="submitted"
+			></app-button>
+
+			<app-button
+				text="Создать сотрудника"
+				type="submit"
+				size="block"
+				[submitted]="submitted"
+			></app-button>
+		</div>
+	</form>
+</section>

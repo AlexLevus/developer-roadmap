@@ -52,8 +52,8 @@ $input-text-color: #00244d;
 			box-shadow 0.1s ease-in-out, -webkit-box-shadow 0.1s ease-in-out;
 
 		&:hover {
-			background-color: #fff;
-			border-color: #0073f7;
+			background-color: #fff !important;
+			border-color: #0073f7 !important;
 		}
 
 		&:focus {

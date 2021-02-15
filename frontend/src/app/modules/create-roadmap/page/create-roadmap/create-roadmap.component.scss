@@ -1,0 +1,43 @@
+// TODO: временно, позже убрать
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.block {
+  margin: 20px;
+
+  width: 400px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+table {
+  margin: 0 auto;
+
+  width: 80%;
+}
+
+.stage {
+  margin-top: 30px;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.mat-form-field {
+  margin-right: 4px;
+}

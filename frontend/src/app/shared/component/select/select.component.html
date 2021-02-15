@@ -1,0 +1,10 @@
+<div>
+	<label class="label">{{ label }}</label>
+	<mat-form-field class="select" appearance="none">
+		<mat-select [formControl]="control" placeholder="Выберите">
+			<mat-option *ngFor="let item of items" [value]="item">
+				{{ item }}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>

@@ -27,13 +27,12 @@ export class User {
   @Column({ name: 'last_name' })
   lastName: string;
 
-  // TODO: убрать и оставить только isActive
   @Expose()
-  @Column({ name: 'is_verified', default: false })
-  isVerified: boolean;
+  @Column({ name: 'middle_name' })
+  middleName: string;
 
   @Expose()
-  @Column({ name: 'is_active', default: true })
+  @Column({ name: 'is_active', default: false })
   isActive: boolean;
 
   @Expose()
@@ -59,10 +58,10 @@ export class User {
   resetPasswordExpires: number;
 
   @OneToMany(() => UserRoadmap, (userRoadmap) => userRoadmap.user)
-  public userRoadmaps!: UserRoadmap[];
+  userRoadmaps!: UserRoadmap[];
 
   @OneToMany(() => DepartmentUser, (departmentUser) => departmentUser.user)
-  public departmentUser!: DepartmentUser[];
+  departmentUser!: DepartmentUser[];
 
   constructor(user: Partial<User>) {
     if (user) {

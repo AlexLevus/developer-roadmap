@@ -1,0 +1,31 @@
+<a routerLink="/roadmap/1">
+  <div class="card" [ngStyle]="{ backgroundColor: bgColor}">
+    <div class="card__header">
+      <span class="card__start-date">Начало: {{startDate | date:'mediumDate'}}</span>
+      <div class="card__menu">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span>Отписаться</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <h2 class="card__name">{{name}}</h2>
+    <div class="progress">
+      <label>Прогресс</label>
+      <mat-progress-bar
+        [value]="progress"
+      >
+      </mat-progress-bar>
+      <span class="progress__text">{{progress}}%</span>
+    </div>
+    <div class="card__footer">
+      <div class="card__deadline">
+        Осталось 2 дня
+      </div>
+    </div>
+  </div>
+</a>

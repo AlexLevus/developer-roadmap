@@ -30,7 +30,7 @@ export class UserResolver {
       const user = await getRepository(User).findOne({ id });
 
       if (!user) {
-        throw new ForbiddenError('User not found.');
+        throw new ForbiddenError('Пользователь не найден');
       }
 
       return user;
@@ -63,16 +63,15 @@ export class UserResolver {
     @Context('req') req: any
   ): Promise<User> {
     const { email, password } = input;
-    let existedUser;
 
-    existedUser = await getRepository(User).findOne({
+    const existedUser = await getRepository(User).findOne({
       where: {
         email: email
       }
     });
 
     if (existedUser) {
-      throw new ForbiddenError('User already exists.');
+      throw new ForbiddenError('Пользователь с таким email уже существует');
     }
 
     const createdUser = await getRepository(User).save(
@@ -108,11 +107,11 @@ export class UserResolver {
       throw new ForbiddenError('Token is invalid.');
     }
 
-    if (!user.isVerified) {
+    if (!user.isActive) {
       const updateUser = await getRepository(User).save(
         new User({
           ...user,
-          isVerified: true
+          isActive: true
         })
       );
 
@@ -177,7 +176,7 @@ export class UserResolver {
     const user = await getRepository(User).findOne({
       where: {
         email: email,
-        isVerified: true
+        isActive: true
       }
     });
 
@@ -191,8 +190,6 @@ export class UserResolver {
       userId: user.id,
       type: Type.FORGOT_PASSWORD
     });
-
-    // console.log(existedEmail)
 
     await sendMail(
       'forgotPassword',

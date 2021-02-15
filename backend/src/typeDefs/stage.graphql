@@ -16,6 +16,4 @@ type Mutation {
 input CreateStageInput {
   name: String!
   path: String!
-  newId: String!
-  roadmapId: String!
 }

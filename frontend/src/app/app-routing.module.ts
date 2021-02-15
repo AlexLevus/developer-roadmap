@@ -1,20 +1,38 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { HomeComponent } from "@modules/home/page/home/home.component";
-import { AuthGuard } from "@app/guard/auth.guard";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
 import { VerifyComponent } from "@modules/auth/page/verify/verify.component";
+import { ContentLayoutComponent } from "./layout/content-layout/content-layout.component";
 
 const routes: Routes = [
 	{
 		path: "",
-		component: HomeComponent,
-		canActivate: [AuthGuard],
+		component: ContentLayoutComponent,
+		//canActivate: [AuthGuard],
 		children: [
 			{
-				path: "home",
+				path: "dashboard",
 				loadChildren: () =>
-					import("@modules/home/home.module").then(m => m.HomeModule)
+					import("@modules/dashboard/dashboard.module").then(
+						m => m.DashboardModule
+					)
+			},
+			{
+				path: "admin",
+				loadChildren: () =>
+					import("@modules/admin/admin.module").then(m => m.AdminModule)
+			},
+			{
+				path: "roadmap/:roadmapId",
+				loadChildren: () =>
+					import("@modules/roadmap/roadmap.module").then(m => m.RoadmapModule)
+			},
+			{
+				path: "create-roadmap",
+				loadChildren: () =>
+					import("@modules/create-roadmap/create-roadmap.module").then(
+						m => m.CreateRoadmapModule
+					)
 			}
 		]
 	},
@@ -32,7 +50,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+	imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
 	exports: [RouterModule],
 	providers: []
 })

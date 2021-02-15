@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { LOCALE_ID, NgModule } from "@angular/core";
 
 import { CoreModule } from "@app/core.module";
 import { SharedModule } from "@shared/shared.module";
@@ -14,9 +14,17 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { GraphQLModule } from "./graphql.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
+import { registerLocaleData } from "@angular/common";
+import localeRu from "@angular/common/locales/ru";
+import { ContentLayoutComponent } from "./layout/content-layout/content-layout.component";
+import { MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material/core";
+import { MAT_CHIPS_DEFAULT_OPTIONS } from "@angular/material/chips";
+import { ENTER } from "@angular/cdk/keycodes";
+
+registerLocaleData(localeRu);
 
 @NgModule({
-	declarations: [AppComponent, AuthLayoutComponent],
+	declarations: [AppComponent, AuthLayoutComponent, ContentLayoutComponent],
 	imports: [
 		// angular
 		BrowserModule,
@@ -38,7 +46,16 @@ import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component"
 		GraphQLModule,
 		HttpClientModule
 	],
-	providers: [],
+	providers: [
+		{ provide: LOCALE_ID, useValue: "ru-RU" },
+		{ provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } },
+		{
+			provide: MAT_CHIPS_DEFAULT_OPTIONS,
+			useValue: {
+				separatorKeyCodes: [ENTER]
+			}
+		}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

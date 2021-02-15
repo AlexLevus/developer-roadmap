@@ -24,8 +24,6 @@ export class CreateRoadmapInput {
 export class CreateStageInput {
     name: string;
     path: string;
-    newId: string;
-    roadmapId: string;
 }
 
 export class CreateUserInput {
@@ -112,8 +110,7 @@ export class User {
     resetPasswordExpires?: number;
     createdAt: number;
     lastLogin?: number;
-    isVerified: boolean;
-    isSuperuser: boolean;
+    isAdmin: boolean;
 }
 
 export class LoginResponse {

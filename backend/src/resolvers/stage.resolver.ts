@@ -15,18 +15,14 @@ export class StageResolver {
 
   @Mutation()
   async createStage(@Args('input') input: CreateStageInput): Promise<Stage> {
-    const { name, path, newId, roadmapId } = input;
+    const { name, path } = input;
 
-    /*    const roadmap: Roadmap = await getRepository(Roadmap).findOne({
-      id: roadmapId
-    });*/
-
-    const stagePath = path === '' ? roadmapId : path.concat('.', newId);
+    const roadmapId = path.split('.')[0];
 
     const stageData: Partial<Stage> = {
       name,
       roadmapId,
-      path: stagePath
+      path
     };
 
     return await getRepository(Stage).save(new Stage(stageData));

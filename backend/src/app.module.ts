@@ -13,7 +13,7 @@ import * as Resolvers from './resolvers';
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       definitions: {
-        path: join(process.cwd(), 'src/generator/graphql.schema.ts'),
+        path: join(process.cwd(), 'src/generator/graphql.models.ts'),
         outputAs: 'class'
       },
       debug: true,

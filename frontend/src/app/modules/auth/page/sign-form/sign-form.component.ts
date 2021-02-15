@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "@app/service/auth.service";
-import { User } from "@data/schema/user";
+import { User } from "@data/models/user";
 import { Router } from "@angular/router";
 
 @Component({
@@ -12,9 +12,6 @@ import { Router } from "@angular/router";
 export class SignFormComponent {
 	state = "";
 	isRegistrationProcessed = false;
-	inputStyles = {
-		marginBottom: "24px"
-	};
 	submitted = false;
 	error = false;
 	tabIndex = 0;
@@ -48,7 +45,7 @@ export class SignFormComponent {
 			return;
 		}
 		this.submitted = true;
-		const user: User = {
+		const user: Partial<User> = {
 			email: this.loginForm.value.email,
 			password: this.loginForm.value.password
 		};
@@ -58,7 +55,7 @@ export class SignFormComponent {
 			.subscribe(
 				() => {
 					this.loginForm.reset();
-					this.router.navigate(["/home"]);
+					this.router.navigate(["/dashboard"]);
 				},
 				() => {
 					this.error = true;
@@ -81,7 +78,7 @@ export class SignFormComponent {
 
 		if (password === confirmPassword) {
 			this.submitted = true;
-			const user: User = { email, password };
+			const user: Partial<User> = { email, password };
 
 			this.authService
 				.register(user)

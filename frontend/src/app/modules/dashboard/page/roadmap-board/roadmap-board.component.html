@@ -1,0 +1,56 @@
+<section class="roadmap-board">
+	<div class="roadmap-board__header">
+		<h1>Планы развития</h1>
+		<span>{{ currentDate | date: "d MMMM" }}</span>
+	</div>
+	<div class="roadmap-board__counter-list">
+		<div class="roadmap-board__counter-item counter-item">
+			<span class="counter-item__amount">45</span>
+			<span class="counter-item__state">В процессе</span>
+		</div>
+		<div class="roadmap-board__counter-item counter-item">
+			<span class="counter-item__amount">17</span>
+			<span class="counter-item__state">Завершено</span>
+		</div>
+		<div class="roadmap-board__counter-item counter-item">
+			<span class="counter-item__amount">62</span>
+			<span class="counter-item__state">Всего</span>
+		</div>
+	</div>
+	<div class="roadmap-board__items">
+		<div class="roadmap-board__items-row">
+			<app-roadmap-card
+				name="Веб дизайн"
+				progress="60"
+				bgColor="#ffdfc6"
+			></app-roadmap-card>
+			<app-roadmap-card
+				name="Тестирование"
+				progress="50"
+				bgColor="#e5e4fb"
+			></app-roadmap-card>
+			<app-roadmap-card
+				name="Svg анимации"
+				progress="80"
+				bgColor="#d3f5fc"
+			></app-roadmap-card>
+		</div>
+		<div class="roadmap-board__items-row">
+			<app-roadmap-card
+				name="Разработка интерфейсов"
+				progress="20"
+				bgColor="#ffcddd"
+			></app-roadmap-card>
+			<app-roadmap-card
+				name="Анализ данных"
+				progress="60"
+				bgColor="#bdf6d9"
+			></app-roadmap-card>
+			<app-roadmap-card
+				name="JavaScript"
+				progress="40"
+				bgColor="#ccdafd"
+			></app-roadmap-card>
+		</div>
+	</div>
+</section>

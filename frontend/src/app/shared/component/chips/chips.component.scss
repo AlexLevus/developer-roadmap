@@ -1,0 +1,63 @@
+$select_font: "Arial";
+
+.label {
+	margin-bottom: 8px;
+
+	display: block;
+
+	align-items: center;
+
+	font-size: 14px;
+	line-height: 1.4;
+	letter-spacing: -0.2px;
+
+	color: #747e8a;
+}
+
+::ng-deep {
+	.chip {
+		width: 100%;
+
+		.mat-chip {
+			color: #747e8a;
+			background-color: #fff;
+			border: 1px solid #c5d0db;
+			border-radius: 6px;
+			box-shadow: inset 0 0 0 1px transparent;
+			padding: 8px 8px 8px 12px !important;
+		}
+
+		.mat-chip-input {
+			color: #747e8a;
+			background-color: #fff;
+			border: 1px solid #c5d0db;
+			border-radius: 6px;
+			box-shadow: inset 0 0 0 1px transparent;
+			padding: 10px 12px;
+		}
+
+    .mat-form-field-infix {
+      padding: 0;
+
+      border: none;
+    }
+
+		.mat-standard-chip {
+			height: auto;
+		}
+
+		.mat-form-field-underline {
+			display: none;
+		}
+
+		.mat-chip-list-wrapper {
+			align-items: normal;
+		}
+	}
+
+	.mat-option:hover:not(.mat-option-disabled),
+	.mat-option:focus,
+	.mat-active {
+		background: #f5f9ff !important;
+	}
+}

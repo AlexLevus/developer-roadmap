@@ -4,12 +4,13 @@ type User {
   password: String!
   firstName: String!
   lastName: String!
+  middleName: String!
   resetPasswordToken: String
   resetPasswordExpires: Float
   createdAt: Float!
   lastLogin: Float
-  isVerified: Boolean!
-  isSuperuser: Boolean!
+  isAdmin: Boolean!
+  isActive: Boolean!
 }
 
 type Query {
@@ -19,6 +20,7 @@ type Query {
 input CreateUserInput {
   firstName: String!
   lastName: String!
+  middleName: String!
   email: String!
   password: String!
 }

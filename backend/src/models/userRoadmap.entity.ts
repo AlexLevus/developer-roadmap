@@ -3,7 +3,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  OneToMany
+  OneToMany,
+  JoinColumn
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { User } from './user.entity';
@@ -14,14 +15,8 @@ import { UserRoadmapStage } from './userRoadmapStage.entity';
   name: 'user_roadmaps'
 })
 export class UserRoadmap {
-  @PrimaryGeneratedColumn({ name: 'user_roadmap_id' })
-  userRoadmapId!: number;
-
-  @Column({ name: 'user_id' })
-  userId!: string;
-
-  @Column({ name: 'roadmap_id' })
-  roadmapId!: string;
+  @PrimaryGeneratedColumn()
+  id: string;
 
   @Expose()
   @Column({ name: 'start_date', type: 'bigint', default: +new Date() })
@@ -36,9 +31,11 @@ export class UserRoadmap {
   rating: number;
 
   @ManyToOne(() => User, (user) => user.userRoadmaps)
+  @JoinColumn({ name: 'user_id' })
   user!: User;
 
   @ManyToOne(() => Roadmap, (roadmap) => roadmap.userRoadmaps)
+  @JoinColumn({ name: 'roadmap_id' })
   roadmap!: Roadmap;
 
   @OneToMany(

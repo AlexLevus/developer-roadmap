@@ -1,40 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
 import { tap } from "rxjs/operators";
-import { User } from "@data/schema/user";
-
-const verify = gql`
-	mutation verifyEmail($emailToken: String!) {
-		verifyEmail(emailToken: $emailToken)
-	}
-`;
-
-const login = gql`
-	mutation login($input: LoginUserInput!) {
-		login(input: $input) {
-			accessToken
-			refreshToken
-		}
-	}
-`;
-
-const createUser = gql`
-	mutation createUser($input: CreateUserInput!) {
-		createUser(input: $input) {
-			firstName
-			lastName
-			email
-			password
-		}
-	}
-`;
-
-interface LoginResponse {
-	refreshToken: string;
-	accessToken: string;
-}
+import { User } from "@data/models/user";
+import { CREATE_USER, LOGIN, VERIFY } from "@data/graphQL/mutations";
+import { LoginResponse } from "@data/graphQL/types";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -42,10 +12,10 @@ export class AuthService {
 
 	constructor(private apollo: Apollo) {}
 
-	login(user: User) {
+	login(user: Partial<User>) {
 		return this.apollo
 			.mutate({
-				mutation: login,
+				mutation: LOGIN,
 				variables: {
 					input: user
 				}
@@ -55,21 +25,22 @@ export class AuthService {
 
 	verify(token: string) {
 		return this.apollo.mutate({
-			mutation: verify,
+			mutation: VERIFY,
 			variables: {
 				emailToken: token
 			}
 		});
 	}
 
-	register(user: User) {
+	register(user: Partial<User>) {
 		return this.apollo.mutate({
-			mutation: createUser,
+			mutation: CREATE_USER,
 			variables: {
 				input: {
 					...user,
 					firstName: "Alex",
-					lastName: "Levus"
+					lastName: "Levus",
+          middleName: "Vlas"
 				}
 			}
 		});

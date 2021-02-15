@@ -9,6 +9,10 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatTreeModule } from "@angular/material/tree";
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 @NgModule({
 	declarations: [],
@@ -21,7 +25,11 @@ import { MatButtonModule } from "@angular/material/button";
 		MatCheckboxModule,
 		MatTreeModule,
 		MatIconModule,
-		MatButtonModule
+		MatButtonModule,
+		MatProgressBarModule,
+		MatMenuModule,
+		MatChipsModule,
+		MatAutocompleteModule
 	],
 	exports: [
 		MatTabsModule,
@@ -32,7 +40,11 @@ import { MatButtonModule } from "@angular/material/button";
 		MatCheckboxModule,
 		MatTreeModule,
 		MatIconModule,
-		MatButtonModule
+		MatButtonModule,
+		MatProgressBarModule,
+		MatMenuModule,
+		MatChipsModule,
+		MatAutocompleteModule
 	]
 })
 export class MaterialModule {}

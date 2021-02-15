@@ -1,0 +1,23 @@
+<div class="form">
+  <div class="block">
+    <form [formGroup]="roadmapForm" (ngSubmit)="createRoadmap()">
+      <app-input
+        controlName="name"
+        inputName="reg-email"
+        label="Название"
+        type="text"
+      ></app-input>
+      <app-input
+        controlName="description"
+        inputName="reg-email"
+        label="Описание"
+        type="text"
+      ></app-input>
+      <app-button
+        text="Создать план развития"
+        type="submit"
+        size="sm"
+      ></app-button>
+    </form>
+  </div>
+</div>

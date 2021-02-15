@@ -29,19 +29,19 @@ const common = {
   refreshToken: {
     privateKey: REFRESH_TOKEN_SECRET!,
     signOptions: {
-      expiresIn: '7d' // 7d
+      expiresIn: '7d'
     }
   },
   emailToken: {
     privateKey: EMAIL_TOKEN_SECRET!,
     signOptions: {
-      expiresIn: '1d' // 1d
+      expiresIn: '1d'
     }
   },
   resetPassToken: {
     privateKey: RESETPASS_TOKEN_SECRET!,
     signOptions: {
-      expiresIn: '1d' // 1d
+      expiresIn: '1d'
     }
   }
 };
@@ -112,9 +112,7 @@ export const verifyToken = async (
     return currentUser;
   }
 
-  // console.log(currentUser)
-
-  if (currentUser && !currentUser.isVerified) {
+  if (currentUser && !currentUser.isActive) {
     throw new ForbiddenError('Please verify your email.');
   }
 
@@ -134,12 +132,8 @@ export const verifyToken = async (
  * @beta
  */
 export const tradeToken = async (user: User): Promise<LoginResponse> => {
-  if (!user.isVerified) {
-    throw new ForbiddenError('Please verify your email.');
-  }
-
   if (!user.isActive) {
-    throw new ForbiddenError("User already doesn't exist.");
+    throw new ForbiddenError('Please verify your email.');
   }
 
   const accessToken = await generateToken(user, 'accessToken');

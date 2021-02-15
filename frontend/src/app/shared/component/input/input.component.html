@@ -1,4 +1,4 @@
-<section [ngStyle]="customStyle" class="input">
+<div [ngStyle]="customStyle" class="input">
   <label class="input__label" [for]="inputName">{{label}}</label>
   <input
     class="input__field"
@@ -8,7 +8,6 @@
     [type]="type"
     [autocomplete]="autocomplete"
     [placeholder]="placeholder"
-    [required]="required"
   />
   <div class="input__validation" *ngIf="control!.invalid && control!.touched">
     <small *ngIf="control.errors.required">
@@ -21,4 +20,4 @@
       Минимальная длина: 8 символов
     </small>
   </div>
-</section>
+</div>

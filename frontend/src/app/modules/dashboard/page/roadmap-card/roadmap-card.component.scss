@@ -1,0 +1,83 @@
+:host {
+  width: 100%;
+}
+
+.card {
+	padding: 15px;
+
+	height: 240px;
+
+	background-color: #01b170;
+
+	border-radius: 30px;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+	&__start-date {
+		color: #a0a0ab;
+	}
+
+  &__deadline {
+    padding: 2px 10px;
+
+    font-weight: 500;
+    text-align: center;
+
+    background-color: #fff;
+    border-radius: 20px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+	&__header {
+		margin-bottom: 25px;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__menu {
+		margin-right: -10px;
+	}
+
+	&__name {
+		font-size: 18px;
+		text-align: center;
+	}
+}
+
+.progress {
+  margin-bottom: 20px;
+
+	display: flex;
+	flex-direction: column;
+
+	font-weight: 700;
+
+	&__scale {
+		width: 100%;
+	}
+
+	&__text {
+		text-align: end;
+	}
+}
+
+::ng-deep .mat-progress-bar-buffer {
+	background: #fff !important;
+}
+
+.outline {
+	height: 1px;
+
+	background-color: #fff;
+	border: none;
+}
