@@ -15,6 +15,10 @@ export class Organization {
   name: string;
 
   @Expose()
+  @Column({ name: 'director_id', type: 'text' })
+  directorId: string;
+
+  @Expose()
   @Column({ name: 'is_active', default: false })
   isActive: boolean;
 

@@ -2,15 +2,16 @@ type User {
   id: ID!
   email: String!
   password: String!
-  firstName: String!
-  lastName: String!
-  middleName: String!
+  firstName: String
+  lastName: String
+  middleName: String
   resetPasswordToken: String
   resetPasswordExpires: Float
   createdAt: Float!
   lastLogin: Float
   isAdmin: Boolean!
   isActive: Boolean!
+  isCompleted: Boolean!
 }
 
 type Query {
@@ -18,11 +19,15 @@ type Query {
 }
 
 input CreateUserInput {
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  id: String!
   firstName: String!
   lastName: String!
   middleName: String!
-  email: String!
-  password: String!
 }
 
 input LoginUserInput {
@@ -31,6 +36,7 @@ input LoginUserInput {
 }
 
 type LoginResponse {
+  id: String!
   accessToken: String!
   refreshToken: String!
 }
@@ -41,6 +47,7 @@ type RefreshTokenResponse {
 
 type Mutation {
   createUser(input: CreateUserInput!): User
+  updateUser(input: UpdateUserInput!): Boolean
   verifyEmail(emailToken: String!): Boolean
   login(input: LoginUserInput!): LoginResponse
   refreshToken(refreshToken: String!): RefreshTokenResponse

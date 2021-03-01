@@ -7,12 +7,14 @@ import { NoAuthGuard } from "@app/guard/noauth.guard";
 import { throwIfAlreadyLoaded } from "@app/guard/module-import.guard";
 
 import { TokenInterceptor } from "@app/interceptor/token.interceptor";
+import { CompleteRegistrationGuard } from "@app/guard/complete-registration.guard";
 
 @NgModule({
 	imports: [HttpClientModule],
 	providers: [
 		AuthGuard,
 		NoAuthGuard,
+		CompleteRegistrationGuard,
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: TokenInterceptor,

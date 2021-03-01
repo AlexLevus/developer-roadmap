@@ -20,15 +20,15 @@ export class User {
   password: string;
 
   @Expose()
-  @Column({ name: 'first_name' })
+  @Column({ name: 'first_name', nullable: true })
   firstName: string;
 
   @Expose()
-  @Column({ name: 'last_name' })
+  @Column({ name: 'last_name', nullable: true })
   lastName: string;
 
   @Expose()
-  @Column({ name: 'middle_name' })
+  @Column({ name: 'middle_name', nullable: true })
   middleName: string;
 
   @Expose()
@@ -62,6 +62,8 @@ export class User {
 
   @OneToMany(() => DepartmentUser, (departmentUser) => departmentUser.user)
   departmentUser!: DepartmentUser[];
+
+  isCompleted: boolean;
 
   constructor(user: Partial<User>) {
     if (user) {

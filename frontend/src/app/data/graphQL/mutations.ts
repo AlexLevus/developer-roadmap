@@ -9,6 +9,7 @@ export const VERIFY = gql`
 export const LOGIN = gql`
 	mutation login($input: LoginUserInput!) {
 		login(input: $input) {
+			id
 			accessToken
 			refreshToken
 		}
@@ -23,6 +24,12 @@ export const CREATE_USER = gql`
 			email
 			password
 		}
+	}
+`;
+
+export const UPDATE_USER = gql`
+	mutation updateUser($input: UpdateUserInput!) {
+		updateUser(input: $input)
 	}
 `;
 
@@ -42,6 +49,16 @@ export const CREATE_STAGE = gql`
 			name
 			path
 			roadmapId
+		}
+	}
+`;
+
+export const CREATE_ORGANIZATION = gql`
+	mutation createOrganization($name: String!, $directorId: String!) {
+		createOrganization(name: $name, directorId: $directorId) {
+			id
+			name
+			directorId
 		}
 	}
 `;

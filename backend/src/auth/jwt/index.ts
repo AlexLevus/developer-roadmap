@@ -131,7 +131,9 @@ export const verifyToken = async (
  *
  * @beta
  */
-export const tradeToken = async (user: User): Promise<LoginResponse> => {
+export const tradeToken = async (
+  user: User
+): Promise<Partial<LoginResponse>> => {
   if (!user.isActive) {
     throw new ForbiddenError('Please verify your email.');
   }

@@ -16,7 +16,6 @@ export const GET_ALL_ROADMAPS = gql`
 	}
 `;
 
-
 export const GET_ROADMAP = gql`
 	query roadmap($id: String!) {
 		roadmap(id: $id) {
@@ -34,16 +33,17 @@ export const GET_ROADMAP = gql`
 `;
 
 export const GET_USER = gql`
-  query user($id: String!) {
-    user(id: $id) {
-      id
-      firstName
-      lastName
-      middleName
-      isActive
-      isAdmin
-      createdAt
-      lastLogin
-    }
-  }
+	query user($id: ID!) {
+		user(id: $id) {
+			id
+			firstName
+			lastName
+			middleName
+			isActive
+			isAdmin
+			createdAt
+			lastLogin
+			isCompleted
+		}
+	}
 `;

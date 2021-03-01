@@ -3,6 +3,11 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "@app/service/auth.service";
 import { User } from "@data/models/user";
 import { Router } from "@angular/router";
+import { switchMap } from "rxjs/operators";
+import { LoginResponse, UserResponse } from "@data/graphQL/types";
+import { UserService } from "@app/service/user.service";
+import { EMPTY } from "rxjs";
+import { ApolloQueryResult, FetchResult } from "@apollo/client";
 
 @Component({
 	selector: "app-sign-form",
@@ -37,7 +42,11 @@ export class SignFormComponent {
 		])
 	});
 
-	constructor(private authService: AuthService, private router: Router) {}
+	constructor(
+		private authService: AuthService,
+		private userService: UserService,
+		private router: Router
+	) {}
 
 	login() {
 		if (this.loginForm.invalid) {
@@ -45,6 +54,7 @@ export class SignFormComponent {
 			return;
 		}
 		this.submitted = true;
+
 		const user: Partial<User> = {
 			email: this.loginForm.value.email,
 			password: this.loginForm.value.password
@@ -52,10 +62,21 @@ export class SignFormComponent {
 
 		this.authService
 			.login(user)
+			.pipe(
+				switchMap((res: FetchResult<LoginResponse>) => {
+					const id = res.data?.login.id;
+					return id ? this.userService.getUserById(id).valueChanges : EMPTY;
+				})
+			)
 			.subscribe(
-				() => {
+				(res: ApolloQueryResult<UserResponse>) => {
 					this.loginForm.reset();
-					this.router.navigate(["/dashboard"]);
+
+					if (res.data.user.isCompleted) {
+						this.router.navigate(["/dashboard"]);
+					} else {
+						this.router.navigate(["/registration"]);
+					}
 				},
 				() => {
 					this.error = true;
@@ -83,7 +104,7 @@ export class SignFormComponent {
 			this.authService
 				.register(user)
 				.subscribe(
-					() => {
+					data => {
 						this.registrationForm.reset();
 						this.state = "success";
 					},

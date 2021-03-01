@@ -19,6 +19,7 @@ import { comparePassword, hashPassword } from '@utils';
 import { generateToken, verifyToken, tradeToken } from '@auth';
 import { EmailResolver } from './email.resolver';
 import { sendMail } from '@shared';
+import { UpdateUserInput } from '../generator/graphql.models';
 
 @Resolver('User')
 export class UserResolver {
@@ -33,6 +34,8 @@ export class UserResolver {
         throw new ForbiddenError('Пользователь не найден');
       }
 
+      user.isCompleted = user.firstName !== null;
+
       return user;
     } catch (error) {
       throw new ApolloError(error);
@@ -40,17 +43,44 @@ export class UserResolver {
   }
 
   @Mutation()
-  async login(@Args('input') input: LoginUserInput): Promise<LoginResponse> {
-    const { email, password } = input;
+  async updateUser(@Args('input') input: UpdateUserInput): Promise<boolean> {
+    const { id } = input;
 
-    const user = await getRepository(User).findOne({
+    const existedUser = await getRepository(User).findOne({
       where: {
-        email: email
+        id
       }
     });
 
+    if (!existedUser) {
+      throw new ForbiddenError('Пользователь не найден');
+    }
+
+    const updateUser = await getRepository(User).update(
+      id,
+      new User({
+        ...existedUser,
+        ...input
+      })
+    );
+
+    return !!updateUser;
+  }
+
+  @Mutation()
+  async login(@Args('input') input: LoginUserInput): Promise<LoginResponse> {
+    const { email, password } = input;
+    const user = await getRepository(User).findOne({
+      where: { email }
+    });
+
     if (user && (await comparePassword(password, user.password))) {
-      return await tradeToken(user);
+      const { accessToken, refreshToken } = await tradeToken(user);
+      return {
+        id: user.id,
+        accessToken,
+        refreshToken
+      };
     }
 
     throw new AuthenticationError('Login failed.');

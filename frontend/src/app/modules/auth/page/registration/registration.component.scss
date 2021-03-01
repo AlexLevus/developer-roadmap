@@ -1,0 +1,45 @@
+.registration {
+	width: 40%;
+	margin: 0 auto;
+
+	font-size: 15px;
+	line-height: 24px;
+	color: #00244d;
+	border-radius: 8px;
+	box-shadow: 0 8px 32px 0 rgba(196, 200, 204, 0.48),
+		0 1px 4px 0 rgba(0, 36, 77, 0.08);
+	background-color: #fff;
+	padding: 44px 64px 64px 64px;
+
+	&__wrapper {
+		width: 100vw;
+		min-height: 100vh;
+		padding: 20px;
+		background: #f0f5fc;
+	}
+
+	&__text {
+		text-align: center;
+	}
+
+	&__input {
+		display: flex;
+		flex-direction: column;
+
+		margin-bottom: 18px;
+	}
+
+	&__label {
+		margin-bottom: 8px;
+
+		display: block;
+
+		align-items: center;
+
+		font-size: 14px;
+		line-height: 1.4;
+		letter-spacing: -0.2px;
+
+		color: #747e8a;
+	}
+}

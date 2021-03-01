@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { User } from "@data/models/user";
 
 @Component({
 	selector: "app-roadmap-board",
@@ -6,6 +7,7 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./roadmap-board.component.scss"]
 })
 export class RoadmapBoardComponent implements OnInit {
+	user: User | undefined = undefined;
 	currentDate = new Date();
 
 	constructor() {}

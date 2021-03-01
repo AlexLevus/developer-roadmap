@@ -15,7 +15,7 @@ export type RoadmapResponse = {
 };
 
 export type UserResponse = {
-  user: User
+	user: User;
 };
 
 export type CreateRoadmapResponse = {
@@ -29,6 +29,11 @@ export type CreateStageResponse = {
 };
 
 export interface LoginResponse {
-	refreshToken: string;
-	accessToken: string;
+	login: {
+		id: string;
+		refreshToken: string;
+		accessToken: string;
+	};
 }
+
+export type LoginResponseType = LoginResponse | null | undefined;
