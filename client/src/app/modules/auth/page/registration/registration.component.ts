@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { OrganizationService } from "@app/service/organization.service";
 import { UserService } from "@app/service/user.service";
 import { User } from "@data/models/user";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-registration",
@@ -24,7 +25,8 @@ export class RegistrationComponent implements OnInit {
 
 	constructor(
 		private organizationService: OrganizationService,
-		private userService: UserService
+		private userService: UserService,
+    private router: Router
 	) {}
 
 	ngOnInit(): void {}
@@ -37,7 +39,7 @@ export class RegistrationComponent implements OnInit {
 			companyName
 		} = this.registrationForm.value;
 		const userId = localStorage.getItem("userId")!;
-		console.log(this.registrationForm.value);
+
 		if (this.registrationForm.invalid) {
 			this.registrationForm.markAllAsTouched();
 			return;
@@ -53,12 +55,9 @@ export class RegistrationComponent implements OnInit {
 		this.organizationService.createOrganization(companyName, userId).subscribe(
 			({ data }) => {
 				this.registrationForm.reset();
-				this.submitted = false;
-			},
-			() => {
-				this.submitted = false;
+        this.router.navigate(["/dashboard"]);
 			}
-		);
+		).add(() => this.submitted = false);
 
 		this.userService.updateUser(user).subscribe(
 			() => {

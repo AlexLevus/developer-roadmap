@@ -22,10 +22,10 @@ export class VerifyComponent implements OnInit {
 		this.authService
 			.verify(token)
 			.subscribe(
-				res => {
+				(res) => {
 					this.isVerified = true;
 				},
-				error => {
+				(error) => {
 					this.error = error.message;
 					console.log(this.error);
 				}

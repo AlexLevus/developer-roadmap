@@ -35,14 +35,14 @@ p {
 
   font-size: 1.25em;
   text-align: center;
+}
 
-  &.success {
-    color: #73af55;
-  }
+.success {
+  color: #73af55;
+}
 
-  &.error {
-    color: #d06079;
-  }
+.error {
+  color: #d06079;
 }
 
 @-webkit-keyframes dash {

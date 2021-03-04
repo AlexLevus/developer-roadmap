@@ -1,10 +1,10 @@
 <div [ngStyle]="customStyle" class="input">
-  <label class="input__label" [for]="inputName">{{label}}</label>
+  <label class="input__label" [for]="controlName">{{label}}</label>
   <input
     class="input__field"
     [formControl]="control"
-    [id]="inputName"
-    [name]="inputName"
+    [id]="controlName"
+    [name]="controlName"
     [type]="type"
     [autocomplete]="autocomplete"
     [placeholder]="placeholder"

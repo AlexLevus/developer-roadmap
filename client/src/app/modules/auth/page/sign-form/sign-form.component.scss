@@ -15,10 +15,9 @@ $input-text-color: #00244d;
 	box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.16);
 
   &__input {
-    display: flex;
-    flex-direction: column;
-
     margin-bottom: 18px;
+
+    display: block;
   }
 
 	&__wrapper {

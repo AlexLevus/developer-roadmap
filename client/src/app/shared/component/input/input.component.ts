@@ -7,7 +7,6 @@ import { FormControl, FormGroupDirective } from "@angular/forms";
 	styleUrls: ["./input.component.scss"]
 })
 export class InputComponent implements OnInit {
-	@Input() inputName = "";
 	@Input() customStyle: { [klass: string]: any } | undefined;
 	@Input() label = "";
 	@Input() required = false;

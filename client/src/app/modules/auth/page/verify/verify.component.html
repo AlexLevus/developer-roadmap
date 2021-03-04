@@ -1,7 +1,16 @@
-<p *ngIf="isLoading; else text">Загрузка...</p>
-<ng-template #text>
-	<p *ngIf="!error; else errorMessage">Учетная запись успешно подтверждена!</p>
-	<ng-template #errorMessage>
-		<p>{{ error }}</p>
-	</ng-template>
-</ng-template>
+<div class="verify-page">
+	<div class="verify-page__wrapper">
+		<p *ngIf="isLoading; else text">Загрузка...</p>
+		<ng-template #text>
+			<p *ngIf="!error; else errorMessage">
+				Учетная запись успешно подтверждена! Перейдем на
+				<a class="verify-page__link" [routerLink]="['/auth/login']"
+					>страницу входа</a
+				>?
+			</p>
+			<ng-template #errorMessage>
+				<p>Неверная ссылка подтверждения учетной записи, пожалуйста, попробуйте снова</p>
+			</ng-template>
+		</ng-template>
+	</div>
+</div>

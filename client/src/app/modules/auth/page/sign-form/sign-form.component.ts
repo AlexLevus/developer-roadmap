@@ -82,11 +82,7 @@ export class SignFormComponent {
 					this.error = true;
 				}
 			)
-			.add(() =>
-				setTimeout(() => {
-					this.submitted = false;
-				}, 700)
-			);
+			.add(() => (this.submitted = false));
 	}
 
 	register() {
@@ -104,7 +100,7 @@ export class SignFormComponent {
 			this.authService
 				.register(user)
 				.subscribe(
-					data => {
+					(data) => {
 						this.registrationForm.reset();
 						this.state = "success";
 					},

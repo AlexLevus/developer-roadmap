@@ -1,50 +1,42 @@
 <div class="registration__wrapper">
-<section class="registration">
-	<div class="registration__text">
-		<h1>Подготовим ваш аккаунт!</h1>
-		<span class="registration__label">Расскажите о себе</span>
-	</div>
-	<form [formGroup]="registrationForm" (ngSubmit)="completeRegistration()">
-		<app-input
-			class="registration__input"
-			controlName="lastName"
-			inputName="last-name"
-			label="Фамилия"
-			type="text"
-		></app-input>
-		<app-input
-			class="registration__input"
-			controlName="firstName"
-			inputName="first-name"
-			label="Имя"
-			type="text"
-		></app-input>
-		<app-input
-			class="registration__input"
-			controlName="middleName"
-			inputName="middle-name"
-			label="Отчество"
-			type="text"
-		></app-input>
-    <app-input
-      class="registration__input"
-      controlName="companyName"
-      inputName="company-name"
-      label="Название компании"
-      type="text"
-    ></app-input>
-		<app-select
-			class="registration__input"
-			label="Ваша роль в компании"
-			controlName="position"
-			[items]="roles"
-		></app-select>
-		<app-button
-			text="Начать"
-			type="submit"
-			size="block"
-			[submitted]="submitted"
-		></app-button>
-	</form>
-</section>
+	<section class="registration">
+		<div class="registration__text">
+			<h1>Подготовим ваш аккаунт!</h1>
+			<span class="registration__label">Расскажите о себе</span>
+		</div>
+		<form [formGroup]="registrationForm" (ngSubmit)="completeRegistration()">
+			<app-input
+				class="registration__input"
+				controlName="lastName"
+				label="Фамилия"
+			></app-input>
+			<app-input
+				class="registration__input"
+				controlName="firstName"
+				label="Имя"
+			></app-input>
+			<app-input
+				class="registration__input"
+				controlName="middleName"
+				label="Отчество"
+			></app-input>
+			<app-input
+				class="registration__input"
+				controlName="companyName"
+				label="Название компании"
+			></app-input>
+			<app-select
+				class="registration__input"
+				label="Ваша роль в компании"
+				controlName="position"
+				[items]="roles"
+			></app-select>
+			<app-button
+				text="Начать"
+				type="submit"
+				size="block"
+				[submitted]="submitted"
+			></app-button>
+		</form>
+	</section>
 </div>

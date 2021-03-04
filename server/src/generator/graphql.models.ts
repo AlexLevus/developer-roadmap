@@ -95,7 +95,7 @@ export abstract class IMutation {
 
     abstract forgotPassword(email: string): boolean | Promise<boolean>;
 
-    abstract resetPassword(resetPasswordToken: string, password: string): boolean | Promise<boolean>;
+    abstract resetPassword(resetPasswordToken: string, password?: string): boolean | Promise<boolean>;
 }
 
 export class Organization {

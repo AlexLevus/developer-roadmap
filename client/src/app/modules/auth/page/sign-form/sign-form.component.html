@@ -1,21 +1,27 @@
 <div class="sign-form">
-	<div *ngIf="!state; else registrationMessage">
-		<mat-tab-group [(selectedIndex)]="tabIndex" mat-align-tabs="center" animationDuration="0ms">
+	<div *ngIf="!state; else completeMessage">
+		<mat-tab-group
+			[(selectedIndex)]="tabIndex"
+			mat-align-tabs="center"
+			animationDuration="0ms"
+		>
 			<mat-tab label="Вход">
 				<div class="sign-form__wrapper">
-					<form class="sign-form__form" [formGroup]="loginForm" (ngSubmit)="login()">
+					<form
+						class="sign-form__form"
+						[formGroup]="loginForm"
+						(ngSubmit)="login()"
+					>
 						<app-input
-              class="sign-form__input"
+							class="sign-form__input"
 							controlName="email"
-							inputName="email"
 							label="Email"
 							type="email"
 							autocomplete="email"
 						></app-input>
 						<app-input
-              class="sign-form__input"
-              controlName="password"
-							inputName="password"
+							class="sign-form__input"
+							controlName="password"
 							label="Пароль"
 							type="password"
 							autocomplete="new-password"
@@ -24,7 +30,11 @@
 							Неверный email или пароль
 						</div>
 						<section class="sign-form__recovery-group">
-							<a class="sign-form__password-recovery" href="">Забыли пароль?</a>
+							<a
+								class="sign-form__password-recovery"
+								[routerLink]="['/auth/reset']"
+								>Забыли пароль?</a
+							>
 						</section>
 						<app-button
 							text="Войти"
@@ -39,26 +49,23 @@
 				<div class="sign-form__wrapper">
 					<form [formGroup]="registrationForm" (ngSubmit)="register()">
 						<app-input
-              class="sign-form__input"
-              controlName="email"
-							inputName="reg-email"
+							class="sign-form__input"
+							controlName="email"
 							label="Email"
 							type="email"
 							autocomplete="email"
 							placeholder="example@site.com"
 						></app-input>
 						<app-input
-              class="sign-form__input"
-              controlName="password"
-							inputName="reg-password"
+							class="sign-form__input"
+							controlName="password"
 							label="Пароль"
 							type="password"
 							autocomplete="new-password"
 						></app-input>
 						<app-input
-              class="sign-form__input"
-              controlName="confirmPassword"
-							inputName="confirm-password"
+							class="sign-form__input"
+							controlName="confirmPassword"
 							label="Подтверждение пароля"
 							type="password"
 							autocomplete="new-password"
@@ -116,24 +123,20 @@
 		</div>
 	</div>
 
-	<ng-template #registrationMessage>
+	<ng-template #completeMessage>
 		<app-state *ngIf="state === 'success'" [state]="state">
-			<p class="success">Регистрация прошла успешно!</p>
-			<p class="success">
-				Сейчас Вам необходимо подтвердить адрес электронной почты.
-			</p>
-			<p class="success">
-				Для этого перейдите по ссылке из письма об активации аккаунта.
-			</p>
+			<p>Регистрация прошла успешно!</p>
+			<p>Сейчас Вам необходимо подтвердить адрес электронной почты.</p>
+			<p>Для этого перейдите по ссылке из письма об активации аккаунта.</p>
 		</app-state>
-		<app-state *ngIf="state === 'error'" state="error">
-			<p class="error">Ошибка :(</p>
-			<p class="error">Попробуйте еще раз!</p>
+		<app-state *ngIf="state === 'error'" [state]="state">
+			<p>Ошибка :(</p>
+			<p>Попробуйте еще раз!</p>
 		</app-state>
-    <app-button
-      (click)="closeState()"
-      text="Вернуться назад"
-      size="block"
-    ></app-button>
+		<app-button
+			(click)="closeState()"
+			text="Вернуться назад"
+			size="block"
+		></app-button>
 	</ng-template>
 </div>

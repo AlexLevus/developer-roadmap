@@ -170,8 +170,6 @@ export class UserResolver {
   ): Promise<boolean> {
     const user = await getRepository(User).findOne({ id });
 
-    // console.log(currentPassword , password)
-
     if (!user) {
       throw new ForbiddenError('User not found.');
     }
@@ -245,19 +243,27 @@ export class UserResolver {
   @Mutation()
   async resetPassword(
     @Args('resetPasswordToken') resetPasswordToken: string,
-    @Args('password') password: string
+    @Args('password') password?: string
   ): Promise<boolean> {
-    const user = await getRepository(User).findOne({
-      resetPasswordToken
-    });
+    const user = await verifyToken(resetPasswordToken, 'resetPassToken');
+
+    if (user && !password) {
+      return true;
+    }
 
     if (!user) {
-      throw new ForbiddenError('User not found.');
+      throw new ForbiddenError('Token is invalid.');
     }
 
     if (user.resetPasswordExpires < Date.now()) {
       throw new AuthenticationError(
         'Reset password token is invalid, please try again.'
+      );
+    }
+
+    if (await comparePassword(password, user.password)) {
+      throw new ForbiddenError(
+        'Your new password must be different from your previous password.'
       );
     }
 
