@@ -47,16 +47,18 @@ export class LoginUserInput {
     password: string;
 }
 
-export class Email {
+export class Department {
     id: string;
-    userId: string;
-    type: Type;
-    isOpened: boolean;
-    createdAt: number;
-    updatedAt: number;
+    name: string;
+    description: string;
+    managerId?: string;
+    org?: Organization;
+    isActive: boolean;
 }
 
 export abstract class IQuery {
+    abstract organizationDepartments(orgId?: string): Department[] | Promise<Department[]>;
+
     abstract emails(): Email[] | Promise<Email[]>;
 
     abstract organization(): Organization[] | Promise<Organization[]>;
@@ -68,9 +70,13 @@ export abstract class IQuery {
     abstract stages(): Stage[] | Promise<Stage[]>;
 
     abstract user(id: string): User | Promise<User>;
+
+    abstract users(): User[] | Promise<User[]>;
 }
 
 export abstract class IMutation {
+    abstract createDepartment(name: string, description: string, orgId: string): Department | Promise<Department>;
+
     abstract createEmail(input: CreateEmailInput): Email | Promise<Email>;
 
     abstract openEmail(id: string): boolean | Promise<boolean>;
@@ -96,6 +102,15 @@ export abstract class IMutation {
     abstract forgotPassword(email: string): boolean | Promise<boolean>;
 
     abstract resetPassword(resetPasswordToken: string, password?: string): boolean | Promise<boolean>;
+}
+
+export class Email {
+    id: string;
+    userId: string;
+    type: Type;
+    isOpened: boolean;
+    createdAt: number;
+    updatedAt: number;
 }
 
 export class Organization {
@@ -134,7 +149,7 @@ export class User {
     lastLogin?: number;
     isAdmin: boolean;
     isActive: boolean;
-    isCompleted: boolean;
+    isCompleted?: boolean;
 }
 
 export class LoginResponse {

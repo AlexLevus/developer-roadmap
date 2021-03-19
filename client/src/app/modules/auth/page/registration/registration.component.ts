@@ -19,14 +19,18 @@ export class RegistrationComponent implements OnInit {
 		position: new FormControl(null, [Validators.required])
 	});
 
-	roles: string[] = ["Руководитель", "Разработчик", "Менеджер продукта", "HR"];
+	roles = [
+		{ id: "1", name: "Руководитель" },
+		{ id: "2", name: "Разработчик" },
+		{ id: "3", name: "Менеджер продукта" }
+	];
 
 	submitted = false;
 
 	constructor(
 		private organizationService: OrganizationService,
 		private userService: UserService,
-    private router: Router
+		private router: Router
 	) {}
 
 	ngOnInit(): void {}
@@ -52,12 +56,13 @@ export class RegistrationComponent implements OnInit {
 			lastName
 		};
 
-		this.organizationService.createOrganization(companyName, userId).subscribe(
-			({ data }) => {
+		this.organizationService
+			.createOrganization(companyName, userId)
+			.subscribe(({ data }) => {
 				this.registrationForm.reset();
-        this.router.navigate(["/dashboard"]);
-			}
-		).add(() => this.submitted = false);
+				this.router.navigate(["/dashboard"]);
+			})
+			.add(() => (this.submitted = false));
 
 		this.userService.updateUser(user).subscribe(
 			() => {

@@ -15,24 +15,24 @@ const routes: Routes = [
 				path: "dashboard",
 				loadChildren: () =>
 					import("@modules/dashboard/dashboard.module").then(
-						m => m.DashboardModule
+						(m) => m.DashboardModule
 					)
 			},
 			{
 				path: "admin",
 				loadChildren: () =>
-					import("@modules/admin/admin.module").then(m => m.AdminModule)
+					import("@modules/admin/admin.module").then((m) => m.AdminModule)
 			},
 			{
 				path: "roadmap/:roadmapId",
 				loadChildren: () =>
-					import("@modules/roadmap/roadmap.module").then(m => m.RoadmapModule)
+					import("@modules/roadmap/roadmap.module").then((m) => m.RoadmapModule)
 			},
 			{
 				path: "create-roadmap",
 				loadChildren: () =>
 					import("@modules/create-roadmap/create-roadmap.module").then(
-						m => m.CreateRoadmapModule
+						(m) => m.CreateRoadmapModule
 					)
 			}
 		]
@@ -41,7 +41,7 @@ const routes: Routes = [
 		path: "auth",
 		canActivate: [NoAuthGuard],
 		loadChildren: () =>
-			import("@modules/auth/auth.module").then(m => m.AuthModule)
+			import("@modules/auth/auth.module").then((m) => m.AuthModule)
 	},
 	{ path: "**", redirectTo: "/auth/login", pathMatch: "full" }
 ];

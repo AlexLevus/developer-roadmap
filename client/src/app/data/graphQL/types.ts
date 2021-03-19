@@ -1,6 +1,7 @@
 import { Roadmap } from "@data/models/roadmap";
 import { Stage } from "@data/models/stage";
 import { User } from "@data/models/user";
+import { Department } from "@data/models/department";
 
 export type RoadmapsResponse = {
 	roadmaps: Roadmap[];
@@ -12,6 +13,14 @@ export type RoadmapResponse = {
 		description: string;
 		stages: Stage[];
 	};
+};
+
+export type GetOrganizationDepartmentsResponse = {
+	organizationDepartments: Department[];
+};
+
+export type GetAllUsersResponse = {
+	users: User[];
 };
 
 export type UserResponse = {

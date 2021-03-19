@@ -1,6 +1,6 @@
 import { Mutation, Args, Context, Resolver, Query } from '@nestjs/graphql';
 
-import { User } from '@models';
+import { Roadmap, User } from '@models';
 import {
   CreateUserInput,
   LoginUserInput,
@@ -24,6 +24,13 @@ import { UpdateUserInput } from '../generator/graphql.models';
 @Resolver('User')
 export class UserResolver {
   constructor(private readonly emailResolver: EmailResolver) {}
+
+  @Query()
+  async users(): Promise<User[]> {
+    return getRepository(User).find({
+      cache: true
+    });
+  }
 
   @Query()
   async user(@Args('id') id: string): Promise<User> {

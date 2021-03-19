@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { UserResponse } from "@data/graphQL/types";
-import { GET_USER } from "@data/graphQL/queries";
+import { GetAllUsersResponse, UserResponse } from "@data/graphQL/types";
+import { GET_ALL_USERS, GET_USER } from "@data/graphQL/queries";
 import { Apollo } from "apollo-angular";
 import {
 	FORGOT_PASSWORD,
@@ -15,6 +15,12 @@ import { User } from "@data/models/user";
 })
 export class UserService {
 	constructor(private apollo: Apollo) {}
+
+	getAllUsers() {
+		return this.apollo.watchQuery<GetAllUsersResponse>({
+			query: GET_ALL_USERS
+		});
+	}
 
 	getUserById(id: string) {
 		return this.apollo.watchQuery<UserResponse>({

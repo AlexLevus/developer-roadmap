@@ -63,6 +63,19 @@ export const CREATE_ORGANIZATION = gql`
 	}
 `;
 
+export const CREATE_DEPARTMENT = gql`
+	mutation createDepartment(
+		$name: String!
+		$description: String!
+		$orgId: ID!
+	) {
+		createDepartment(name: $name, description: $description, orgId: $orgId) {
+			id
+			name
+		}
+	}
+`;
+
 export const CHANGE_PASSWORD = gql`
 	mutation changePassword(
 		$id: ID!

@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { DepartmentService } from "@app/service/department.service";
+import { Department } from "@data/models/department";
 
 @Component({
 	selector: "app-create-employee",
@@ -21,12 +23,10 @@ export class CreateEmployeeComponent implements OnInit {
 		skills: new FormControl(null)
 	});
 
-	positions: string[] = [
-		"Front-End Developer",
-		"Backend-End Developer",
-		"Product Manager",
-		"UI/UX Designer",
-		"QA Tester"
+	positions = [
+		{ id: "1", name: "Front-End Developer" },
+		{ id: "2", name: "Backend-End Developer" },
+		{ id: "3", name: "Product Manager" }
 	];
 
 	skills: string[] = [];
@@ -39,12 +39,19 @@ export class CreateEmployeeComponent implements OnInit {
 		"PostgreSQL"
 	];
 
-	departments: string[] = ["Департамент 1", "Департамент 2", "Департамент 3"];
+	departments: Department[] = [];
 	submitted = false;
 
-	constructor() {}
+	constructor(private departmentService: DepartmentService) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.departmentService
+			.getOrganizationDepartments("1")
+			.valueChanges.subscribe((result) => {
+				console.log(result.data.organizationDepartments);
+				this.departments = result.data.organizationDepartments;
+			});
+	}
 
 	createEmployee() {
 		console.log(this.employeeForm.value);

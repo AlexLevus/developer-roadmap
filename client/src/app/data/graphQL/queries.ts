@@ -32,9 +32,36 @@ export const GET_ROADMAP = gql`
 	}
 `;
 
+export const GET_ORGANIZATION_DEPARTMENTS = gql`
+	query organizationDepartments($orgId: ID!) {
+		organizationDepartments(orgId: $orgId) {
+			id
+			name
+			description
+			managerId
+		}
+	}
+`;
+
 export const GET_USER = gql`
 	query user($id: ID!) {
 		user(id: $id) {
+			id
+			firstName
+			lastName
+			middleName
+			isActive
+			isAdmin
+			createdAt
+			lastLogin
+			isCompleted
+		}
+	}
+`;
+
+export const GET_ALL_USERS = gql`
+	{
+		users {
 			id
 			firstName
 			lastName

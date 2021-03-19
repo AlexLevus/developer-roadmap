@@ -31,16 +31,20 @@ export class Department {
   isActive: boolean;
 
   @Expose()
-  @Column({ name: 'manager_id' })
+  @Column({ name: 'manager_id', nullable: true })
   managerId: string;
+
+  @Expose()
+  @Column({ name: 'org_id' })
+  orgId: string;
 
   @OneToMany(
     () => DepartmentUser,
     (departmentUser) => departmentUser.department
   )
-  public departmentUser!: DepartmentUser[];
+  departmentUser!: DepartmentUser[];
 
-  @ManyToOne(() => Organization, (org) => org.departments)
+  @ManyToOne(() => Organization, (org) => org.departments, { cascade: true })
   @JoinColumn({ name: 'org_id' })
   org: Organization;
 

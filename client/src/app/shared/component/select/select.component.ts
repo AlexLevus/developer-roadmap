@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroupDirective } from "@angular/forms";
+import { SelectItem } from "@data/models/selectItem";
 
 @Component({
 	selector: "app-select",
@@ -8,10 +9,8 @@ import { FormControl, FormGroupDirective } from "@angular/forms";
 })
 export class SelectComponent implements OnInit {
 	@Input() controlName = "";
-	@Input() items = [];
+	@Input() items: SelectItem[] = [];
 	@Input() label = "";
-
-	departments: string[] = ["Департамент 1", "Департамент 2", "Департамент 3"];
 
 	control: FormControl | undefined;
 
