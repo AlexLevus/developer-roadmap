@@ -1,13 +1,6 @@
 import { Mutation, Args, Context, Resolver, Query } from '@nestjs/graphql';
 
-import { Roadmap, User } from '@models';
-import {
-  CreateUserInput,
-  LoginUserInput,
-  LoginResponse,
-  RefreshTokenResponse,
-  Type
-} from '../generator/graphql.schema';
+import { User } from '@models';
 import { getRepository } from 'typeorm';
 import {
   ApolloError,
@@ -19,11 +12,22 @@ import { comparePassword, hashPassword } from '@utils';
 import { generateToken, verifyToken, tradeToken } from '@auth';
 import { EmailResolver } from './email.resolver';
 import { sendMail } from '@shared';
-import { UpdateUserInput } from '../generator/graphql.models';
+import {
+  UpdateUserInput,
+  CreateUserInput,
+  LoginUserInput,
+  LoginResponse,
+  RefreshTokenResponse,
+  Type
+} from '../generator/graphql.models';
+import { SkillResolver } from './skill.resolver';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(private readonly emailResolver: EmailResolver) {}
+  constructor(
+    private readonly emailResolver: EmailResolver,
+    private readonly skillResolver: SkillResolver
+  ) {}
 
   @Query()
   async users(): Promise<User[]> {
@@ -41,8 +45,6 @@ export class UserResolver {
         throw new ForbiddenError('Пользователь не найден');
       }
 
-      user.isCompleted = user.firstName !== null;
-
       return user;
     } catch (error) {
       throw new ApolloError(error);
@@ -51,7 +53,7 @@ export class UserResolver {
 
   @Mutation()
   async updateUser(@Args('input') input: UpdateUserInput): Promise<boolean> {
-    const { id } = input;
+    const { id, orgId, positionId } = input;
 
     const existedUser = await getRepository(User).findOne({
       where: {
@@ -67,7 +69,9 @@ export class UserResolver {
       id,
       new User({
         ...existedUser,
-        ...input
+        ...input,
+        orgId,
+        positionId
       })
     );
 
@@ -94,16 +98,14 @@ export class UserResolver {
   }
 
   @Mutation()
-  async createUser(
-    @Args('input') input: CreateUserInput,
-    @Context('pubsub') pubsub: any,
-    @Context('req') req: any
+  async registerUser(
+    @Args('email') email: string,
+    @Args('password') password: string,
+    @Context('req') req: any = 'localhost'
   ): Promise<User> {
-    const { email, password } = input;
-
     const existedUser = await getRepository(User).findOne({
       where: {
-        email: email
+        email
       }
     });
 
@@ -113,7 +115,6 @@ export class UserResolver {
 
     const createdUser = await getRepository(User).save(
       new User({
-        ...input,
         email,
         password: await hashPassword(password)
       })
@@ -134,6 +135,41 @@ export class UserResolver {
     );
 
     return createdUser;
+  }
+
+  @Mutation()
+  async createUser(@Args('input') input: CreateUserInput): Promise<boolean> {
+    const { email, password, skills } = input;
+
+    const newUser = await this.registerUser(email, password);
+
+    skills.map((skill) => ({
+      id: +skill.id,
+      name: skill.name
+    }));
+
+    if (newUser) {
+      // создали новые скиллы
+      const savedSkills = skills
+        .filter((skill) => skill.id === null)
+        .map((skill) => this.skillResolver.createSkill(skill.name));
+
+      // @ts-ignore
+      newUser.skills = [
+        ...skills.filter((skill) => skill.id !== null),
+        ...(await Promise.all(savedSkills))
+      ];
+      console.log(newUser.skills);
+
+      // добавить скиллы пользователю
+      const updateUser = await getRepository(User).save(newUser);
+
+      // должен определить скиллы пользователя в таблицу user_skills
+      // если скилла не существует, то сначала его создать (у скиллов, которых нет, id === null)
+      return !!updateUser;
+    }
+
+    return false;
   }
 
   @Mutation()

@@ -1,14 +1,27 @@
 import { Injectable } from "@angular/core";
-import { GetAllUsersResponse, UserResponse } from "@data/graphQL/types";
-import { GET_ALL_USERS, GET_USER } from "@data/graphQL/queries";
+import {
+	GetAllUsersResponse,
+	PositionResponse,
+	SkillResponse,
+	UserResponse
+} from "@data/graphQL/types";
+import {
+	GET_ALL_USERS,
+	GET_POSITIONS,
+	GET_SKILLS,
+	GET_USER
+} from "@data/graphQL/queries";
 import { Apollo } from "apollo-angular";
 import {
 	FORGOT_PASSWORD,
 	CHANGE_PASSWORD,
 	UPDATE_USER,
-	RESET_PASSWORD
+	RESET_PASSWORD,
+	CREATE_USER
 } from "@data/graphQL/mutations";
 import { User } from "@data/models/user";
+import { tap } from "rxjs/operators";
+import { currentUserVar } from "../../graphql.module";
 
 @Injectable({
 	providedIn: "root"
@@ -27,6 +40,36 @@ export class UserService {
 			query: GET_USER,
 			variables: {
 				id
+			}
+		});
+	}
+
+	getCurrentUser(id: string) {
+		return this.getUserById(id).valueChanges.pipe(
+			tap(({ data }) => {
+				localStorage.setItem("user", JSON.stringify(data.user));
+				currentUserVar(data.user);
+			})
+		);
+	}
+
+	getPositions() {
+		return this.apollo.watchQuery<PositionResponse>({
+			query: GET_POSITIONS
+		});
+	}
+
+	getSkills() {
+		return this.apollo.watchQuery<SkillResponse>({
+			query: GET_SKILLS
+		});
+	}
+
+	createUser(user: Partial<User>) {
+		return this.apollo.mutate<boolean>({
+			mutation: CREATE_USER,
+			variables: {
+				input: user
 			}
 		});
 	}

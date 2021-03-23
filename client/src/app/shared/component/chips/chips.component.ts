@@ -7,6 +7,7 @@ import {
 import { FormControl, FormGroupDirective } from "@angular/forms";
 import { MatChipInputEvent } from "@angular/material/chips";
 import { Observable } from "rxjs";
+import { SelectItem } from "@data/models/selectItem";
 
 @Component({
 	selector: "app-chips",
@@ -18,8 +19,8 @@ export class ChipsComponent implements OnInit {
 	@ViewChild("auto") matAutocomplete!: MatAutocomplete;
 
 	@Input() label = "";
-	@Input() items!: string[];
-	@Input() autocompleteItems!: string[];
+	@Input() items: SelectItem[] = [];
+	@Input() autocompleteItems: SelectItem[] = [];
 	@Input() controlName!: string;
 
 	itemsControl!: FormControl;
@@ -27,7 +28,7 @@ export class ChipsComponent implements OnInit {
 	selectable = true;
 	removable = true;
 	inputControl = new FormControl();
-	filteredItems: Observable<string[]>;
+	filteredItems: Observable<SelectItem[]>;
 
 	constructor(private formGroupDir: FormGroupDirective) {
 		this.filteredItems = this.inputControl.valueChanges.pipe(
@@ -46,16 +47,19 @@ export class ChipsComponent implements OnInit {
 
 	add(event: MatChipInputEvent): void {
 		const input = event.input;
-		const value = event.value;
+		const name = event.value.trim();
 
-		if (this.items.find(item => item === value) && input) {
+		if (this.items.find((item) => item.name === name) && input) {
 			input.value = "";
 			this.inputControl.setValue(null);
 			return;
 		}
 
-		if ((value || "").trim()) {
-			this.items.push(value.trim());
+		const existedItem = this.autocompleteItems.find((el) => el.name === name);
+		const id = existedItem ? existedItem.id : null;
+
+		if ((name || "").trim()) {
+			this.items.push({ id, name });
 		}
 
 		if (input) {
@@ -66,8 +70,8 @@ export class ChipsComponent implements OnInit {
 		this.itemsControl.setValue(this.items);
 	}
 
-	remove(item: string): void {
-		const index = this.items.indexOf(item);
+	remove(item: SelectItem): void {
+		const index = this.items.map((el) => el.name).indexOf(item.name);
 
 		if (index >= 0) {
 			this.items.splice(index, 1);
@@ -77,18 +81,27 @@ export class ChipsComponent implements OnInit {
 	}
 
 	selected(event: MatAutocompleteSelectedEvent): void {
-		const value = event.option.viewValue;
+		if (this.items.find((item) => item.name === event.option.viewValue)) {
+			this.input.nativeElement.value = "";
+			this.inputControl.setValue(null);
+			return;
+		}
+
+		const value = {
+			id: event.option.value,
+			name: event.option.viewValue
+		};
 		this.items.push(value);
 		this.input.nativeElement.value = "";
 		this.inputControl.setValue(null);
 		this.itemsControl.setValue(this.items);
 	}
 
-	private _filter(value: string): string[] {
+	private _filter(value: string): SelectItem[] {
 		const filterValue = value.toLowerCase();
 
 		return this.autocompleteItems.filter(
-			item => item.toLowerCase().indexOf(filterValue) === 0
+			(item) => item.name.toLowerCase().indexOf(filterValue) === 0
 		);
 	}
 }

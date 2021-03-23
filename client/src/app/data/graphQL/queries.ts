@@ -54,7 +54,7 @@ export const GET_USER = gql`
 			isAdmin
 			createdAt
 			lastLogin
-			isCompleted
+			orgId
 		}
 	}
 `;
@@ -70,7 +70,25 @@ export const GET_ALL_USERS = gql`
 			isAdmin
 			createdAt
 			lastLogin
-			isCompleted
+		}
+	}
+`;
+
+export const GET_POSITIONS = gql`
+	query positions {
+		positions {
+			id
+			name
+			description
+		}
+	}
+`;
+
+export const GET_SKILLS = gql`
+	query skills {
+		skills {
+			id
+			name
 		}
 	}
 `;

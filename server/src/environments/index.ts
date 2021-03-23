@@ -3,6 +3,7 @@ const AUTHOR: string = process.env.AUTHOR || 'Aleksandr';
 
 // application
 const END_POINT: string = process.env.END_POINT || 'graphql';
+const APP_URL: string = process.env.APP_URL || 'http://localhost:4200';
 
 // jsonwebtoken
 const ISSUER: string = process.env.ISSUER || 'Aleksandr Levus';
@@ -28,6 +29,7 @@ const NODEMAILER_USER: string = process.env.NODEMAILER_USER || 'alexislevus';
 const NODEMAILER_PASS: string = process.env.NODEMAILER_PASS || '18051999sanya';
 
 export {
+  APP_URL,
   AUTHOR,
   END_POINT,
   ISSUER,

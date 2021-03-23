@@ -1,7 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { UserRoadmap } from './userRoadmap.entity';
 import { DepartmentUser } from './departmentUser.entity';
+import { Position } from './position.entity';
+import { Organization } from './organization.entity';
+import { Skill } from './skill.entity';
 
 @Entity({
   name: 'users'
@@ -60,10 +72,24 @@ export class User {
   @OneToMany(() => UserRoadmap, (userRoadmap) => userRoadmap.user)
   userRoadmaps!: UserRoadmap[];
 
-  @OneToMany(() => DepartmentUser, (departmentUser) => departmentUser.user)
-  departmentUser!: DepartmentUser[];
+  @Expose()
+  @Column({ name: 'position_id', nullable: true })
+  positionId!: string;
 
-  isCompleted: boolean;
+  @Expose()
+  @Column({ name: 'org_id', nullable: true })
+  orgId!: string;
+
+  @ManyToOne(() => Position, (position) => position.users)
+  @JoinColumn({ name: 'position_id' })
+  position: Position;
+
+  @ManyToOne(() => Organization, (organization) => organization.users)
+  @JoinColumn({ name: 'org_id' })
+  organization: Organization;
+
+  @ManyToMany((type) => Skill, (skill) => skill.users)
+  skills: Skill[];
 
   constructor(user: Partial<User>) {
     if (user) {

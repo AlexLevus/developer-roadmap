@@ -10,3 +10,4 @@ export * from './position.entity';
 export * from './userRoadmap.entity';
 export * from './departmentUser.entity';
 export * from './userRoadmapStage.entity';
+export * from './skill.entity';

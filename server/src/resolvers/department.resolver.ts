@@ -11,7 +11,7 @@ export class DepartmentResolver {
     @Args('orgId') orgId: string
   ): Promise<Department[]> {
     return await getRepository(Department).find({
-      org: {
+      organization: {
         id: orgId
       }
     });
@@ -33,13 +33,13 @@ export class DepartmentResolver {
       throw new ForbiddenError('Департамент с таким именем уже существует');
     }
 
-    const org = await getRepository(Organization).findOne({
+    const organization = await getRepository(Organization).findOne({
       where: {
         id: orgId
       }
     });
 
-    if (!org) {
+    if (!organization) {
       throw new ForbiddenError('Неправильно указана организация');
     }
 

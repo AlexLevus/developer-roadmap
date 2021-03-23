@@ -4,6 +4,8 @@ import { OrganizationService } from "@app/service/organization.service";
 import { UserService } from "@app/service/user.service";
 import { User } from "@data/models/user";
 import { Router } from "@angular/router";
+import { mergeMap } from "rxjs/operators";
+import { Position } from "@data/models/position";
 
 @Component({
 	selector: "app-registration",
@@ -19,11 +21,7 @@ export class RegistrationComponent implements OnInit {
 		position: new FormControl(null, [Validators.required])
 	});
 
-	roles = [
-		{ id: "1", name: "Руководитель" },
-		{ id: "2", name: "Разработчик" },
-		{ id: "3", name: "Менеджер продукта" }
-	];
+	positions: Position[] = [];
 
 	submitted = false;
 
@@ -33,14 +31,19 @@ export class RegistrationComponent implements OnInit {
 		private router: Router
 	) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.userService.getPositions().valueChanges.subscribe(({ data }) => {
+			this.positions = data.positions;
+		});
+	}
 
 	completeRegistration() {
 		const {
 			firstName,
 			middleName,
 			lastName,
-			companyName
+			companyName,
+			position
 		} = this.registrationForm.value;
 		const userId = localStorage.getItem("userId")!;
 
@@ -49,29 +52,25 @@ export class RegistrationComponent implements OnInit {
 			return;
 		}
 
-		const user: Partial<User> = {
-			id: userId,
-			firstName,
-			middleName,
-			lastName
-		};
-
 		this.organizationService
 			.createOrganization(companyName, userId)
+			.pipe(
+				mergeMap(({ data }) => {
+					const user: Partial<User> = {
+						id: userId,
+						orgId: data?.createOrganization.id,
+						positionId: position,
+						firstName,
+						middleName,
+						lastName
+					};
+					return this.userService.updateUser(user);
+				})
+			)
 			.subscribe(({ data }) => {
 				this.registrationForm.reset();
 				this.router.navigate(["/dashboard"]);
 			})
 			.add(() => (this.submitted = false));
-
-		this.userService.updateUser(user).subscribe(
-			() => {
-				this.registrationForm.reset();
-				this.submitted = false;
-			},
-			() => {
-				this.submitted = false;
-			}
-		);
 	}
 }

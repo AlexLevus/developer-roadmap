@@ -2,7 +2,7 @@ import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
 import { Roadmap, Stage, User } from '@models';
-import { CreateStageInput } from '../generator/graphql.schema';
+import { CreateStageInput } from '../generator/graphql.models';
 
 @Resolver('Stage')
 export class StageResolver {

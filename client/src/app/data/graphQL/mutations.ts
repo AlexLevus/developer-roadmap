@@ -16,14 +16,20 @@ export const LOGIN = gql`
 	}
 `;
 
-export const CREATE_USER = gql`
-	mutation createUser($input: CreateUserInput!) {
-		createUser(input: $input) {
+export const REGISTER_USER = gql`
+	mutation registerUser($email: String!, $password: String!) {
+		registerUser(email: $email, password: $password) {
 			firstName
 			lastName
 			email
 			password
 		}
+	}
+`;
+
+export const CREATE_USER = gql`
+	mutation createUser($input: CreateUserInput!) {
+		createUser(input: $input)
 	}
 `;
 

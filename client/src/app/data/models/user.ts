@@ -5,9 +5,12 @@ export interface User {
 	firstName: string;
 	lastName: string;
 	middleName: string;
+	orgId: string;
+	positionId: string;
+	departmentId?: string;
+	skills?: string[];
 	isActive: boolean;
 	isAdmin: boolean;
-	isCompleted: boolean;
 	createdAt: Date;
 	lastLogin: Date;
 }

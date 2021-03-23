@@ -1,8 +1,8 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
-import { Roadmap, Stage, User } from '@models';
-import { CreateRoadmapInput } from '../generator/graphql.schema';
+import { Roadmap, Stage } from '@models';
+import { CreateRoadmapInput } from '../generator/graphql.models';
 import { ApolloError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver('Roadmap')

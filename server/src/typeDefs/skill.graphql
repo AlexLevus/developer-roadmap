@@ -1,0 +1,17 @@
+type Skill {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  skills: [Skill]
+}
+
+type Mutation {
+  createSkill(name: String!): Boolean
+}
+
+input SkillInput {
+  id: ID
+  name: String!
+}

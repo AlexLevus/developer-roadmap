@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Apollo } from "apollo-angular";
 import { tap } from "rxjs/operators";
 import { User } from "@data/models/user";
-import { CREATE_USER, LOGIN, VERIFY } from "@data/graphQL/mutations";
+import { REGISTER_USER, LOGIN, VERIFY } from "@data/graphQL/mutations";
 import { LoginResponse, LoginResponseType } from "@data/graphQL/types";
 
 @Injectable({ providedIn: "root" })
@@ -18,7 +18,7 @@ export class AuthService {
 				}
 			})
 			.pipe(
-				tap(result => {
+				tap((result) => {
 					this.setToken(result.data);
 					this.setUserId(result.data);
 				})
@@ -34,13 +34,12 @@ export class AuthService {
 		});
 	}
 
-	register(user: Partial<User>) {
+	register(email: string, password: string) {
 		return this.apollo.mutate<User>({
-			mutation: CREATE_USER,
+			mutation: REGISTER_USER,
 			variables: {
-				input: {
-					...user
-				}
+				email,
+				password
 			}
 		});
 	}

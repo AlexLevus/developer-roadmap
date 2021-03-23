@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { User } from "@data/models/user";
 import { DepartmentService } from "@app/service/department.service";
+import { currentUserVar } from "../../../../graphql.module";
 
 @Component({
 	selector: "app-create-department",
@@ -31,12 +32,10 @@ export class CreateDepartmentComponent implements OnInit {
 
 		const { name, description } = this.departmentForm.value;
 
-		// TODO прокинуть orgId
-
 		this.departmentService
-			.createDepartment(name, description, "1")
-			.subscribe((result) => {
-				console.log(result.data);
+			.createDepartment(name, description, currentUserVar().orgId)
+			.subscribe(({ data }) => {
+				console.log(data);
 			});
 	}
 }

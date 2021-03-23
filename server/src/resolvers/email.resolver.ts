@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import { ForbiddenError } from 'apollo-server-core';
 
 import { Email } from '@models';
-import { CreateEmailInput } from '../generator/graphql.schema';
+import { CreateEmailInput } from '../generator/graphql.models';
 
 @Resolver('Email')
 export class EmailResolver {

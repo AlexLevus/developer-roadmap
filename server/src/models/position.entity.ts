@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { DepartmentUser } from './departmentUser.entity';
+import { User } from './user.entity';
 
 @Entity({
   name: 'positions'
@@ -22,8 +22,8 @@ export class Position {
   @Column({ name: 'is_active', default: false })
   isActive: boolean;
 
-  @OneToMany(() => DepartmentUser, (departmentUser) => departmentUser.position)
-  departmentUsers: DepartmentUser[];
+  @OneToMany(() => User, (user) => user.position)
+  users: User[];
 
   constructor(position: Partial<Position>) {
     if (position) {

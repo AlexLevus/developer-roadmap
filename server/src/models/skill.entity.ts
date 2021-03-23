@@ -2,13 +2,10 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
   ManyToMany,
   JoinTable
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { Roadmap } from './roadmap.entity';
 import { User } from './user.entity';
 
 @Entity({
@@ -23,7 +20,11 @@ export class Skill {
   @Column()
   name: string;
 
-  @ManyToMany(() => User)
+  @Expose()
+  @Column({ name: 'is_default', default: false })
+  isDefault: boolean;
+
+  @ManyToMany((type) => User, (user) => user.skills)
   @JoinTable({
     name: 'user_skills',
     joinColumn: {

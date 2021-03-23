@@ -46,7 +46,7 @@ export class Department {
 
   @ManyToOne(() => Organization, (org) => org.departments, { cascade: true })
   @JoinColumn({ name: 'org_id' })
-  org: Organization;
+  organization: Organization;
 
   constructor(department: Partial<Department>) {
     if (department) {

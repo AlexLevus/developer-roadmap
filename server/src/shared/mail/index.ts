@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import { User } from '@models';
 
 import {
+  APP_URL,
   AUTHOR,
   END_POINT,
   ISSUER,
@@ -67,12 +68,14 @@ export const sendMail = async (
       author: AUTHOR!,
       issuer: ISSUER!,
       to: user.firstName,
-      tracking: `http://${req.headers.host}/${END_POINT}/${id}`
+      tracking: `${APP_URL}/${END_POINT}/${id}`
+      // tracking: `http://${req.headers.host}/${END_POINT}/${id}`
     };
 
     const replacements = {
       verifyEmail: {
-        link: `${req.headers.origin}/verify/${token}`,
+        // link: `${req.headers.origin}/verify/${token}`,
+        link: `${APP_URL}/verify/${token}`,
         subject: 'Verify Email',
         text1: 'To complete your sign up, please verify your email: ',
         button: 'VERIFY EMAIL',
@@ -80,7 +83,8 @@ export const sendMail = async (
         ...common
       },
       forgotPassword: {
-        link: `${req.headers.origin}/reset/${token}`,
+        // link: `${req.headers.origin}/reset/${token}`,
+        link: `${APP_URL}/reset/${token}`,
         subject: 'Reset Your Password',
         text1:
           // tslint:disable-next-line:quotemark

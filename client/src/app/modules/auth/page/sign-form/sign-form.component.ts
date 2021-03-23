@@ -65,14 +65,15 @@ export class SignFormComponent {
 			.pipe(
 				switchMap((res: FetchResult<LoginResponse>) => {
 					const id = res.data?.login.id;
-					return id ? this.userService.getUserById(id).valueChanges : EMPTY;
+					return id ? this.userService.getCurrentUser(id) : EMPTY;
 				})
 			)
 			.subscribe(
 				(res: ApolloQueryResult<UserResponse>) => {
 					this.loginForm.reset();
+					console.log(res);
 
-					if (res.data.user.isCompleted) {
+					if (res.data.user.orgId) {
 						this.router.navigate(["/dashboard"]);
 					} else {
 						this.router.navigate(["/registration"]);
@@ -95,10 +96,9 @@ export class SignFormComponent {
 
 		if (password === confirmPassword) {
 			this.submitted = true;
-			const user: Partial<User> = { email, password };
 
 			this.authService
-				.register(user)
+				.register(email, password)
 				.subscribe(
 					(data) => {
 						this.registrationForm.reset();

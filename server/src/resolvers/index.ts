@@ -4,3 +4,5 @@ export * from './roadmap.resolver';
 export * from './stage.resolver';
 export * from './organization.resolver';
 export * from './department.resolver';
+export * from './position.resolver';
+export * from './skill.resolver';

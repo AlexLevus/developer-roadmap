@@ -2,6 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { DepartmentService } from "@app/service/department.service";
 import { Department } from "@data/models/department";
+import { currentUserVar } from "../../../../graphql.module";
+import { UserService } from "@app/service/user.service";
+import { Position } from "@data/models/position";
+import { User } from "@data/models/user";
+import { Skill } from "@data/models/skill";
 
 @Component({
 	selector: "app-create-employee",
@@ -23,34 +28,34 @@ export class CreateEmployeeComponent implements OnInit {
 		skills: new FormControl(null)
 	});
 
-	positions = [
-		{ id: "1", name: "Front-End Developer" },
-		{ id: "2", name: "Backend-End Developer" },
-		{ id: "3", name: "Product Manager" }
-	];
+	skills: Skill[] = [];
 
-	skills: string[] = [];
-
-	autocompleteSkills: string[] = [
-		"React",
-		"Vue",
-		"Spring",
-		"NodeJS",
-		"PostgreSQL"
-	];
+	autocompleteSkills: Skill[] = [];
 
 	departments: Department[] = [];
+	positions: Position[] = [];
+
 	submitted = false;
 
-	constructor(private departmentService: DepartmentService) {}
+	constructor(
+		private departmentService: DepartmentService,
+		private userService: UserService
+	) {}
 
 	ngOnInit(): void {
 		this.departmentService
-			.getOrganizationDepartments("1")
-			.valueChanges.subscribe((result) => {
-				console.log(result.data.organizationDepartments);
-				this.departments = result.data.organizationDepartments;
+			.getOrganizationDepartments(currentUserVar().orgId)
+			.valueChanges.subscribe(({ data }) => {
+				this.departments = data.organizationDepartments;
 			});
+
+		this.userService.getPositions().valueChanges.subscribe(({ data }) => {
+			this.positions = data.positions;
+		});
+
+		this.userService.getSkills().valueChanges.subscribe(({ data }) => {
+			this.autocompleteSkills = data.skills;
+		});
 	}
 
 	createEmployee() {
@@ -59,6 +64,33 @@ export class CreateEmployeeComponent implements OnInit {
 			this.employeeForm.markAllAsTouched();
 			return;
 		}
+
+		const {
+			firstName,
+			lastName,
+			middleName,
+			email,
+			password,
+			position,
+			department,
+			skills
+		} = this.employeeForm.value;
+
+		const user: Partial<User> = {
+			email,
+			password,
+			firstName,
+			lastName,
+			middleName,
+			skills,
+			positionId: position,
+			departmentId: department,
+			orgId: currentUserVar().orgId
+		};
+
+		this.userService.createUser(user).subscribe(({ data }) => {
+			console.log(data);
+		});
 	}
 
 	generatePassword(): void {

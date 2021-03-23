@@ -25,6 +25,11 @@ export class CreateRoadmapInput {
     description: string;
 }
 
+export class SkillInput {
+    id?: string;
+    name: string;
+}
+
 export class CreateStageInput {
     name: string;
     path: string;
@@ -33,6 +38,13 @@ export class CreateStageInput {
 export class CreateUserInput {
     email: string;
     password: string;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    skills?: SkillInput[];
+    orgId: string;
+    positionId: string;
+    departmentId: string;
 }
 
 export class UpdateUserInput {
@@ -40,6 +52,8 @@ export class UpdateUserInput {
     firstName: string;
     lastName: string;
     middleName: string;
+    orgId: string;
+    positionId: string;
 }
 
 export class LoginUserInput {
@@ -63,9 +77,13 @@ export abstract class IQuery {
 
     abstract organization(): Organization[] | Promise<Organization[]>;
 
+    abstract positions(): Position[] | Promise<Position[]>;
+
     abstract roadmaps(): Roadmap[] | Promise<Roadmap[]>;
 
     abstract roadmap(id?: string): Roadmap | Promise<Roadmap>;
+
+    abstract skills(): Skill[] | Promise<Skill[]>;
 
     abstract stages(): Stage[] | Promise<Stage[]>;
 
@@ -85,11 +103,15 @@ export abstract class IMutation {
 
     abstract createRoadmap(input?: CreateRoadmapInput): Roadmap | Promise<Roadmap>;
 
+    abstract createSkill(name: string): boolean | Promise<boolean>;
+
     abstract createStage(input?: CreateStageInput): Stage | Promise<Stage>;
 
-    abstract createUser(input: CreateUserInput): User | Promise<User>;
+    abstract registerUser(email: string, password: string): User | Promise<User>;
 
     abstract updateUser(input: UpdateUserInput): boolean | Promise<boolean>;
+
+    abstract createUser(input?: CreateUserInput): boolean | Promise<boolean>;
 
     abstract verifyEmail(emailToken: string): boolean | Promise<boolean>;
 
@@ -119,6 +141,13 @@ export class Organization {
     directorId: string;
 }
 
+export class Position {
+    id: string;
+    name: string;
+    description: string;
+    isActive: boolean;
+}
+
 export class Roadmap {
     id: string;
     name: string;
@@ -127,6 +156,11 @@ export class Roadmap {
     rating: number;
     isActive: boolean;
     stages?: Stage[];
+}
+
+export class Skill {
+    id: string;
+    name: string;
 }
 
 export class Stage {
@@ -143,13 +177,15 @@ export class User {
     firstName?: string;
     lastName?: string;
     middleName?: string;
+    orgId?: string;
+    positionId?: string;
     resetPasswordToken?: string;
     resetPasswordExpires?: number;
     createdAt: number;
     lastLogin?: number;
     isAdmin: boolean;
     isActive: boolean;
-    isCompleted?: boolean;
+    skills?: Skill[];
 }
 
 export class LoginResponse {

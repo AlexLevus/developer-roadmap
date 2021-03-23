@@ -1,0 +1,10 @@
+type Position {
+  id: ID!
+  name: String!
+  description: String!
+  isActive: Boolean!
+}
+
+type Query {
+  positions: [Position]
+}

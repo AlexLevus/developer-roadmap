@@ -4,7 +4,6 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
-import { TypeOrmService } from './config/typeorm/config';
 
 import * as Resolvers from './resolvers';
 
@@ -19,9 +18,7 @@ import * as Resolvers from './resolvers';
       debug: true,
       playground: true
     }),
-    TypeOrmModule.forRootAsync({
-      useClass: TypeOrmService
-    })
+    TypeOrmModule.forRoot()
   ],
   controllers: [AppController],
   providers: [AppService, ...Object.values(Resolvers)]

@@ -1,37 +1,28 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
   OneToOne
 } from 'typeorm';
-import { Expose, plainToClass } from 'class-transformer';
+import { plainToClass } from 'class-transformer';
 import { User } from './user.entity';
 import { Department } from './department.entity';
-import { Position } from './position.entity';
 
 @Entity({
   name: 'department_users'
 })
 export class DepartmentUser {
-  @PrimaryGeneratedColumn({ name: 'department_user_id' })
-  departmentUserId!: number;
-
-  @Column({ name: 'department_id' })
-  departmentId!: string;
-
-  @Column({ name: 'user_id' })
-  userId!: string;
+  @PrimaryGeneratedColumn()
+  id!: string;
 
   @ManyToOne(() => Department, (department) => department)
+  @JoinColumn({ name: 'department_id' })
   department!: Department;
 
-  @ManyToOne(() => User, (user) => user)
+  @OneToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user!: User;
-
-  @ManyToOne(() => Position, (position) => position.departmentUsers)
-  position: Position;
 
   constructor(departmentUser: Partial<DepartmentUser>) {
     if (DepartmentUser) {
