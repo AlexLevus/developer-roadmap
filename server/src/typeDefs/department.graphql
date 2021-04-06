@@ -8,6 +8,7 @@ type Department {
 }
 
 type Query {
+  department(id: ID): Department
   organizationDepartments(orgId: ID): [Department]
 }
 
@@ -16,5 +17,6 @@ type Mutation {
     name: String!
     description: String!
     orgId: ID!
+    managerId: ID!
   ): Department
 }

@@ -13,6 +13,8 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatDialogModule } from "@angular/material/dialog";
 
 @NgModule({
 	declarations: [],
@@ -29,7 +31,9 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 		MatProgressBarModule,
 		MatMenuModule,
 		MatChipsModule,
-		MatAutocompleteModule
+		MatAutocompleteModule,
+		MatGridListModule,
+		MatDialogModule
 	],
 	exports: [
 		MatTabsModule,
@@ -44,7 +48,9 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 		MatProgressBarModule,
 		MatMenuModule,
 		MatChipsModule,
-		MatAutocompleteModule
+		MatAutocompleteModule,
+		MatGridListModule,
+		MatDialogModule
 	]
 })
 export class MaterialModule {}

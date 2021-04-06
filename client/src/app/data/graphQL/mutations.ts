@@ -74,8 +74,14 @@ export const CREATE_DEPARTMENT = gql`
 		$name: String!
 		$description: String!
 		$orgId: ID!
+		$managerId: ID!
 	) {
-		createDepartment(name: $name, description: $description, orgId: $orgId) {
+		createDepartment(
+			name: $name
+			description: $description
+			orgId: $orgId
+			managerId: $managerId
+		) {
 			id
 			name
 		}

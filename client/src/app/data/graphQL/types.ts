@@ -12,8 +12,19 @@ export type RoadmapsResponse = {
 export type RoadmapResponse = {
 	roadmap: {
 		id: string;
+		name: string;
 		description: string;
+		rating: number;
 		stages: Stage[];
+	};
+};
+
+export type DepartmentResponse = {
+	department: {
+		id: string;
+		name: string;
+		description: string;
+		managerId: string;
 	};
 };
 
@@ -29,8 +40,12 @@ export type CreateOrganizationResponse = {
 	};
 };
 
-export type GetAllUsersResponse = {
+export type AllUsersResponse = {
 	users: User[];
+};
+
+export type OrganizationUsersResponse = {
+	organizationUsers: User[];
 };
 
 export type UserResponse = {

@@ -4,5 +4,6 @@ export interface Roadmap {
 	id: string;
 	name: string;
 	description: string;
+	rating: number;
 	stages: Stage[];
 }

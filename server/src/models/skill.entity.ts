@@ -24,7 +24,7 @@ export class Skill {
   @Column({ name: 'is_default', default: false })
   isDefault: boolean;
 
-  @ManyToMany((type) => User, (user) => user.skills)
+  @ManyToMany(() => User, (user) => user.skills)
   @JoinTable({
     name: 'user_skills',
     joinColumn: {

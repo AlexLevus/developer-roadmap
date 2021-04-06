@@ -1,11 +1,26 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
-import { Department, Organization } from '@models';
-import { ForbiddenError } from 'apollo-server-core';
+import { Department, Organization, Roadmap, Stage } from '@models';
+import { ApolloError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver('Department')
 export class DepartmentResolver {
+  @Query()
+  async department(@Args('id') id: string): Promise<Department> {
+    try {
+      const department = await getRepository(Department).findOne({ id });
+
+      if (!department) {
+        throw new ForbiddenError('Roadmap not found.');
+      }
+
+      return department;
+    } catch (error) {
+      throw new ApolloError(error);
+    }
+  }
+
   @Query()
   async organizationDepartments(
     @Args('orgId') orgId: string
@@ -21,7 +36,8 @@ export class DepartmentResolver {
   async createDepartment(
     @Args('name') name: string,
     @Args('description') description: string,
-    @Args('orgId') orgId: string
+    @Args('orgId') orgId: string,
+    @Args('managerId') managerId: string
   ): Promise<Department> {
     const existedDepartment = await getRepository(Department).findOne({
       where: {
@@ -44,7 +60,7 @@ export class DepartmentResolver {
     }
 
     return await getRepository(Department).save(
-      new Department({ name, description, orgId, isActive: true })
+      new Department({ name, description, orgId, isActive: true, managerId })
     );
   }
 }

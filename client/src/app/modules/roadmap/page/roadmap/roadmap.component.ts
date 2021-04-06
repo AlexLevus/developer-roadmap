@@ -4,6 +4,7 @@ import { RoadmapService } from "@app/service/roadmap.service";
 import { BehaviorSubject } from "rxjs";
 import { TreeNode } from "@data/models/treeNode";
 import { Stage } from "@data/models/stage";
+import { Roadmap } from "@data/models/roadmap";
 
 @Component({
 	selector: "app-roadmap",
@@ -19,6 +20,7 @@ export class RoadmapComponent implements OnInit {
 	treeData$: BehaviorSubject<TreeNode[]> = new BehaviorSubject<TreeNode[]>([]);
 	submitted = false;
 	loading = true;
+	roadmap!: Roadmap;
 
 	ngOnInit(): void {
 		const { roadmapId } = this.route.snapshot.params;
@@ -26,6 +28,7 @@ export class RoadmapComponent implements OnInit {
 			.getRoadmap(roadmapId)
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { roadmap } = data;
+				this.roadmap = roadmap;
 				this.treeData$.next(
 					this.arrangeIntoTree(roadmap.stages, ["roadmapId"])
 				);
@@ -38,7 +41,7 @@ export class RoadmapComponent implements OnInit {
 		nodes
 			.slice()
 			.sort((a, b) => a.path.localeCompare(b.path))
-			.forEach(node => {
+			.forEach((node) => {
 				const paths: any[] = [[...node.path.split(".")]];
 				paths.forEach((path: string[]) => {
 					let currentLevel = tree;
@@ -90,13 +93,9 @@ export class RoadmapComponent implements OnInit {
 	}
 
 	saveStage(stage: Stage) {
-		this.roadmapService.createStage(stage).subscribe(
-			() => {
-				this.submitted = false;
-			},
-			() => {
-				this.submitted = false;
-			}
-		);
+		this.roadmapService
+			.createStage(stage)
+			.subscribe()
+			.add(() => (this.submitted = false));
 	}
 }

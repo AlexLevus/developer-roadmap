@@ -4,6 +4,7 @@ import { ContentLayoutComponent } from "./layout/content-layout/content-layout.c
 import { AuthGuard } from "@app/guard/auth.guard";
 import { CompleteRegistrationGuard } from "@app/guard/complete-registration.guard";
 import { NoAuthGuard } from "@app/guard/noauth.guard";
+import { RoadmapBoardComponent } from "@modules/dashboard/page/roadmap-board/roadmap-board.component";
 
 const routes: Routes = [
 	{
@@ -34,6 +35,10 @@ const routes: Routes = [
 					import("@modules/create-roadmap/create-roadmap.module").then(
 						(m) => m.CreateRoadmapModule
 					)
+			},
+			{
+				path: "roadmaps",
+				component: RoadmapBoardComponent
 			}
 		]
 	},

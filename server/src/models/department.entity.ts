@@ -4,11 +4,13 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  JoinTable,
+  ManyToMany
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { DepartmentUser } from './departmentUser.entity';
 import { Organization } from './organization.entity';
+import { User } from './user.entity';
 
 @Entity({
   name: 'departments'
@@ -38,11 +40,19 @@ export class Department {
   @Column({ name: 'org_id' })
   orgId: string;
 
-  @OneToMany(
-    () => DepartmentUser,
-    (departmentUser) => departmentUser.department
-  )
-  departmentUser!: DepartmentUser[];
+  @ManyToMany(() => User, (user) => user.departments)
+  @JoinTable({
+    name: 'department_users',
+    joinColumn: {
+      name: 'department_id',
+      referencedColumnName: 'id'
+    },
+    inverseJoinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id'
+    }
+  })
+  users!: User[];
 
   @ManyToOne(() => Organization, (org) => org.departments, { cascade: true })
   @JoinColumn({ name: 'org_id' })

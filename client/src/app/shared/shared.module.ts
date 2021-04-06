@@ -11,6 +11,8 @@ import { StateComponent } from "./component/state/state.component";
 import { TreeComponent } from "./component/tree/tree.component";
 import { SelectComponent } from "./component/select/select.component";
 import { ChipsComponent } from "./component/chips/chips.component";
+import { CheckboxComponent } from "./component/checkbox/checkbox.component";
+import { CardComponent } from "./component/card/card.component";
 
 @NgModule({
 	imports: [
@@ -26,7 +28,9 @@ import { ChipsComponent } from "./component/chips/chips.component";
 		StateComponent,
 		TreeComponent,
 		SelectComponent,
-		ChipsComponent
+		ChipsComponent,
+		CheckboxComponent,
+		CardComponent
 	],
 	exports: [
 		CommonModule,
@@ -41,7 +45,9 @@ import { ChipsComponent } from "./component/chips/chips.component";
 		StateComponent,
 		TreeComponent,
 		SelectComponent,
-		ChipsComponent
+		ChipsComponent,
+		CheckboxComponent,
+		CardComponent
 	]
 })
 export class SharedModule {

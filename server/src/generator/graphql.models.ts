@@ -71,6 +71,8 @@ export class Department {
 }
 
 export abstract class IQuery {
+    abstract department(id?: string): Department | Promise<Department>;
+
     abstract organizationDepartments(orgId?: string): Department[] | Promise<Department[]>;
 
     abstract emails(): Email[] | Promise<Email[]>;
@@ -90,10 +92,12 @@ export abstract class IQuery {
     abstract user(id: string): User | Promise<User>;
 
     abstract users(): User[] | Promise<User[]>;
+
+    abstract organizationUsers(orgId: string): User[] | Promise<User[]>;
 }
 
 export abstract class IMutation {
-    abstract createDepartment(name: string, description: string, orgId: string): Department | Promise<Department>;
+    abstract createDepartment(name: string, description: string, orgId: string, managerId: string): Department | Promise<Department>;
 
     abstract createEmail(input: CreateEmailInput): Email | Promise<Email>;
 

@@ -3,6 +3,8 @@ import { Stage } from "@data/models/stage";
 import { Roadmap } from "@data/models/roadmap";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { RoadmapService } from "@app/service/roadmap.service";
+import { Router } from "@angular/router";
+import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
 	selector: "app-create-roadmap",
@@ -10,16 +12,21 @@ import { RoadmapService } from "@app/service/roadmap.service";
 	styleUrls: ["./create-roadmap.component.scss"]
 })
 export class CreateRoadmapComponent implements OnInit {
-	roadmaps: Roadmap[] = [];
 	submitted = false;
 	loading = true;
 
 	roadmapForm = new FormGroup({
 		name: new FormControl(null, [Validators.required]),
-		description: new FormControl(null, [Validators.required])
+		description: new FormControl(null, [Validators.required]),
+		companyAccess: new FormControl(false, [Validators.required]),
+		public: new FormControl(false, [Validators.required])
 	});
 
-	constructor(private roadmapService: RoadmapService) {}
+	constructor(
+		private roadmapService: RoadmapService,
+		private router: Router,
+		private dialogRef: MatDialogRef<CreateRoadmapComponent>
+	) {}
 
 	ngOnInit(): void {}
 
@@ -36,28 +43,20 @@ export class CreateRoadmapComponent implements OnInit {
 			description
 		};
 
-		this.roadmapService.createRoadmap(roadmap).subscribe(
-			({ data }) => {
+		this.roadmapService
+			.createRoadmap(roadmap)
+			.subscribe(({ data }) => {
 				this.roadmapForm.reset();
-				this.submitted = false;
-				if (data) {
-					this.roadmaps = [...this.roadmaps, data.createRoadmap];
-				}
-			},
-			() => {
-				this.submitted = false;
-			}
-		);
+				this.dialogRef.close();
+				this.router.navigate(["/roadmap", data?.createRoadmap.id]);
+			})
+			.add(() => (this.submitted = false));
 	}
 
 	saveStage(stage: Stage) {
-		this.roadmapService.createStage(stage).subscribe(
-			() => {
-				this.submitted = false;
-			},
-			() => {
-				this.submitted = false;
-			}
-		);
+		this.roadmapService
+			.createStage(stage)
+			.subscribe()
+			.add(() => (this.submitted = false));
 	}
 }

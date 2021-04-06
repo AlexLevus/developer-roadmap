@@ -1,6 +1,6 @@
 import { Mutation, Args, Context, Resolver, Query } from '@nestjs/graphql';
 
-import { User } from '@models';
+import { Department, Skill, User } from '@models';
 import { getRepository } from 'typeorm';
 import {
   ApolloError,
@@ -44,6 +44,17 @@ export class UserResolver {
       if (!user) {
         throw new ForbiddenError('Пользователь не найден');
       }
+
+      return user;
+    } catch (error) {
+      throw new ApolloError(error);
+    }
+  }
+
+  @Query()
+  async organizationUsers(@Args('orgId') orgId: string): Promise<User[]> {
+    try {
+      const user = await getRepository(User).find({ orgId });
 
       return user;
     } catch (error) {
@@ -139,7 +150,17 @@ export class UserResolver {
 
   @Mutation()
   async createUser(@Args('input') input: CreateUserInput): Promise<boolean> {
-    const { email, password, skills } = input;
+    const {
+      email,
+      password,
+      skills,
+      departmentId,
+      firstName,
+      lastName,
+      middleName,
+      orgId,
+      positionId
+    } = input;
 
     const newUser = await this.registerUser(email, password);
 
@@ -149,23 +170,32 @@ export class UserResolver {
     }));
 
     if (newUser) {
-      // создали новые скиллы
       const savedSkills = skills
         .filter((skill) => skill.id === null)
         .map((skill) => this.skillResolver.createSkill(skill.name));
 
-      // @ts-ignore
       newUser.skills = [
         ...skills.filter((skill) => skill.id !== null),
         ...(await Promise.all(savedSkills))
-      ];
-      console.log(newUser.skills);
+      ] as Skill[];
 
-      // добавить скиллы пользователю
-      const updateUser = await getRepository(User).save(newUser);
+      newUser.departments = [
+        await getRepository(Department).findOne({
+          where: {
+            id: departmentId
+          }
+        })
+      ] as Department[];
 
-      // должен определить скиллы пользователя в таблицу user_skills
-      // если скилла не существует, то сначала его создать (у скиллов, которых нет, id === null)
+      await getRepository(User).save(newUser);
+      const updateUser = await getRepository(User).update(newUser.id, {
+        firstName,
+        lastName,
+        middleName,
+        orgId,
+        positionId
+      });
+
       return !!updateUser;
     }
 

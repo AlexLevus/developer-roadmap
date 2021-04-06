@@ -1,27 +1,32 @@
 <section class="create-employee">
-  <h1>Создать департамент</h1>
-  <form [formGroup]="departmentForm" (ngSubmit)="createDepartment()">
-    <fieldset>
-      <legend><h2>Основная информация</h2></legend>
-      <app-input
-        class="create-employee__input"
-        controlName="name"
-        label="Название"
-      ></app-input>
-      <app-input
-        class="create-employee__input"
-        controlName="description"
-        label="Описание"
-      ></app-input>
-    </fieldset>
-
-    <div class="create-employee__buttons">
-      <app-button
-        text="Создать департамент"
-        type="submit"
-        size="block"
-        [submitted]="submitted"
-      ></app-button>
-    </div>
-  </form>
+	<h1>Создать департамент</h1>
+	<form [formGroup]="departmentForm" (ngSubmit)="createDepartment()">
+		<fieldset>
+			<legend><h2>Основная информация</h2></legend>
+			<app-input
+				class="create-employee__input"
+				controlName="name"
+				label="Название"
+			></app-input>
+			<app-input
+				class="create-employee__input"
+				controlName="description"
+				label="Описание"
+			></app-input>
+			<app-select
+				class="create-employee__input"
+				label="Директор департамента"
+				controlName="manager"
+				[items]="users"
+			></app-select>
+		</fieldset>
+		<div class="create-employee__buttons">
+			<app-button
+				text="Создать департамент"
+				type="submit"
+				size="block"
+				[submitted]="submitted"
+			></app-button>
+		</div>
+	</form>
 </section>

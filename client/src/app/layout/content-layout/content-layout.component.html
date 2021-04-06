@@ -10,7 +10,7 @@
 						src="assets/svg/iconfinder_ic_dashboard_48px_3669363.svg"
 						alt="Dashboard icon"
 					/>
-					<a class="nav-item__link" href="">Dashboard</a>
+					<a class="nav-item__link" [routerLink]="['/dashboard']">Dashboard</a>
 				</div>
 				<div class="sidebar__nav-item nav-item">
 					<img
@@ -28,7 +28,7 @@
             src="assets/svg/statistic-icon.svg"
             alt="Statistic icon"
           />
-          <a class="nav-item__link" [routerLink]="['/admin/create-department']">Добавить департамент</a>
+          <a class="nav-item__link" [routerLink]="['/admin/department-board']">Департаменты</a>
         </div>
         <div class="sidebar__nav-item nav-item">
           <img
@@ -39,6 +39,15 @@
           />
           <a class="nav-item__link" [routerLink]="['/admin/create-employee']">Добавить сотрудника</a>
         </div>
+      <div class="sidebar__nav-item nav-item">
+        <img
+          class="nav-item__icon"
+          height="22"
+          src="assets/svg/statistic-icon.svg"
+          alt="Statistic icon"
+        />
+        <a class="nav-item__link" [routerLink]="['/roadmaps']">Роадмапы</a>
+      </div>
 			</div>
 			<div class="sidebar__system-links">
 				<div class="sidebar__nav-item nav-item">

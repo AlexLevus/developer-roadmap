@@ -2,15 +2,17 @@
 	<mat-grid-list cols="3" rowHeight="300" gutterSize="25">
 		<mat-grid-tile>
 			<div class="roadmap-board__card roadmap-board__create-card">
-				<button type="button" (click)="openCreateDialog()">Создать роадмап</button>
+				<button type="button" (click)="openCreateDialog()">
+					Создать департамент
+				</button>
 			</div>
 		</mat-grid-tile>
-		<mat-grid-tile *ngFor="let roadmap of roadmaps">
+		<mat-grid-tile *ngFor="let department of departments">
 			<app-card
 				class="roadmap-board__card"
-        [title]="roadmap.name"
-        [description]="roadmap.description"
-        [to]="'/roadmap/' + roadmap.id"
+				[title]="department.name"
+				[description]="department.description"
+				[to]="'/admin/department/' + department.id"
 			></app-card>
 		</mat-grid-tile>
 	</mat-grid-list>

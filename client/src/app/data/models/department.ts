@@ -3,5 +3,5 @@ export interface Department {
 	name: string;
 	description: string;
 	managerId: string;
-	org: string; // TODO Organization
+	org?: string; // TODO Organization
 }

@@ -10,10 +10,10 @@ import {
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { UserRoadmap } from './userRoadmap.entity';
-import { DepartmentUser } from './departmentUser.entity';
 import { Position } from './position.entity';
 import { Organization } from './organization.entity';
 import { Skill } from './skill.entity';
+import { Department } from './department.entity';
 
 @Entity({
   name: 'users'
@@ -88,7 +88,10 @@ export class User {
   @JoinColumn({ name: 'org_id' })
   organization: Organization;
 
-  @ManyToMany((type) => Skill, (skill) => skill.users)
+  @ManyToMany(() => Department, (department) => department.users)
+  departments!: Department[];
+
+  @ManyToMany(() => Skill, (skill) => skill.users)
   skills: Skill[];
 
   constructor(user: Partial<User>) {

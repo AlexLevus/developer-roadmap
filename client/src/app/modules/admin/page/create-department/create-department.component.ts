@@ -1,8 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { User } from "@data/models/user";
 import { DepartmentService } from "@app/service/department.service";
 import { currentUserVar } from "../../../../graphql.module";
+import { MatDialogRef } from "@angular/material/dialog";
+import { UserService } from "@app/service/user.service";
+import { SelectItem } from "@data/models/selectItem";
+import { map } from "rxjs/operators";
 
 @Component({
 	selector: "app-create-department",
@@ -12,17 +15,35 @@ import { currentUserVar } from "../../../../graphql.module";
 export class CreateDepartmentComponent implements OnInit {
 	departmentForm = new FormGroup({
 		name: new FormControl(null, [Validators.required]),
-		description: new FormControl(null, [Validators.required])
+		description: new FormControl(null, [Validators.required]),
+		manager: new FormControl(null, [Validators.required])
 	});
 
-	departments: string[] = ["Департамент 1", "Департамент 2", "Департамент 3"];
 	submitted = false;
 
-	users: User[] = [];
+	users: SelectItem[] = [];
 
-	constructor(private departmentService: DepartmentService) {}
+	constructor(
+		private userService: UserService,
+		private departmentService: DepartmentService,
+		private dialogRef: MatDialogRef<CreateDepartmentComponent>
+	) {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.userService
+			.getOrganizationUsers(currentUserVar().orgId)
+			.valueChanges.pipe(
+				map(({ data }) => {
+					return data.organizationUsers.map((user) => ({
+						id: user.id,
+						name: `${user.firstName} ${user.lastName}`
+					}));
+				})
+			)
+			.subscribe((users) => {
+				this.users = users;
+			});
+	}
 
 	createDepartment() {
 		if (this.departmentForm.invalid) {
@@ -30,12 +51,13 @@ export class CreateDepartmentComponent implements OnInit {
 			return;
 		}
 
-		const { name, description } = this.departmentForm.value;
+		const { name, description, manager } = this.departmentForm.value;
 
 		this.departmentService
-			.createDepartment(name, description, currentUserVar().orgId)
+			.createDepartment(name, description, currentUserVar().orgId, manager)
 			.subscribe(({ data }) => {
 				console.log(data);
+				this.dialogRef.close();
 			});
 	}
 }

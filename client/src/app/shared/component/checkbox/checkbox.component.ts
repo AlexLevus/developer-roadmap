@@ -1,18 +1,15 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroupDirective } from "@angular/forms";
-import { SelectItem } from "@data/models/selectItem";
 
 @Component({
-	selector: "app-select",
-	templateUrl: "./select.component.html",
-	styleUrls: ["./select.component.scss"]
+	selector: "app-checkbox",
+	templateUrl: "./checkbox.component.html",
+	styleUrls: ["./checkbox.component.scss"]
 })
-export class SelectComponent implements OnInit {
+export class CheckboxComponent implements OnInit {
 	@Input() controlName = "";
-	@Input() items: SelectItem[] = [];
 	@Input() label = "";
-	@Input() multiple = false;
-
+	@Input() labelPosition: "after" | "before" = "after";
 	control: FormControl | undefined;
 
 	constructor(private formGroupDir: FormGroupDirective) {}

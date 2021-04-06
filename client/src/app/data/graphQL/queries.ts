@@ -22,12 +22,24 @@ export const GET_ROADMAP = gql`
 			id
 			name
 			description
+			rating
 			stages {
 				id
 				name
 				path
 				roadmapId
 			}
+		}
+	}
+`;
+
+export const GET_DEPARTMENT = gql`
+	query department($id: ID!) {
+		department(id: $id) {
+			id
+			name
+			description
+			managerId
 		}
 	}
 `;
@@ -46,6 +58,22 @@ export const GET_ORGANIZATION_DEPARTMENTS = gql`
 export const GET_USER = gql`
 	query user($id: ID!) {
 		user(id: $id) {
+			id
+			firstName
+			lastName
+			middleName
+			isActive
+			isAdmin
+			createdAt
+			lastLogin
+			orgId
+		}
+	}
+`;
+
+export const GET_ORGANIZATION_USERS = gql`
+	query organizationUsers($orgId: ID!) {
+		organizationUsers(orgId: $orgId) {
 			id
 			firstName
 			lastName

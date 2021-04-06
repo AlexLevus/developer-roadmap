@@ -1,12 +1,14 @@
 import { Injectable } from "@angular/core";
 import {
-	GetAllUsersResponse,
+	AllUsersResponse,
+	OrganizationUsersResponse,
 	PositionResponse,
 	SkillResponse,
 	UserResponse
 } from "@data/graphQL/types";
 import {
 	GET_ALL_USERS,
+	GET_ORGANIZATION_USERS,
 	GET_POSITIONS,
 	GET_SKILLS,
 	GET_USER
@@ -30,8 +32,17 @@ export class UserService {
 	constructor(private apollo: Apollo) {}
 
 	getAllUsers() {
-		return this.apollo.watchQuery<GetAllUsersResponse>({
+		return this.apollo.watchQuery<AllUsersResponse>({
 			query: GET_ALL_USERS
+		});
+	}
+
+	getOrganizationUsers(orgId: string) {
+		return this.apollo.watchQuery<OrganizationUsersResponse>({
+			query: GET_ORGANIZATION_USERS,
+			variables: {
+				orgId
+			}
 		});
 	}
 

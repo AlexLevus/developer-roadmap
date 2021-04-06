@@ -3,6 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { CreateEmployeeComponent } from "@modules/admin/page/create-employee/create-employee.component";
 import { CreateDepartmentComponent } from "@modules/admin/page/create-department/create-department.component";
+import { DepartmentBoardComponent } from "@modules/admin/page/department-board/department-board.component";
+import { DepartmentComponent } from "@modules/admin/page/department/department.component";
 
 export const routes: Routes = [
 	{
@@ -12,6 +14,14 @@ export const routes: Routes = [
 	{
 		path: "create-department",
 		component: CreateDepartmentComponent
+	},
+	{
+		path: "department-board",
+		component: DepartmentBoardComponent
+	},
+	{
+		path: "department/:id",
+		component: DepartmentComponent
 	}
 ];
 

@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { User } from "@data/models/user";
+import { RoadmapService } from "@app/service/roadmap.service";
+import { Roadmap } from "@data/models/roadmap";
+import { MatDialog } from "@angular/material/dialog";
+import { CreateRoadmapComponent } from "@modules/create-roadmap/page/create-roadmap/create-roadmap.component";
 
 @Component({
 	selector: "app-roadmap-board",
@@ -7,12 +10,25 @@ import { User } from "@data/models/user";
 	styleUrls: ["./roadmap-board.component.scss"]
 })
 export class RoadmapBoardComponent implements OnInit {
-	user: User | undefined = undefined;
-	currentDate = new Date();
+	roadmaps: Roadmap[] = [];
+	loading = true;
 
-	constructor() {}
+	constructor(
+		private roadmapService: RoadmapService,
+		public dialog: MatDialog
+	) {}
 
-	// TODO: попробуй задать цвета через классы (см ButtonComponent)
+	ngOnInit(): void {
+		this.roadmapService
+			.getRoadmaps()
+			.valueChanges.subscribe(({ data, loading }) => {
+				const { roadmaps } = data;
+				this.roadmaps = roadmaps;
+				this.loading = loading;
+			});
+	}
 
-	ngOnInit(): void {}
+	openCreateDialog() {
+		this.dialog.open(CreateRoadmapComponent);
+	}
 }
