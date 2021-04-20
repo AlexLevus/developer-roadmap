@@ -16,6 +16,7 @@ import { TreeNode } from "@data/models/treeNode";
 })
 export class TreeComponent implements OnInit {
 	@Output() saveItem: EventEmitter<TreeNode> = new EventEmitter();
+	@Input() isRoadmapAdded = false;
 	@Input() dataChange: BehaviorSubject<TreeNode[]> = new BehaviorSubject<
 		TreeNode[]
 	>([]);
@@ -50,7 +51,8 @@ export class TreeComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.dataChange.subscribe(data => {
+		console.log(this.isRoadmapAdded);
+		this.dataChange.subscribe((data) => {
 			this.dataSource.data = data;
 		});
 	}
@@ -83,7 +85,7 @@ export class TreeComponent implements OnInit {
 		const descendants = this.treeControl.getDescendants(node);
 		return (
 			descendants.length > 0 &&
-			descendants.every(child => {
+			descendants.every((child) => {
 				return this.checklistSelection.isSelected(child);
 			})
 		);
@@ -91,7 +93,7 @@ export class TreeComponent implements OnInit {
 
 	descendantsPartiallySelected(node: TreeFlatNode): boolean {
 		const descendants = this.treeControl.getDescendants(node);
-		const result = descendants.some(child =>
+		const result = descendants.some((child) =>
 			this.checklistSelection.isSelected(child)
 		);
 		return result && !this.descendantsAllSelected(node);
@@ -104,7 +106,7 @@ export class TreeComponent implements OnInit {
 			? this.checklistSelection.select(...descendants)
 			: this.checklistSelection.deselect(...descendants);
 
-		descendants.forEach(child => this.checklistSelection.isSelected(child));
+		descendants.forEach((child) => this.checklistSelection.isSelected(child));
 		this.checkAllParentsSelection(node);
 	}
 
@@ -126,7 +128,7 @@ export class TreeComponent implements OnInit {
 		const descendants = this.treeControl.getDescendants(node);
 		const descAllSelected =
 			descendants.length > 0 &&
-			descendants.every(child => {
+			descendants.every((child) => {
 				return this.checklistSelection.isSelected(child);
 			});
 		if (nodeSelected && !descAllSelected) {

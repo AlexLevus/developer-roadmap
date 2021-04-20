@@ -5,8 +5,7 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
-  JoinTable,
-  ManyToMany
+  OneToOne
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { Organization } from './organization.entity';
@@ -33,26 +32,15 @@ export class Department {
   isActive: boolean;
 
   @Expose()
-  @Column({ name: 'manager_id', nullable: true })
-  managerId: string;
-
-  @Expose()
   @Column({ name: 'org_id' })
   orgId: string;
 
-  @ManyToMany(() => User, (user) => user.departments)
-  @JoinTable({
-    name: 'department_users',
-    joinColumn: {
-      name: 'department_id',
-      referencedColumnName: 'id'
-    },
-    inverseJoinColumn: {
-      name: 'user_id',
-      referencedColumnName: 'id'
-    }
-  })
-  users!: User[];
+  @OneToMany(() => User, (user) => user.department)
+  users: User[];
+
+  @OneToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'manager_id' })
+  manager: User;
 
   @ManyToOne(() => Organization, (org) => org.departments, { cascade: true })
   @JoinColumn({ name: 'org_id' })

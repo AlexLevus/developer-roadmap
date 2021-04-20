@@ -1,7 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+  ManyToOne
+} from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { UserRoadmap } from './userRoadmap.entity';
 import { Stage } from './stage.entity';
+import { User } from './user.entity';
+import { Organization } from './organization.entity';
 
 @Entity({
   name: 'roadmaps'
@@ -22,6 +32,11 @@ export class Roadmap {
   @Expose()
   @Column({ default: 0 })
   rating: number;
+
+  // TODO: связать с User
+  @Expose()
+  @Column({ name: 'author_id' })
+  author: string;
 
   @Expose()
   @Column({ name: 'is_active', default: false })

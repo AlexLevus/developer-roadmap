@@ -1,7 +1,7 @@
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
-import { Department, Organization, Roadmap, Stage } from '@models';
+import { Department, Organization, User } from '@models';
 import { ApolloError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver('Department')
@@ -59,8 +59,32 @@ export class DepartmentResolver {
       throw new ForbiddenError('Неправильно указана организация');
     }
 
-    return await getRepository(Department).save(
-      new Department({ name, description, orgId, isActive: true, managerId })
+    const manager = await getRepository(User).findOne({
+      where: {
+        id: managerId
+      }
+    });
+
+    const isUserAlreadyManager = await getRepository(Department).findOne({
+      where: {
+        manager
+      }
+    });
+
+    if (isUserAlreadyManager) {
+      throw new ForbiddenError(
+        'Пользователь уже является директором департамента'
+      );
+    }
+
+    const department = await getRepository(Department).save(
+      new Department({ name, description, orgId, isActive: true })
     );
+
+    await getRepository(Department).update(department.id, {
+      manager
+    });
+
+    return department;
   }
 }

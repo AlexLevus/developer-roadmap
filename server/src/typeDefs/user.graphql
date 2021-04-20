@@ -14,6 +14,8 @@ type User {
   isAdmin: Boolean!
   isActive: Boolean!
   skills: [Skill]
+  department: Department
+  position: Position
 }
 
 type Query {

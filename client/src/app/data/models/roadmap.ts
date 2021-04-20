@@ -6,4 +6,5 @@ export interface Roadmap {
 	description: string;
 	rating: number;
 	stages: Stage[];
+	author: string;
 }

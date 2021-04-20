@@ -63,9 +63,15 @@ export const generateToken = async (
   user: User,
   type: TokenType
 ): Promise<string> => {
+  const { id, isAdmin, isActive, positionId, orgId, departmentId } = user;
   return await sign(
     {
-      id: user.id
+      id,
+      isActive,
+      isAdmin,
+      positionId,
+      orgId,
+      departmentId
     },
     common[type].privateKey,
     {

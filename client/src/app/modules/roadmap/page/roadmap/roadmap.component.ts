@@ -5,6 +5,7 @@ import { BehaviorSubject } from "rxjs";
 import { TreeNode } from "@data/models/treeNode";
 import { Stage } from "@data/models/stage";
 import { Roadmap } from "@data/models/roadmap";
+import { currentUserVar } from "../../../../graphql.module";
 
 @Component({
 	selector: "app-roadmap",
@@ -21,6 +22,7 @@ export class RoadmapComponent implements OnInit {
 	submitted = false;
 	loading = true;
 	roadmap!: Roadmap;
+	isRoadmapAdded = false;
 
 	ngOnInit(): void {
 		const { roadmapId } = this.route.snapshot.params;
@@ -29,10 +31,22 @@ export class RoadmapComponent implements OnInit {
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { roadmap } = data;
 				this.roadmap = roadmap;
+				console.log(this.roadmap);
 				this.treeData$.next(
 					this.arrangeIntoTree(roadmap.stages, ["roadmapId"])
 				);
 				this.loading = loading;
+			});
+
+		this.roadmapService
+			.getUserRoadmaps(currentUserVar().id)
+			.valueChanges.subscribe(({ data }) => {
+				const userRoadmapsIds = data.userRoadmaps.reduce(
+					(acc: string[], cur) => [...acc, cur?.id],
+					[]
+				);
+
+				this.isRoadmapAdded = userRoadmapsIds.includes(roadmapId);
 			});
 	}
 

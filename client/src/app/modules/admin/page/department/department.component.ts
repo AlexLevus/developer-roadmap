@@ -23,7 +23,6 @@ export class DepartmentComponent implements OnInit {
 			.getDepartment(id)
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { department } = data;
-				console.log(department);
 				this.department = department;
 				this.loading = loading;
 			});

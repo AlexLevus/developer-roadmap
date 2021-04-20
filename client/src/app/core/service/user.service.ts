@@ -58,7 +58,6 @@ export class UserService {
 	getCurrentUser(id: string) {
 		return this.getUserById(id).valueChanges.pipe(
 			tap(({ data }) => {
-				localStorage.setItem("user", JSON.stringify(data.user));
 				currentUserVar(data.user);
 			})
 		);
@@ -81,7 +80,10 @@ export class UserService {
 			mutation: CREATE_USER,
 			variables: {
 				input: user
-			}
+			},
+			refetchQueries: [
+				{ query: GET_ORGANIZATION_USERS, variables: { orgId: user.orgId } }
+			]
 		});
 	}
 

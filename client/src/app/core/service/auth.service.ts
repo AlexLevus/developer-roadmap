@@ -20,7 +20,6 @@ export class AuthService {
 			.pipe(
 				tap((result) => {
 					this.setToken(result.data);
-					this.setUserId(result.data);
 				})
 			);
 	}
@@ -54,15 +53,6 @@ export class AuthService {
 			const loginRes = response.login;
 			localStorage.setItem("access", loginRes.accessToken);
 			localStorage.setItem("refresh", loginRes.refreshToken);
-		} else {
-			localStorage.clear();
-		}
-	}
-
-	private setUserId(response: LoginResponseType): void {
-		if (response) {
-			const loginRes = response.login;
-			localStorage.setItem("userId", loginRes.id);
 		} else {
 			localStorage.clear();
 		}

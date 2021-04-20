@@ -2,7 +2,7 @@ type Department {
   id: ID!
   name: String!
   description: String!
-  managerId: ID
+  manager: User!
   org: Organization
   isActive: Boolean!
 }

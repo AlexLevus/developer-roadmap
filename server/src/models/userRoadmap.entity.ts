@@ -27,8 +27,16 @@ export class UserRoadmap {
   isCompleted: boolean;
 
   @Expose()
-  @Column()
+  @Column({ default: 0 })
   rating: number;
+
+  @Expose()
+  @Column({ name: 'user_id' })
+  userId!: string;
+
+  @Expose()
+  @Column({ name: 'roadmap_id' })
+  roadmapId!: string;
 
   @ManyToOne(() => User, (user) => user.userRoadmaps)
   @JoinColumn({ name: 'user_id' })

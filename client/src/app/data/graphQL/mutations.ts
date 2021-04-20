@@ -69,6 +69,18 @@ export const CREATE_ORGANIZATION = gql`
 	}
 `;
 
+export const ADD_ROADMAP_TO_USER = gql`
+	mutation addRoadmapToUser($roadmapId: ID!, $userId: ID!) {
+		addRoadmapToUser(roadmapId: $roadmapId, userId: $userId)
+	}
+`;
+
+export const REMOVE_USER_ROADMAP = gql`
+	mutation removeUserRoadmap($roadmapId: ID!, $userId: ID!) {
+		removeUserRoadmap(roadmapId: $roadmapId, userId: $userId)
+	}
+`;
+
 export const CREATE_DEPARTMENT = gql`
 	mutation createDepartment(
 		$name: String!

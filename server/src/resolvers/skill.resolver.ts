@@ -29,7 +29,6 @@ export class SkillResolver {
 
     const newSkill = await getRepository(Skill).save(new Skill({ name }));
 
-    console.log(newSkill, name);
     return newSkill;
   }
 }

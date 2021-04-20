@@ -3,51 +3,48 @@
 		<div class="logo">LOGO</div>
 		<nav class="sidebar__nav-list">
 			<div class="sidebar__common-links">
-				<div class="sidebar__nav-item nav-item">
+				<div class="sidebar__nav-item nav-item" [routerLink]="['/dashboard']">
 					<img
 						class="nav-item__icon"
 						height="22"
 						src="assets/svg/iconfinder_ic_dashboard_48px_3669363.svg"
 						alt="Dashboard icon"
 					/>
-					<a class="nav-item__link" [routerLink]="['/dashboard']">Dashboard</a>
+					<a class="nav-item__link">Главная</a>
 				</div>
-				<div class="sidebar__nav-item nav-item">
+				<div
+					class="sidebar__nav-item nav-item"
+					[routerLink]="['/admin/department-board']"
+				>
 					<img
 						class="nav-item__icon"
 						height="22"
 						src="assets/svg/statistic-icon.svg"
 						alt="Statistic icon"
 					/>
-					<a class="nav-item__link" href="">Statistics</a>
+					<a class="nav-item__link">Департаменты</a>
 				</div>
-        <div class="sidebar__nav-item nav-item">
-          <img
-            class="nav-item__icon"
-            height="22"
-            src="assets/svg/statistic-icon.svg"
-            alt="Statistic icon"
-          />
-          <a class="nav-item__link" [routerLink]="['/admin/department-board']">Департаменты</a>
-        </div>
-        <div class="sidebar__nav-item nav-item">
-          <img
-            class="nav-item__icon"
-            height="22"
-            src="assets/svg/statistic-icon.svg"
-            alt="Statistic icon"
-          />
-          <a class="nav-item__link" [routerLink]="['/admin/create-employee']">Добавить сотрудника</a>
-        </div>
-      <div class="sidebar__nav-item nav-item">
-        <img
-          class="nav-item__icon"
-          height="22"
-          src="assets/svg/statistic-icon.svg"
-          alt="Statistic icon"
-        />
-        <a class="nav-item__link" [routerLink]="['/roadmaps']">Роадмапы</a>
-      </div>
+				<div
+					class="sidebar__nav-item nav-item"
+					[routerLink]="['/admin/employees-board']"
+				>
+					<img
+						class="nav-item__icon"
+						height="22"
+						src="assets/svg/statistic-icon.svg"
+						alt="Statistic icon"
+					/>
+					<a class="nav-item__link">Сотрудники</a>
+				</div>
+				<div class="sidebar__nav-item nav-item" [routerLink]="['/roadmaps']">
+					<img
+						class="nav-item__icon"
+						height="22"
+						src="assets/svg/statistic-icon.svg"
+						alt="Statistic icon"
+					/>
+					<a class="nav-item__link">Роадмапы</a>
+				</div>
 			</div>
 			<div class="sidebar__system-links">
 				<div class="sidebar__nav-item nav-item">
@@ -59,25 +56,29 @@
 					/>
 					<a class="nav-item__link" href="">Настройки</a>
 				</div>
-				<div class="sidebar__nav-item nav-item">
+				<div class="sidebar__nav-item nav-item" (click)="logout()">
 					<img
 						class="nav-item__icon"
 						height="22"
 						src="assets/svg/logout_icon.svg"
 						alt="Log out icon"
 					/>
-					<a class="nav-item__link" href="" (click)="logout()">Выход</a>
+					<a class="nav-item__link">Выход</a>
 				</div>
 			</div>
 		</nav>
 	</div>
 	<div class="main">
 		<div class="header">
-        <div class="header__search">
-          <input type="text" class="header__search-input" placeholder="What are you looking for?">
-        </div>
-      <div class="header__notification"></div>
-      <div class="header__avatar"></div>
+			<div class="header__search">
+				<input
+					type="text"
+					class="header__search-input"
+					placeholder="What are you looking for?"
+				/>
+			</div>
+			<div class="header__notification"></div>
+			<div class="header__avatar"></div>
 		</div>
 		<div class="content">
 			<router-outlet></router-outlet>

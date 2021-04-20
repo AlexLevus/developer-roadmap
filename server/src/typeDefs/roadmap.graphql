@@ -6,18 +6,23 @@ type Roadmap {
   rating: Int!
   isActive: Boolean!
   stages: [Stage]
+  author: String!
 }
 
 type Query {
   roadmaps: [Roadmap]
   roadmap(id: String): Roadmap
+  userRoadmaps(userId: ID!): [Roadmap]
 }
 
 type Mutation {
   createRoadmap(input: CreateRoadmapInput): Roadmap
+  addRoadmapToUser(roadmapId: ID!, userId: ID!): Boolean
+  removeUserRoadmap(roadmapId: ID!, userId: ID!): Boolean
 }
 
 input CreateRoadmapInput {
   name: String!
   description: String!
+  author: String!
 }

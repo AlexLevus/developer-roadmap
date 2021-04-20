@@ -7,15 +7,25 @@ import {
 } from "@apollo/client/core";
 import { HttpLink } from "apollo-angular/http";
 import { User } from "@data/models/user";
+import jwt_decode from "jwt-decode";
 
 const uri = "http://localhost:3000/graphql";
 
-// Create the initial value
+const getUserInfo = (): User => {
+	const token = localStorage.getItem("access");
+	if (token) {
+		const decodedToken = jwt_decode(token) as User;
+		decodedToken.departmentId = String(decodedToken.departmentId);
+		decodedToken.positionId = String(decodedToken.positionId);
+		decodedToken.orgId = String(decodedToken.orgId);
+		decodedToken.id = String(decodedToken.id);
+		return decodedToken as User;
+	} else {
+		return {} as User;
+	}
+};
 
-// Create the todos var and initialize it with the initial value
-export const currentUserVar = makeVar<User>(
-	JSON.parse(localStorage.getItem("user")!)
-);
+export const currentUserVar = makeVar<User>(getUserInfo());
 
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
 	const cache = new InMemoryCache({

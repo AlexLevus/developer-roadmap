@@ -23,6 +23,7 @@ export class CreateOrganizationInput {
 export class CreateRoadmapInput {
     name: string;
     description: string;
+    author: string;
 }
 
 export class SkillInput {
@@ -65,7 +66,7 @@ export class Department {
     id: string;
     name: string;
     description: string;
-    managerId?: string;
+    manager: User;
     org?: Organization;
     isActive: boolean;
 }
@@ -84,6 +85,8 @@ export abstract class IQuery {
     abstract roadmaps(): Roadmap[] | Promise<Roadmap[]>;
 
     abstract roadmap(id?: string): Roadmap | Promise<Roadmap>;
+
+    abstract userRoadmaps(userId: string): Roadmap[] | Promise<Roadmap[]>;
 
     abstract skills(): Skill[] | Promise<Skill[]>;
 
@@ -106,6 +109,10 @@ export abstract class IMutation {
     abstract createOrganization(name: string, directorId: string): Organization | Promise<Organization>;
 
     abstract createRoadmap(input?: CreateRoadmapInput): Roadmap | Promise<Roadmap>;
+
+    abstract addRoadmapToUser(roadmapId: string, userId: string): boolean | Promise<boolean>;
+
+    abstract removeUserRoadmap(roadmapId: string, userId: string): boolean | Promise<boolean>;
 
     abstract createSkill(name: string): boolean | Promise<boolean>;
 
@@ -160,6 +167,7 @@ export class Roadmap {
     rating: number;
     isActive: boolean;
     stages?: Stage[];
+    author: string;
 }
 
 export class Skill {
@@ -190,6 +198,8 @@ export class User {
     isAdmin: boolean;
     isActive: boolean;
     skills?: Skill[];
+    department?: Department;
+    position?: Position;
 }
 
 export class LoginResponse {

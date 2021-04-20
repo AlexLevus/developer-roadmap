@@ -6,6 +6,11 @@
 	outline: none;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html,
 body {
 	margin: 0;
@@ -32,6 +37,8 @@ a {
 
 fieldset {
   border: none;
+  padding: 0;
+  margin: 0;
 }
 
 @import "~@angular/material/theming";

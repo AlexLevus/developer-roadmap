@@ -9,6 +9,7 @@ export type RoadmapsResponse = {
 	roadmaps: Roadmap[];
 };
 
+// TODO через author получать User
 export type RoadmapResponse = {
 	roadmap: {
 		id: string;
@@ -16,15 +17,19 @@ export type RoadmapResponse = {
 		description: string;
 		rating: number;
 		stages: Stage[];
+		author: string;
 	};
 };
 
+export type UserRoadmapsResponse = {
+	userRoadmaps: Roadmap[];
+};
 export type DepartmentResponse = {
 	department: {
 		id: string;
 		name: string;
 		description: string;
-		managerId: string;
+		manager: Partial<User>;
 	};
 };
 

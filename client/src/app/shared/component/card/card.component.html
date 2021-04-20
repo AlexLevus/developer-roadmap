@@ -3,4 +3,5 @@
 	<p class="card__desc">
 		{{ description }}
 	</p>
+	<p *ngIf="owner">{{ owner.firstName }} {{ owner.lastName }}</p>
 </div>

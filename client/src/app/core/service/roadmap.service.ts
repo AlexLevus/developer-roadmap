@@ -2,14 +2,24 @@ import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Apollo } from "apollo-angular";
 import { Roadmap } from "@data/models/roadmap";
-import { CREATE_ROADMAP, CREATE_STAGE } from "@data/graphQL/mutations";
+import {
+	ADD_ROADMAP_TO_USER,
+	CREATE_ROADMAP,
+	CREATE_STAGE,
+	REMOVE_USER_ROADMAP
+} from "@data/graphQL/mutations";
 import { Stage } from "@data/models/stage";
-import { GET_ALL_ROADMAPS, GET_ROADMAP } from "@data/graphQL/queries";
+import {
+	GET_ALL_ROADMAPS,
+	GET_ROADMAP,
+	GET_USER_ROADMAPS
+} from "@data/graphQL/queries";
 import {
 	CreateRoadmapResponse,
 	CreateStageResponse,
 	RoadmapResponse,
-	RoadmapsResponse
+	RoadmapsResponse,
+	UserRoadmapsResponse
 } from "@data/graphQL/types";
 
 @Injectable({ providedIn: "root" })
@@ -23,7 +33,8 @@ export class RoadmapService {
 			mutation: CREATE_ROADMAP,
 			variables: {
 				input: roadmap
-			}
+			},
+			refetchQueries: [{ query: GET_ALL_ROADMAPS }]
 		});
 	}
 
@@ -48,6 +59,37 @@ export class RoadmapService {
 			variables: {
 				id
 			}
+		});
+	}
+
+	getUserRoadmaps(userId: string) {
+		return this.apollo.watchQuery<UserRoadmapsResponse>({
+			query: GET_USER_ROADMAPS,
+			variables: {
+				userId
+			}
+		});
+	}
+
+	addRoadmapToUser(roadmapId: string, userId: string) {
+		return this.apollo.mutate<boolean>({
+			mutation: ADD_ROADMAP_TO_USER,
+			variables: {
+				roadmapId,
+				userId
+			},
+			refetchQueries: [{ query: GET_USER_ROADMAPS, variables: { userId } }]
+		});
+	}
+
+	removeRoadmapFromUser(roadmapId: string, userId: string) {
+		return this.apollo.mutate<boolean>({
+			mutation: REMOVE_USER_ROADMAP,
+			variables: {
+				roadmapId,
+				userId
+			},
+			refetchQueries: [{ query: GET_USER_ROADMAPS, variables: { userId } }]
 		});
 	}
 }

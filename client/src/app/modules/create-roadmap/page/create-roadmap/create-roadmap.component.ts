@@ -5,6 +5,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { RoadmapService } from "@app/service/roadmap.service";
 import { Router } from "@angular/router";
 import { MatDialogRef } from "@angular/material/dialog";
+import { currentUserVar } from "../../../../graphql.module";
 
 @Component({
 	selector: "app-create-roadmap",
@@ -40,7 +41,8 @@ export class CreateRoadmapComponent implements OnInit {
 
 		const roadmap: Partial<Roadmap> = {
 			name,
-			description
+			description,
+			author: currentUserVar().id
 		};
 
 		this.roadmapService

@@ -1,18 +1,19 @@
 .create-employee {
-  width: 40%;
-  margin: 0 auto;
-  padding: 20px 0;
-
-  &__buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
+  h2 {
+    margin: 0;
   }
 
-  &__input {
-    display: flex;
-    flex-direction: column;
+	&__buttons {
+		display: flex;
+		justify-content: space-between;
+		gap: 20px;
+	}
 
-    margin-bottom: 18px;
+	&__input {
+		width: 95%;
+	}
+
+  &__chips {
+    margin: 0 7px;
   }
 }

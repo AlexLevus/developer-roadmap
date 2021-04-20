@@ -2,54 +2,81 @@
 	<h1>Создать сотрудника</h1>
 	<form [formGroup]="employeeForm" (ngSubmit)="createEmployee()">
 		<fieldset>
-			<legend><h2>Основная информация</h2></legend>
-			<app-input
-				class="create-employee__input"
-				controlName="lastName"
-				label="Фамилия"
-			></app-input>
-			<app-input
-				class="create-employee__input"
-				controlName="firstName"
-				label="Имя"
-			></app-input>
-			<app-input
-				class="create-employee__input"
-				controlName="middleName"
-				label="Отчество"
-			></app-input>
+			<legend><h2>Личные данные</h2></legend>
+			<mat-grid-list cols="2" rowHeight="90px">
+				<mat-grid-tile>
+					<app-input
+						class="create-employee__input"
+						controlName="lastName"
+						label="Фамилия"
+					></app-input>
+				</mat-grid-tile>
+				<mat-grid-tile>
+					<app-input
+						class="create-employee__input"
+						controlName="firstName"
+						label="Имя"
+					></app-input>
+				</mat-grid-tile>
+				<mat-grid-tile>
+					<app-input
+						class="create-employee__input"
+						controlName="middleName"
+						label="Отчество"
+					></app-input>
+				</mat-grid-tile>
+			</mat-grid-list>
 		</fieldset>
 
 		<fieldset>
 			<legend><h2>Рабочая информация</h2></legend>
-			<app-select
-				class="create-employee__input"
-				label="Позиция"
-				controlName="position"
-				[items]="positions"
-			></app-select>
-			<app-select
-				class="create-employee__input"
-				label="Департамент"
-				controlName="department"
-				[items]="departments"
-			></app-select>
-      <app-chips label="Навыки" controlName="skills" [items]="skills" [autocompleteItems]="autocompleteSkills"></app-chips>
+			<mat-grid-list cols="2" rowHeight="90px">
+				<mat-grid-tile>
+					<app-select
+						class="create-employee__input"
+						label="Позиция"
+						controlName="position"
+						[items]="positions"
+					></app-select>
+				</mat-grid-tile>
+				<mat-grid-tile>
+					<app-select
+						class="create-employee__input"
+						label="Департамент"
+						controlName="department"
+						[items]="departments"
+					></app-select>
+				</mat-grid-tile>
+			</mat-grid-list>
+			<div class="create-employee__chips">
+				<app-chips
+					label="Навыки"
+					controlName="skills"
+					[items]="skills"
+					[autocompleteItems]="autocompleteSkills"
+				></app-chips>
+			</div>
 		</fieldset>
 
 		<fieldset>
-			<legend><h2>Данные для входа</h2></legend>
-			<app-input
-				class="create-employee__input"
-				controlName="email"
-				label="Почта"
-			></app-input>
-			<app-input
-				class="create-employee__input"
-				controlName="password"
-				label="Пароль"
-				type="password"
-			></app-input>
+			<legend><h2>Аутентификация</h2></legend>
+			<mat-grid-list cols="2" rowHeight="90px">
+				<mat-grid-tile>
+					<app-input
+						class="create-employee__input"
+						controlName="email"
+						label="Почта"
+					></app-input>
+				</mat-grid-tile>
+				<mat-grid-tile>
+					<app-input
+						class="create-employee__input"
+						controlName="password"
+						label="Пароль"
+						type="password"
+					></app-input>
+				</mat-grid-tile>
+			</mat-grid-list>
 		</fieldset>
 
 		<div class="create-employee__buttons">

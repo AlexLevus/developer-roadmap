@@ -5,8 +5,7 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
-  ManyToMany,
-  JoinTable
+  ManyToMany
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { UserRoadmap } from './userRoadmap.entity';
@@ -80,6 +79,10 @@ export class User {
   @Column({ name: 'org_id', nullable: true })
   orgId!: string;
 
+  @Expose()
+  @Column({ name: 'department_id', nullable: true })
+  departmentId!: string;
+
   @ManyToOne(() => Position, (position) => position.users)
   @JoinColumn({ name: 'position_id' })
   position: Position;
@@ -88,8 +91,9 @@ export class User {
   @JoinColumn({ name: 'org_id' })
   organization: Organization;
 
-  @ManyToMany(() => Department, (department) => department.users)
-  departments!: Department[];
+  @ManyToOne(() => Department, (department) => department.users)
+  @JoinColumn({ name: 'department_id' })
+  department!: Department;
 
   @ManyToMany(() => Skill, (skill) => skill.users)
   skills: Skill[];

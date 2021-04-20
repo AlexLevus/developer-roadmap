@@ -7,6 +7,7 @@ import { UserService } from "@app/service/user.service";
 import { Position } from "@data/models/position";
 import { User } from "@data/models/user";
 import { Skill } from "@data/models/skill";
+import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
 	selector: "app-create-employee",
@@ -39,7 +40,8 @@ export class CreateEmployeeComponent implements OnInit {
 
 	constructor(
 		private departmentService: DepartmentService,
-		private userService: UserService
+		private userService: UserService,
+		private dialogRef: MatDialogRef<CreateEmployeeComponent>
 	) {}
 
 	ngOnInit(): void {
@@ -89,7 +91,7 @@ export class CreateEmployeeComponent implements OnInit {
 		};
 
 		this.userService.createUser(user).subscribe(({ data }) => {
-			console.log(data);
+			this.dialogRef.close();
 		});
 	}
 

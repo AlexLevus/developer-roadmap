@@ -1,0 +1,28 @@
+<div *ngIf="roadmap" class="roadmap-card">
+	<div class="roadmap-card__info" [routerLink]="'/roadmap/' + roadmap.id">
+		<span class="roadmap-card__title">{{ roadmap.name }}</span>
+		<p class="roadmap-card__desc">
+			{{ roadmap.description }}
+		</p>
+		<p *ngIf="owner">{{ owner.firstName }} {{ owner.lastName }}</p>
+	</div>
+
+	<button
+		class="roadmap-card__button"
+		*ngIf="isRoadmapAlreadyAdded; else addButton"
+		(click)="removeRoadmap()"
+		mat-raised-button
+	>
+		Удалить
+	</button>
+
+	<ng-template #addButton>
+		<button
+			class="roadmap-card__button"
+			(click)="addRoadmap()"
+			mat-raised-button
+		>
+			Добавить
+		</button>
+	</ng-template>
+</div>

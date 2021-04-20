@@ -1,0 +1,31 @@
+<section class="roadmap-board">
+	<div class="roadmap-board__header">
+		<h1>Title</h1>
+		<span>{{ currentDate | date: "d MMMM" }}</span>
+	</div>
+	<div class="roadmap-board__counter-list">
+		<div class="roadmap-board__counter-item counter-item">
+			<span class="counter-item__amount">45</span>
+			<span class="counter-item__state">В процессе</span>
+		</div>
+		<div class="roadmap-board__counter-item counter-item">
+			<span class="counter-item__amount">17</span>
+			<span class="counter-item__state">Завершено</span>
+		</div>
+		<div class="roadmap-board__counter-item counter-item">
+			<span class="counter-item__amount">62</span>
+			<span class="counter-item__state">Всего</span>
+		</div>
+	</div>
+	<div class="roadmap-board__items">
+			<mat-grid-list cols="3" gutterSize="30">
+				<mat-grid-tile *ngFor="let roadmap of roadmaps" class="roadmap-board__item">
+					<app-user-roadmap-card
+            [roadmap]="roadmap"
+						progress="60"
+						bgColor="#ffdfc6"
+					></app-user-roadmap-card>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</div>
+</section>

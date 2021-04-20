@@ -24,7 +24,6 @@ export class DepartmentBoardComponent implements OnInit {
 			.getOrganizationDepartments(currentUserVar().orgId)
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { organizationDepartments } = data;
-				console.log(organizationDepartments);
 				this.departments = organizationDepartments;
 				this.loading = loading;
 			});

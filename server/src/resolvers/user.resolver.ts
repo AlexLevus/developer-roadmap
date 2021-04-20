@@ -1,6 +1,6 @@
 import { Mutation, Args, Context, Resolver, Query } from '@nestjs/graphql';
 
-import { Department, Skill, User } from '@models';
+import { Department, Position, Skill, User } from '@models';
 import { getRepository } from 'typeorm';
 import {
   ApolloError,
@@ -45,6 +45,10 @@ export class UserResolver {
         throw new ForbiddenError('Пользователь не найден');
       }
 
+      user.department = await getRepository(Department).findOne({
+        id: user.departmentId
+      });
+
       return user;
     } catch (error) {
       throw new ApolloError(error);
@@ -54,9 +58,21 @@ export class UserResolver {
   @Query()
   async organizationUsers(@Args('orgId') orgId: string): Promise<User[]> {
     try {
-      const user = await getRepository(User).find({ orgId });
+      const users = await getRepository(User).find({ orgId });
 
-      return user;
+      for (const user of users) {
+        user.department = await getRepository(Department).findOne({
+          id: user.departmentId
+        });
+      }
+
+      for (const user of users) {
+        user.position = await getRepository(Position).findOne({
+          id: user.positionId
+        });
+      }
+
+      return users;
     } catch (error) {
       throw new ApolloError(error);
     }
@@ -179,13 +195,11 @@ export class UserResolver {
         ...(await Promise.all(savedSkills))
       ] as Skill[];
 
-      newUser.departments = [
-        await getRepository(Department).findOne({
-          where: {
-            id: departmentId
-          }
-        })
-      ] as Department[];
+      newUser.department = (await getRepository(Department).findOne({
+        where: {
+          id: departmentId
+        }
+      })) as Department;
 
       await getRepository(User).save(newUser);
       const updateUser = await getRepository(User).update(newUser.id, {

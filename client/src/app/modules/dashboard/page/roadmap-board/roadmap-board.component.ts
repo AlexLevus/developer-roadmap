@@ -3,6 +3,7 @@ import { RoadmapService } from "@app/service/roadmap.service";
 import { Roadmap } from "@data/models/roadmap";
 import { MatDialog } from "@angular/material/dialog";
 import { CreateRoadmapComponent } from "@modules/create-roadmap/page/create-roadmap/create-roadmap.component";
+import { currentUserVar } from "../../../../graphql.module";
 
 @Component({
 	selector: "app-roadmap-board",
@@ -11,6 +12,7 @@ import { CreateRoadmapComponent } from "@modules/create-roadmap/page/create-road
 })
 export class RoadmapBoardComponent implements OnInit {
 	roadmaps: Roadmap[] = [];
+	userRoadmapsIds: string[] = [];
 	loading = true;
 
 	constructor(
@@ -25,6 +27,15 @@ export class RoadmapBoardComponent implements OnInit {
 				const { roadmaps } = data;
 				this.roadmaps = roadmaps;
 				this.loading = loading;
+			});
+
+		this.roadmapService
+			.getUserRoadmaps(currentUserVar().id)
+			.valueChanges.subscribe(({ data }) => {
+				this.userRoadmapsIds = data.userRoadmaps.reduce(
+					(acc: string[], cur) => [...acc, cur?.id],
+					[]
+				);
 			});
 	}
 
