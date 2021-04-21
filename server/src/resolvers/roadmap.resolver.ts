@@ -1,8 +1,7 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
-import { Department, Roadmap, Stage, UserRoadmap } from '@models';
-import { CreateRoadmapInput } from '../generator/graphql.models';
+import { Roadmap, Stage, User, UserRoadmap } from '@models';
 import { ApolloError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver('Roadmap')
@@ -23,7 +22,7 @@ export class RoadmapResolver {
       });
 
       if (!roadmap) {
-        throw new ForbiddenError('Roadmap not found.');
+        throw new ForbiddenError('План развития не найден');
       }
 
       roadmap.stages = stages;
@@ -52,9 +51,21 @@ export class RoadmapResolver {
 
   @Mutation()
   async createRoadmap(
-    @Args('input') input: CreateRoadmapInput
+    @Args('name') name: string,
+    @Args('description') description: string,
+    @Args('authorId') authorId: string
   ): Promise<Roadmap> {
-    return await getRepository(Roadmap).save(new Roadmap(input));
+    const author = await getRepository(User).findOne({ id: authorId });
+
+    const roadmap = await getRepository(Roadmap).save(
+      new Roadmap({ name, description, author })
+    );
+
+    await getRepository(Roadmap).update(roadmap.id, {
+      author
+    });
+
+    return roadmap;
   }
 
   @Mutation()

@@ -20,12 +20,6 @@ export class CreateOrganizationInput {
     name: string;
 }
 
-export class CreateRoadmapInput {
-    name: string;
-    description: string;
-    author: string;
-}
-
 export class SkillInput {
     id?: string;
     name: string;
@@ -108,7 +102,7 @@ export abstract class IMutation {
 
     abstract createOrganization(name: string, directorId: string): Organization | Promise<Organization>;
 
-    abstract createRoadmap(input?: CreateRoadmapInput): Roadmap | Promise<Roadmap>;
+    abstract createRoadmap(name: string, description: string, authorId?: string): Roadmap | Promise<Roadmap>;
 
     abstract addRoadmapToUser(roadmapId: string, userId: string): boolean | Promise<boolean>;
 
@@ -167,7 +161,7 @@ export class Roadmap {
     rating: number;
     isActive: boolean;
     stages?: Stage[];
-    author: string;
+    author: User;
 }
 
 export class Skill {

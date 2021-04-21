@@ -22,7 +22,8 @@ export class RoadmapComponent implements OnInit {
 	submitted = false;
 	loading = true;
 	roadmap!: Roadmap;
-	isRoadmapAdded = false;
+	isViewMode = false;
+	canUserEdit = false;
 
 	ngOnInit(): void {
 		const { roadmapId } = this.route.snapshot.params;
@@ -31,7 +32,7 @@ export class RoadmapComponent implements OnInit {
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { roadmap } = data;
 				this.roadmap = roadmap;
-				console.log(this.roadmap);
+				this.canUserEdit = this.roadmap.author.id === currentUserVar().id;
 				this.treeData$.next(
 					this.arrangeIntoTree(roadmap.stages, ["roadmapId"])
 				);
@@ -46,7 +47,7 @@ export class RoadmapComponent implements OnInit {
 					[]
 				);
 
-				this.isRoadmapAdded = userRoadmapsIds.includes(roadmapId);
+				this.isViewMode = !userRoadmapsIds.includes(roadmapId);
 			});
 	}
 

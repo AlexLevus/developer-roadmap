@@ -6,7 +6,12 @@ export const GET_ALL_ROADMAPS = gql`
 			id
 			name
 			description
-			author
+			author {
+				id
+				firstName
+				middleName
+				lastName
+			}
 			stages {
 				id
 				name
@@ -24,7 +29,12 @@ export const GET_ROADMAP = gql`
 			name
 			description
 			rating
-			author
+			author {
+				id
+				firstName
+				middleName
+				lastName
+			}
 			stages {
 				id
 				name

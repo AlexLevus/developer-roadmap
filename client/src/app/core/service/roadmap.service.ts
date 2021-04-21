@@ -28,11 +28,16 @@ export class RoadmapService {
 
 	constructor(private apollo: Apollo) {}
 
-	createRoadmap(roadmap: Partial<Roadmap>) {
+	createRoadmap(
+		roadmap: Pick<Roadmap, "name" | "description">,
+		authorId: string
+	) {
 		return this.apollo.mutate<CreateRoadmapResponse>({
 			mutation: CREATE_ROADMAP,
 			variables: {
-				input: roadmap
+				name: roadmap.name,
+				description: roadmap.description,
+				authorId
 			},
 			refetchQueries: [{ query: GET_ALL_ROADMAPS }]
 		});

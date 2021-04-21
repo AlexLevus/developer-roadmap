@@ -3,4 +3,9 @@
 	<span>Описание: {{ roadmap.description }}</span>
 	<span>Рейтинг: {{ roadmap.rating }}</span>
 </div>
-<app-tree [dataChange]="treeData$" (saveItem)="saveStage($event)" [isRoadmapAdded]="isRoadmapAdded"></app-tree>
+<app-tree
+	[dataChange]="treeData$"
+	(saveItem)="saveStage($event)"
+	[isViewMode]="isViewMode"
+	[isEditMode]="canUserEdit"
+></app-tree>

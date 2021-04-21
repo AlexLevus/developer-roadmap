@@ -16,7 +16,8 @@ import { TreeNode } from "@data/models/treeNode";
 })
 export class TreeComponent implements OnInit {
 	@Output() saveItem: EventEmitter<TreeNode> = new EventEmitter();
-	@Input() isRoadmapAdded = false;
+	@Input() isViewMode = true;
+	@Input() isEditMode = true;
 	@Input() dataChange: BehaviorSubject<TreeNode[]> = new BehaviorSubject<
 		TreeNode[]
 	>([]);
@@ -51,7 +52,7 @@ export class TreeComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log(this.isRoadmapAdded);
+		console.log(this.isViewMode);
 		this.dataChange.subscribe((data) => {
 			this.dataSource.data = data;
 		});

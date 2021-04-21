@@ -25,6 +25,7 @@ export class RoadmapBoardComponent implements OnInit {
 			.getRoadmaps()
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { roadmaps } = data;
+				console.log(roadmaps);
 				this.roadmaps = roadmaps;
 				this.loading = loading;
 			});

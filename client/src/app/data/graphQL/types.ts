@@ -17,7 +17,7 @@ export type RoadmapResponse = {
 		description: string;
 		rating: number;
 		stages: Stage[];
-		author: string;
+		author: Partial<User>;
 	};
 };
 

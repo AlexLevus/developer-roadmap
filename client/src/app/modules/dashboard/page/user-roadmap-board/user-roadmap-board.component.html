@@ -18,14 +18,16 @@
 		</div>
 	</div>
 	<div class="roadmap-board__items">
-			<mat-grid-list cols="3" gutterSize="30">
-				<mat-grid-tile *ngFor="let roadmap of roadmaps" class="roadmap-board__item">
-					<app-user-roadmap-card
-            [roadmap]="roadmap"
-						progress="60"
-						bgColor="#ffdfc6"
-					></app-user-roadmap-card>
-				</mat-grid-tile>
-			</mat-grid-list>
-		</div>
+		<mat-grid-list cols="3" gutterSize="30">
+			<mat-grid-tile
+				*ngFor="let roadmap of roadmaps"
+				class="roadmap-board__item"
+			>
+				<app-user-roadmap-card
+					[roadmap]="roadmap"
+					progress="60"
+				></app-user-roadmap-card>
+			</mat-grid-tile>
+		</mat-grid-list>
+	</div>
 </section>

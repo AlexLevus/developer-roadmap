@@ -1,9 +1,7 @@
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
-import { Skill, User } from '@models';
-import { CreateRoadmapInput } from '../generator/graphql.models';
-import { ForbiddenError } from 'apollo-server-core';
+import { Skill } from '@models';
 
 @Resolver('Skill')
 export class SkillResolver {

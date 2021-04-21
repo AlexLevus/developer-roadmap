@@ -1,4 +1,5 @@
 import { Stage } from "@data/models/stage";
+import { User } from "@data/models/user";
 
 export interface Roadmap {
 	id: string;
@@ -6,5 +7,5 @@ export interface Roadmap {
 	description: string;
 	rating: number;
 	stages: Stage[];
-	author: string;
+	author: Partial<User>;
 }

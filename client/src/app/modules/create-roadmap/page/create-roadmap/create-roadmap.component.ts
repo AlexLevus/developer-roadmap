@@ -39,14 +39,13 @@ export class CreateRoadmapComponent implements OnInit {
 
 		const { name, description } = this.roadmapForm.value;
 
-		const roadmap: Partial<Roadmap> = {
+		const roadmap: Pick<Roadmap, "name" | "description"> = {
 			name,
-			description,
-			author: currentUserVar().id
+			description
 		};
 
 		this.roadmapService
-			.createRoadmap(roadmap)
+			.createRoadmap(roadmap, currentUserVar().id)
 			.subscribe(({ data }) => {
 				this.roadmapForm.reset();
 				this.dialogRef.close();

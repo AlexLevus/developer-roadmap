@@ -40,8 +40,12 @@ export const UPDATE_USER = gql`
 `;
 
 export const CREATE_ROADMAP = gql`
-	mutation createRoadmap($input: CreateRoadmapInput!) {
-		createRoadmap(input: $input) {
+	mutation createRoadmap(
+		$name: String!
+		$description: String!
+		$authorId: ID!
+	) {
+		createRoadmap(name: $name, description: $description, authorId: $authorId) {
 			id
 			name
 			description

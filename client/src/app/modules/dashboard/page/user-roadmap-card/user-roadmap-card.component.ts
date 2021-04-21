@@ -12,7 +12,6 @@ export class UserRoadmapCardComponent {
 	@Input() roadmap!: Roadmap;
 	@Input() progress = 0;
 	@Input() startDate = new Date();
-	@Input() bgColor = "";
 
 	constructor(private roadmapService: RoadmapService) {}
 

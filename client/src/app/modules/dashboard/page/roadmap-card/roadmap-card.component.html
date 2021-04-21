@@ -4,7 +4,7 @@
 		<p class="roadmap-card__desc">
 			{{ roadmap.description }}
 		</p>
-		<p *ngIf="owner">{{ owner.firstName }} {{ owner.lastName }}</p>
+		<p>Автор: {{ roadmap.author.firstName }} {{ roadmap.author.lastName }}</p>
 	</div>
 
 	<button
