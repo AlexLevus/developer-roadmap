@@ -1,0 +1,23 @@
+<div [ngStyle]="customStyle" class="input">
+  <label class="input__label" [for]="controlName">{{label}}</label>
+  <input
+    class="input__field"
+    [formControl]="control"
+    [id]="controlName"
+    [name]="controlName"
+    [type]="type"
+    [autocomplete]="autocomplete"
+    [placeholder]="placeholder"
+  />
+  <div class="input__validation" *ngIf="control!.invalid && control!.touched">
+    <small *ngIf="control.errors.required">
+      Обязательное поле
+    </small>
+    <small *ngIf="control.errors.email">
+      Недопустимый email
+    </small>
+    <small *ngIf="control.errors.minlength">
+      Минимальная длина: 8 символов
+    </small>
+  </div>
+</div>

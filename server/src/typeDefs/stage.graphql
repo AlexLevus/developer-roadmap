@@ -1,0 +1,21 @@
+type Stage {
+  id: ID!
+  name: String!
+  path: String!
+  roadmapId: String!
+}
+
+type Query {
+  stages: [Stage]
+}
+
+type Mutation {
+  createStage(text: String!, roadmapId: String!): Stage
+  createSubstage(input: CreateStageInput): Stage
+}
+
+input CreateStageInput {
+  name: String!
+  path: String!
+  roadmapId: String!
+}

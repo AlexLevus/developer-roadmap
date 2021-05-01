@@ -1,0 +1,28 @@
+<div class="card">
+	<div class="card__header">
+		<span class="card__start-date"
+			>Начало: {{ roadmap.startDate | date: "mediumDate" }}</span
+		>
+		<div class="card__menu">
+			<button mat-icon-button [matMenuTriggerFor]="menu">
+				<mat-icon>more_vert</mat-icon>
+			</button>
+			<mat-menu #menu="matMenu">
+				<button (click)="removeUserRoadmap()" mat-menu-item>
+					<span>Отписаться</span>
+				</button>
+			</mat-menu>
+		</div>
+	</div>
+	<div class="card__main" [routerLink]="['/roadmap/', roadmap.id]">
+		<h2 class="card__name">{{ roadmap.name }}</h2>
+		<div class="progress">
+			<label>Прогресс</label>
+			<mat-progress-bar [value]="progress"> </mat-progress-bar>
+			<span class="progress__text">{{ progress }}%</span>
+		</div>
+		<div class="card__footer">
+			<div class="card__deadline">Осталось 2 дня</div>
+		</div>
+	</div>
+</div>

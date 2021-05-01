@@ -1,0 +1,42 @@
+<button (click)="openCreateDialog()" mat-raised-button>
+	Добавить сотрудника
+</button>
+
+<table tuiTable [columns]="columns">
+	<thead>
+		<tr tuiThGroup>
+			<th *tuiHead="'name'" tuiTh>Имя</th>
+      <th *tuiHead="'department'" tuiTh>Департамент</th>
+      <th *tuiHead="'position'" tuiTh>Должность</th>
+      <th *tuiHead="'email'" tuiTh>E-mail</th>
+      <th *tuiHead="'status'" tuiTh>Статус</th>
+    </tr>
+	</thead>
+	<tbody tuiTbody [data]="employees">
+		<tr *tuiRow="let item of employees; let index = index" tuiTr>
+			<td *tuiCell="'name'" tuiTd>
+				{{ index + 1 }}. {{ item.firstName }} {{ item.lastName }}
+			</td>
+
+      <td *tuiCell="'department'" tuiTd>
+        {{ item.department.name }}
+      </td>
+
+      <td *tuiCell="'position'" tuiTd>
+        {{ item.position.name }}
+      </td>
+
+			<td *tuiCell="'email'" tuiTd>
+				<a *ngIf="item.email" tuiLink [href]="'mailto:' + item.email">
+					{{ item.email }}
+				</a>
+			</td>
+
+			<td *tuiCell="'status'" tuiTd>
+				<div [class]="item.isActive ? 'active' : 'inactive'">
+					{{ item.isActive ? "Активен" : "Неактивен" }}
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

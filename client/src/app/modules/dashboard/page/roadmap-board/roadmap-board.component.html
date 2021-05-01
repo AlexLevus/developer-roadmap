@@ -1,0 +1,27 @@
+<div class="roadmap-board">
+	<mat-grid-list cols="3" rowHeight="300" gutterSize="25">
+		<mat-grid-tile>
+			<tui-island
+				class="roadmap-board__card roadmap-board__create-card"
+				[hoverable]="true"
+			>
+				<button
+					type="button"
+					(click)="openCreateDialog()"
+					tuiButton
+					appearance="outline"
+					size="m"
+				>
+					Добавить роадмап
+        </button>
+      </tui-island>
+		</mat-grid-tile>
+		<mat-grid-tile *ngFor="let roadmap of roadmaps">
+			<app-roadmap-card
+				class="roadmap-board__card"
+				[roadmap]="roadmap"
+				[isRoadmapAlreadyAdded]="userRoadmapsIds.includes(roadmap.id)"
+			></app-roadmap-card>
+		</mat-grid-tile>
+	</mat-grid-list>
+</div>

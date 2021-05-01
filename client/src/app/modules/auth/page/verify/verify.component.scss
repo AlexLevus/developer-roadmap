@@ -1,0 +1,26 @@
+.verify-page {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+
+  background-color: #0073f7;
+
+  &__wrapper {
+    padding: 40px;
+
+    width: 360px;
+
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px 0 rgba(196, 200, 204, 0.48),
+    0 1px 4px 0 rgba(0, 36, 77, 0.08);
+  }
+
+  &__link {
+    color: #0073f7;
+  }
+}

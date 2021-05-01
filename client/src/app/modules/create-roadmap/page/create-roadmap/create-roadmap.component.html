@@ -1,0 +1,43 @@
+<div class="form">
+	<form [formGroup]="roadmapForm" (ngSubmit)="createRoadmap()">
+		<app-input controlName="name" label="Название"></app-input>
+		<app-input controlName="description" label="Описание"></app-input>
+		<tui-checkbox-block
+			formControlName="companyAccess"
+			contentAlign="left"
+			nativeId="companyAccess"
+			size="m"
+		>
+			<div>
+				Сделать доступным внутри компании?
+				<tui-tooltip
+					describeId="companyAccess"
+					content="Роадмап будет виден сотрудникам других департаментов"
+				></tui-tooltip>
+			</div>
+		</tui-checkbox-block>
+		<tui-checkbox-block
+			formControlName="public"
+			contentAlign="left"
+			nativeId="public"
+			size="m"
+		>
+			<div>
+				Сделать публичным?
+				<tui-tooltip
+					describeId="public"
+					content="Роадмап будет виден всем пользователям"
+				></tui-tooltip>
+			</div>
+		</tui-checkbox-block>
+		<button
+			tuiButton
+			type="submit"
+			appearance="secondary"
+			size="m"
+			[showLoader]="loading"
+		>
+			Создать
+		</button>
+	</form>
+</div>

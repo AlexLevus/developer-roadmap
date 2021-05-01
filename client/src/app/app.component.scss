@@ -1,0 +1,7 @@
+::ng-deep .mat-grid-tile {
+	overflow: initial !important;
+}
+
+::ng-deep tui-hints-host {
+	z-index: 10000 !important;
+}

@@ -1,0 +1,73 @@
+type User {
+  id: ID!
+  email: String!
+  password: String!
+  firstName: String
+  lastName: String
+  middleName: String
+  orgId: String
+  positionId: String
+  resetPasswordToken: String
+  resetPasswordExpires: Float
+  createdAt: Float!
+  lastLogin: Float
+  isAdmin: Boolean!
+  isActive: Boolean!
+  skills: [Skill]
+  department: Department
+  position: Position
+}
+
+type Query {
+  user(id: ID!): User
+  users: [User]
+  organizationUsers(orgId: ID!): [User]
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  middleName: String!
+  skills: [SkillInput]
+  orgId: String!
+  positionId: String!
+  departmentId: String!
+}
+
+input UpdateUserInput {
+  id: String!
+  firstName: String!
+  lastName: String!
+  middleName: String!
+  orgId: String!
+  positionId: String!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  id: String!
+  accessToken: String!
+  refreshToken: String!
+}
+
+type RefreshTokenResponse {
+  accessToken: String!
+}
+
+type Mutation {
+  registerUser(email: String!, password: String!): User
+  updateUser(input: UpdateUserInput!): Boolean
+  createUser(input: CreateUserInput): Boolean
+  verifyEmail(emailToken: String!): Boolean
+  login(input: LoginUserInput!): LoginResponse
+  refreshToken(refreshToken: String!): RefreshTokenResponse
+  changePassword(id: ID!, currentPassword: String!, password: String!): Boolean
+  forgotPassword(email: String!): Boolean
+  resetPassword(resetPasswordToken: String!, password: String): Boolean
+}

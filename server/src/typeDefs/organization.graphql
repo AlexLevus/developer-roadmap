@@ -1,0 +1,17 @@
+type Organization {
+  id: ID!
+  name: String!
+  directorId: String!
+}
+
+type Query {
+  organization: [Organization]
+}
+
+type Mutation {
+  createOrganization(name: String!, directorId: String!): Organization
+}
+
+input CreateOrganizationInput {
+  name: String!
+}

@@ -1,0 +1,25 @@
+scalar Date
+
+type Roadmap {
+  id: ID!
+  name: String!
+  description: String!
+  content: String!
+  rating: Int!
+  isActive: Boolean!
+  stages: [Stage]
+  author: User!
+  startDate: Date!
+}
+
+type Query {
+  roadmaps: [Roadmap]
+  roadmap(id: String): Roadmap
+  userRoadmaps(userId: ID!): [Roadmap]
+}
+
+type Mutation {
+  createRoadmap(name: String!, description: String!, authorId: ID): Roadmap
+  addRoadmapToUser(roadmapId: ID!, userId: ID!): Boolean
+  removeUserRoadmap(roadmapId: ID!, userId: ID!): Boolean
+}

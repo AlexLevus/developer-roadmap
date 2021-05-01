@@ -1,0 +1,22 @@
+type Department {
+  id: ID!
+  name: String!
+  description: String!
+  manager: User!
+  org: Organization
+  isActive: Boolean!
+}
+
+type Query {
+  department(id: ID): Department
+  organizationDepartments(orgId: ID): [Department]
+}
+
+type Mutation {
+  createDepartment(
+    name: String!
+    description: String!
+    orgId: ID!
+    managerId: ID!
+  ): Department
+}

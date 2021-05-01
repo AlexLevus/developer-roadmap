@@ -1,0 +1,15 @@
+.login-page {
+  display: flex;
+  gap: 100px;
+
+  padding: 60px;
+  height: 100vh;
+  overflow: auto;
+  background-color: #0073f7;
+
+  &__describe-content {
+    color: #fff;
+    font-size: 20px;
+    line-height: 1.4;
+  }
+}
