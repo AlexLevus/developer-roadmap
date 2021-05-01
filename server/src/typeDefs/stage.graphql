@@ -10,10 +10,12 @@ type Query {
 }
 
 type Mutation {
-  createStage(input: CreateStageInput): Stage
+  createStage(text: String!, roadmapId: String!): Stage
+  createSubstage(input: CreateStageInput): Stage
 }
 
 input CreateStageInput {
   name: String!
   path: String!
+  roadmapId: String!
 }

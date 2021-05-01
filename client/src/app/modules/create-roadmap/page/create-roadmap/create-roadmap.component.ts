@@ -1,11 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { Stage } from "@data/models/stage";
+import { Component, Inject, OnInit } from "@angular/core";
 import { Roadmap } from "@data/models/roadmap";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { RoadmapService } from "@app/service/roadmap.service";
-import { Router } from "@angular/router";
 import { MatDialogRef } from "@angular/material/dialog";
 import { currentUserVar } from "../../../../graphql.module";
+import { TuiNotification, TuiNotificationsService } from "@taiga-ui/core";
 
 @Component({
 	selector: "app-create-roadmap",
@@ -14,7 +13,7 @@ import { currentUserVar } from "../../../../graphql.module";
 })
 export class CreateRoadmapComponent implements OnInit {
 	submitted = false;
-	loading = true;
+	loading = false;
 
 	roadmapForm = new FormGroup({
 		name: new FormControl(null, [Validators.required]),
@@ -25,8 +24,9 @@ export class CreateRoadmapComponent implements OnInit {
 
 	constructor(
 		private roadmapService: RoadmapService,
-		private router: Router,
-		private dialogRef: MatDialogRef<CreateRoadmapComponent>
+		private dialogRef: MatDialogRef<CreateRoadmapComponent>,
+		@Inject(TuiNotificationsService)
+		private readonly notificationsService: TuiNotificationsService
 	) {}
 
 	ngOnInit(): void {}
@@ -36,6 +36,8 @@ export class CreateRoadmapComponent implements OnInit {
 			this.roadmapForm.markAllAsTouched();
 			return;
 		}
+
+		this.loading = true;
 
 		const { name, description } = this.roadmapForm.value;
 
@@ -49,15 +51,26 @@ export class CreateRoadmapComponent implements OnInit {
 			.subscribe(({ data }) => {
 				this.roadmapForm.reset();
 				this.dialogRef.close();
-				this.router.navigate(["/roadmap", data?.createRoadmap.id]);
+
+				this.notificationsService
+					.show("Роадмап успешно создан!", {
+						status: TuiNotification.Success
+					})
+					.subscribe();
 			})
-			.add(() => (this.submitted = false));
+			.add(() => {
+				this.submitted = false;
+				this.loading = false;
+			});
 	}
 
-	saveStage(stage: Stage) {
+	/*	saveStage(stage: Stage) {
 		this.roadmapService
-			.createStage(stage)
+			.createSubstage(stage)
 			.subscribe()
-			.add(() => (this.submitted = false));
-	}
+			.add(() => {
+				this.submitted = false;
+				this.loading = false;
+			});
+	}*/
 }

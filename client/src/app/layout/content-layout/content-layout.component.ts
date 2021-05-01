@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-content-layout",
@@ -6,11 +7,12 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ["./content-layout.component.scss"]
 })
 export class ContentLayoutComponent implements OnInit {
-	constructor() {}
+	constructor(private router: Router) {}
 
 	ngOnInit(): void {}
 
 	logout() {
 		localStorage.clear();
+		this.router.navigate(["/"]);
 	}
 }

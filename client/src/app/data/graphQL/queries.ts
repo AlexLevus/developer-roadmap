@@ -52,6 +52,7 @@ export const GET_USER_ROADMAPS = gql`
 			name
 			description
 			rating
+			startDate
 		}
 	}
 `;
@@ -114,6 +115,7 @@ export const GET_ORGANIZATION_USERS = gql`
 			firstName
 			lastName
 			middleName
+			email
 			isActive
 			isAdmin
 			createdAt

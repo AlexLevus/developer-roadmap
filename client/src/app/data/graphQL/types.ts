@@ -70,9 +70,19 @@ export type CreateRoadmapResponse = {
 };
 
 export type CreateStageResponse = {
-	name: string;
-	path: string;
-	roadmapId: string;
+	createStage: {
+		name: string;
+		path: string;
+		roadmapId: string;
+	};
+};
+
+export type CreateSubstageResponse = {
+	createSubstage: {
+		name: string;
+		path: string;
+		roadmapId: string;
+	};
 };
 
 export interface LoginResponse {

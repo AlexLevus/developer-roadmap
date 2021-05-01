@@ -1,4 +1,5 @@
 import { Department } from "@data/models/department";
+import { Position } from "@data/models/position";
 
 export interface User {
 	id: string;
@@ -15,5 +16,6 @@ export interface User {
 	isAdmin: boolean;
 	createdAt: Date;
 	lastLogin: Date;
+	position: Position;
 	department?: Department;
 }

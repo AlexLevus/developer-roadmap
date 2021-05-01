@@ -1,11 +1,14 @@
 <div *ngIf="roadmap" class="roadmap">
-	<span>Название: {{ roadmap.name }}</span>
-	<span>Описание: {{ roadmap.description }}</span>
-	<span>Рейтинг: {{ roadmap.rating }}</span>
+	<h1 class="tui-text_h5">{{ roadmap.name }}</h1>
+	<form *ngIf="canUserEdit" [formGroup]="stageForm" class="roadmap__form" (ngSubmit)="createStage()">
+		<tui-input tuiTextfieldSize="m" formControlName="stageText">
+			Введите название главы
+		</tui-input>
+	</form>
+	<app-tree
+		[dataChange]="treeData$"
+		(saveItem)="createSubstage($event)"
+		[isViewMode]="isViewMode"
+		[isEditMode]="canUserEdit"
+	></app-tree>
 </div>
-<app-tree
-	[dataChange]="treeData$"
-	(saveItem)="saveStage($event)"
-	[isViewMode]="isViewMode"
-	[isEditMode]="canUserEdit"
-></app-tree>

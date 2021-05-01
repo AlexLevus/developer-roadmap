@@ -6,6 +6,7 @@ import { TreeNode } from "@data/models/treeNode";
 import { Stage } from "@data/models/stage";
 import { Roadmap } from "@data/models/roadmap";
 import { currentUserVar } from "../../../../graphql.module";
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
 	selector: "app-roadmap",
@@ -25,7 +26,15 @@ export class RoadmapComponent implements OnInit {
 	isViewMode = false;
 	canUserEdit = false;
 
+	readonly stageForm = new FormGroup({
+		stageText: new FormControl(null)
+	});
+
 	ngOnInit(): void {
+		this.loadRoadmaps();
+	}
+
+	private loadRoadmaps() {
 		const { roadmapId } = this.route.snapshot.params;
 		this.roadmapService
 			.getRoadmap(roadmapId)
@@ -107,10 +116,12 @@ export class RoadmapComponent implements OnInit {
 		return null;
 	}
 
-	saveStage(stage: Stage) {
-		this.roadmapService
-			.createStage(stage)
-			.subscribe()
-			.add(() => (this.submitted = false));
+	createSubstage(stage: Stage) {
+		this.roadmapService.createSubstage(stage, this.roadmap.id).subscribe();
+	}
+
+	createStage() {
+		const text = this.stageForm.value.stageText;
+		this.roadmapService.createStage(this.roadmap.id, text).subscribe();
 	}
 }

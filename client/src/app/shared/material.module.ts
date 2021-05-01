@@ -15,10 +15,50 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatDialogModule } from "@angular/material/dialog";
+import { TuiFieldErrorModule, TuiIslandModule } from "@taiga-ui/kit";
+import {
+	TuiButtonModule,
+	TuiLinkModule,
+	TuiPrimitiveTextfieldModule,
+	TuiScrollbarModule,
+	TuiSvgModule,
+	TuiTextfieldControllerModule
+} from "@taiga-ui/core";
+import { TuiTableModule } from "@taiga-ui/addon-table";
+import { TuiCheckboxModule } from "@taiga-ui/kit";
+import { TuiCheckboxBlockModule } from "@taiga-ui/kit";
+import {
+	TuiNotificationsModule,
+	TuiRootModule,
+	TuiTooltipModule,
+	TuiHintModule,
+	TuiPrimitiveCheckboxModule,
+	iconsPathFactory,
+	TUI_ICONS_PATH
+} from "@taiga-ui/core";
+import { TuiInputModule } from "@taiga-ui/kit";
 
 @NgModule({
 	declarations: [],
 	imports: [
+		TuiIslandModule,
+		TuiButtonModule,
+		TuiTableModule,
+		TuiLinkModule,
+		TuiCheckboxModule,
+		TuiCheckboxBlockModule,
+		TuiTooltipModule,
+		TuiHintModule,
+		TuiPrimitiveCheckboxModule,
+		TuiNotificationsModule,
+		TuiRootModule,
+		TuiFieldErrorModule,
+		TuiInputModule,
+		TuiTextfieldControllerModule,
+		TuiSvgModule,
+		TuiScrollbarModule,
+		TuiPrimitiveTextfieldModule,
+
 		MatTabsModule,
 		MatInputModule,
 		MatProgressSpinnerModule,
@@ -36,6 +76,24 @@ import { MatDialogModule } from "@angular/material/dialog";
 		MatDialogModule
 	],
 	exports: [
+		TuiIslandModule,
+		TuiButtonModule,
+		TuiTableModule,
+		TuiLinkModule,
+		TuiCheckboxModule,
+		TuiCheckboxBlockModule,
+		TuiTooltipModule,
+		TuiHintModule,
+		TuiPrimitiveCheckboxModule,
+		TuiNotificationsModule,
+		TuiRootModule,
+		TuiFieldErrorModule,
+		TuiInputModule,
+		TuiTextfieldControllerModule,
+		TuiSvgModule,
+		TuiScrollbarModule,
+		TuiPrimitiveTextfieldModule,
+
 		MatTabsModule,
 		MatInputModule,
 		MatProgressSpinnerModule,
@@ -51,6 +109,12 @@ import { MatDialogModule } from "@angular/material/dialog";
 		MatAutocompleteModule,
 		MatGridListModule,
 		MatDialogModule
+	],
+	providers: [
+		{
+			provide: TUI_ICONS_PATH,
+			useValue: iconsPathFactory("assets/taiga-ui/icons/")
+		}
 	]
 })
 export class MaterialModule {}

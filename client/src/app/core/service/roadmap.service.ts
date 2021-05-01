@@ -6,6 +6,7 @@ import {
 	ADD_ROADMAP_TO_USER,
 	CREATE_ROADMAP,
 	CREATE_STAGE,
+	CREATE_SUBSTAGE,
 	REMOVE_USER_ROADMAP
 } from "@data/graphQL/mutations";
 import { Stage } from "@data/models/stage";
@@ -17,6 +18,7 @@ import {
 import {
 	CreateRoadmapResponse,
 	CreateStageResponse,
+	CreateSubstageResponse,
 	RoadmapResponse,
 	RoadmapsResponse,
 	UserRoadmapsResponse
@@ -43,11 +45,22 @@ export class RoadmapService {
 		});
 	}
 
-	createStage(stage: Stage) {
+	createStage(roadmapId: string, text: string) {
 		return this.apollo.mutate<CreateStageResponse>({
 			mutation: CREATE_STAGE,
 			variables: {
-				input: stage
+				roadmapId,
+				text
+			},
+			refetchQueries: [{ query: GET_ROADMAP, variables: { id: roadmapId } }]
+		});
+	}
+
+	createSubstage(stage: Stage, roadmapId: string) {
+		return this.apollo.mutate<CreateSubstageResponse>({
+			mutation: CREATE_SUBSTAGE,
+			variables: {
+				input: { ...stage, roadmapId }
 			}
 		});
 	}

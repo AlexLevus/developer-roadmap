@@ -21,15 +21,19 @@
 		matTreeNodePadding
 	>
 		<button mat-icon-button disabled></button>
-		<mat-form-field>
-			<mat-label>Новый этап</mat-label>
-			<input matInput #itemValue />
-		</mat-form-field>
+		<tui-primitive-textfield
+			class="textfield"
+			tuiTextfieldSize="m"
+			[tuiTextfieldCleaner]="true"
+			#itemValue
+			>Новый этап</tui-primitive-textfield
+		>
 		<button mat-button (click)="save(node, itemValue.value)">Сохранить</button>
-	</mat-tree-node>
+  </mat-tree-node>
 
 	<mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
 		<button
+			[style.visibility]="node.expandable ? 'visible' : 'hidden'"
 			mat-icon-button
 			matTreeNodeToggle
 			[attr.aria-label]="'Toggle ' + node.name"

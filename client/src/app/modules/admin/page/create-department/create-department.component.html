@@ -19,14 +19,15 @@
 				controlName="manager"
 				[items]="users"
 			></app-select>
-		</fieldset>
-		<div class="create-employee__buttons">
-			<app-button
-				text="Создать департамент"
+			<button
+				tuiButton
 				type="submit"
-				size="block"
-				[submitted]="submitted"
-			></app-button>
-		</div>
+				appearance="secondary"
+				size="m"
+				[showLoader]="loading"
+			>
+				Создать
+			</button>
+		</fieldset>
 	</form>
 </section>

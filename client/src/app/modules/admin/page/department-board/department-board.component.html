@@ -1,21 +1,37 @@
 <div class="roadmap-board">
 	<mat-grid-list cols="3" rowHeight="300" gutterSize="25">
 		<mat-grid-tile>
-			<div class="roadmap-board__card roadmap-board__create-card">
-				<button type="button" (click)="openCreateDialog()">
-					Создать департамент
+			<tui-island
+				class="roadmap-board__card roadmap-board__create-card"
+				[hoverable]="true"
+			>
+				<button
+					type="button"
+					(click)="openCreateDialog()"
+					tuiButton
+          appearance="outline"
+          size="m"
+        >
+					Добавить департамент
 				</button>
-			</div>
+			</tui-island>
 		</mat-grid-tile>
 		<mat-grid-tile *ngFor="let department of departments">
-			<app-card
-				class="roadmap-board__card"
-				[title]="department.name"
-				[description]="department.description"
-				[to]="'/admin/department/' + department.id"
-				[owner]="department.manager
-				"
-			></app-card>
+			<tui-island class="roadmap-board__card" [hoverable]="true">
+				<div
+					class="roadmap-card__content"
+					[routerLink]="'/admin/department/' + department.id"
+				>
+					<h3 class="tui-island__title">{{ department.name }}</h3>
+					<p class="tui-island__paragraph roadmap-card__description">
+						{{ department.description }}
+					</p>
+					<p class="tui-island__paragraph">
+						Директор: {{ department.manager.firstName }}
+						{{ department.manager.lastName }}
+					</p>
+				</div>
+			</tui-island>
 		</mat-grid-tile>
 	</mat-grid-list>
 </div>

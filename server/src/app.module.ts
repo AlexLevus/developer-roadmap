@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 
 import * as Resolvers from './resolvers';
+import * as Scalars from './scalars';
 
 @Module({
   imports: [
@@ -21,6 +22,10 @@ import * as Resolvers from './resolvers';
     TypeOrmModule.forRoot()
   ],
   controllers: [AppController],
-  providers: [AppService, ...Object.values(Resolvers)]
+  providers: [
+    AppService,
+    ...Object.values(Resolvers),
+    ...Object.values(Scalars)
+  ]
 })
 export class AppModule {}

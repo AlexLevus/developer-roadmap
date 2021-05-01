@@ -1,28 +1,35 @@
-<div *ngIf="roadmap" class="roadmap-card">
-	<div class="roadmap-card__info" [routerLink]="'/roadmap/' + roadmap.id">
-		<span class="roadmap-card__title">{{ roadmap.name }}</span>
-		<p class="roadmap-card__desc">
+<tui-island class="roadmap-card" [hoverable]="true">
+	<div class="roadmap-card__content" [routerLink]="'/roadmap/' + roadmap.id">
+		<h3 class="tui-island__title">{{ roadmap.name }}</h3>
+		<p class="tui-island__paragraph roadmap-card__description">
 			{{ roadmap.description }}
 		</p>
-		<p>Автор: {{ roadmap.author.firstName }} {{ roadmap.author.lastName }}</p>
+		<p class="tui-island__paragraph">
+			Автор: {{ roadmap.author.firstName }} {{ roadmap.author.lastName }}
+		</p>
 	</div>
-
 	<button
-		class="roadmap-card__button"
 		*ngIf="isRoadmapAlreadyAdded; else addButton"
+		tuiButton
+		type="button"
+		class="tui-island__footer-button"
+		appearance="flat"
+		size="m"
 		(click)="removeRoadmap()"
-		mat-raised-button
 	>
 		Удалить
 	</button>
+</tui-island>
 
-	<ng-template #addButton>
-		<button
-			class="roadmap-card__button"
-			(click)="addRoadmap()"
-			mat-raised-button
-		>
-			Добавить
-		</button>
-	</ng-template>
-</div>
+<ng-template #addButton>
+	<button
+		tuiButton
+		type="button"
+		class="tui-island__footer-button"
+		appearance="flat"
+		size="m"
+		(click)="addRoadmap()"
+	>
+		Добавить
+	</button>
+</ng-template>

@@ -20,6 +20,7 @@ import { ContentLayoutComponent } from "./layout/content-layout/content-layout.c
 import { MAT_RIPPLE_GLOBAL_OPTIONS } from "@angular/material/core";
 import { MAT_CHIPS_DEFAULT_OPTIONS } from "@angular/material/chips";
 import { ENTER } from "@angular/cdk/keycodes";
+import { TuiRootModule } from "@taiga-ui/core";
 
 registerLocaleData(localeRu);
 
@@ -44,7 +45,8 @@ registerLocaleData(localeRu);
 		HttpClientModule,
 		ReactiveFormsModule,
 		GraphQLModule,
-		HttpClientModule
+		HttpClientModule,
+		TuiRootModule
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: "ru-RU" },

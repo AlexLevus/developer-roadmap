@@ -53,9 +53,19 @@ export const CREATE_ROADMAP = gql`
 	}
 `;
 
+export const CREATE_SUBSTAGE = gql`
+	mutation createSubstage($input: CreateStageInput!) {
+		createSubstage(input: $input) {
+			name
+			path
+			roadmapId
+		}
+	}
+`;
+
 export const CREATE_STAGE = gql`
-	mutation createStage($input: CreateStageInput!) {
-		createStage(input: $input) {
+	mutation createStage($roadmapId: String!, $text: String!) {
+		createStage(roadmapId: $roadmapId, text: $text) {
 			name
 			path
 			roadmapId

@@ -52,7 +52,6 @@ export class TreeComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log(this.isViewMode);
 		this.dataChange.subscribe((data) => {
 			this.dataSource.data = data;
 		});
@@ -64,7 +63,8 @@ export class TreeComponent implements OnInit {
 
 	getChildren = (node: TreeNode): TreeNode[] => node.children;
 
-	hasChild = (_: number, nodeData: TreeFlatNode) => nodeData.expandable;
+	hasChild = (_: number, nodeData: TreeFlatNode) =>
+		nodeData.expandable || this.isEditMode;
 
 	hasNoContent = (_: number, nodeData: TreeFlatNode) => nodeData.name === "";
 
@@ -158,22 +158,36 @@ export class TreeComponent implements OnInit {
 		return null;
 	}
 
-	private getNewPath(path: string): string {
-		const newLastNumber = +path.slice(-1) + 1;
-		return path.slice(0, path.length - 1) + newLastNumber;
+	private getNewPath(
+		lastChildren: TreeNode | null,
+		parentNode: TreeNode
+	): string {
+		if (lastChildren) {
+			const { path } = lastChildren;
+			const newLastNumber = +path.slice(-1) + 1;
+			return path.slice(0, path.length - 1) + newLastNumber;
+		}
+
+		return parentNode.path + ".1";
 	}
 
 	addNewItem(node: TreeFlatNode) {
 		const parentNode = this.flatNodeMap.get(node);
 
 		if (parentNode) {
-			const lastChildren = parentNode.children[parentNode.children.length - 1];
-			const isNewInputPresent = lastChildren.name === "";
+			const lastChildren = parentNode.children
+				? parentNode.children[parentNode.children.length - 1]
+				: null;
+			const isNewInputPresent = lastChildren?.name === "";
+
+			if (!lastChildren) {
+				parentNode.children = [];
+			}
 
 			if (!isNewInputPresent) {
 				parentNode.children.push({
 					name: "",
-					path: this.getNewPath(lastChildren.path)
+					path: this.getNewPath(lastChildren, parentNode)
 				} as TreeNode);
 
 				this.dataChange.next(this.dataChange.value);

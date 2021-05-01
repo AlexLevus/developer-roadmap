@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { DepartmentService } from "@app/service/department.service";
 import { currentUserVar } from "../../../../graphql.module";
@@ -6,6 +6,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { UserService } from "@app/service/user.service";
 import { SelectItem } from "@data/models/selectItem";
 import { map } from "rxjs/operators";
+import { TuiNotification, TuiNotificationsService } from "@taiga-ui/core";
 
 @Component({
 	selector: "app-create-department",
@@ -20,13 +21,16 @@ export class CreateDepartmentComponent implements OnInit {
 	});
 
 	submitted = false;
+	loading = false;
 
 	users: SelectItem[] = [];
 
 	constructor(
 		private userService: UserService,
 		private departmentService: DepartmentService,
-		private dialogRef: MatDialogRef<CreateDepartmentComponent>
+		private dialogRef: MatDialogRef<CreateDepartmentComponent>,
+		@Inject(TuiNotificationsService)
+		private readonly notificationsService: TuiNotificationsService
 	) {}
 
 	ngOnInit(): void {
@@ -51,13 +55,20 @@ export class CreateDepartmentComponent implements OnInit {
 			return;
 		}
 
+		this.loading = true;
+
 		const { name, description, manager } = this.departmentForm.value;
 
 		this.departmentService
 			.createDepartment(name, description, currentUserVar().orgId, manager)
 			.subscribe(({ data }) => {
-				console.log(data);
 				this.dialogRef.close();
-			});
+				this.notificationsService
+					.show("Департамент успешно создан!", {
+						status: TuiNotification.Success
+					})
+					.subscribe();
+			})
+			.add(() => (this.loading = false));
 	}
 }

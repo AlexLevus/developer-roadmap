@@ -1,31 +1,42 @@
-<button (click)="openCreateDialog()" mat-raised-button>Добавить сотрудника</button>
+<button (click)="openCreateDialog()" mat-raised-button>
+	Добавить сотрудника
+</button>
 
-<table mat-table [dataSource]="employees" class="mat-elevation-z8">
-	<ng-container matColumnDef="name">
-		<th mat-header-cell *matHeaderCellDef>Имя</th>
-		<td mat-cell *matCellDef="let element">
-			{{ element.firstName }} {{ element.lastName }}
-		</td>
-	</ng-container>
+<table tuiTable [columns]="columns">
+	<thead>
+		<tr tuiThGroup>
+			<th *tuiHead="'name'" tuiTh>Имя</th>
+      <th *tuiHead="'department'" tuiTh>Департамент</th>
+      <th *tuiHead="'position'" tuiTh>Должность</th>
+      <th *tuiHead="'email'" tuiTh>E-mail</th>
+      <th *tuiHead="'status'" tuiTh>Статус</th>
+    </tr>
+	</thead>
+	<tbody tuiTbody [data]="employees">
+		<tr *tuiRow="let item of employees; let index = index" tuiTr>
+			<td *tuiCell="'name'" tuiTd>
+				{{ index + 1 }}. {{ item.firstName }} {{ item.lastName }}
+			</td>
 
-	<ng-container matColumnDef="department">
-		<th mat-header-cell *matHeaderCellDef>Департмент</th>
-		<td mat-cell *matCellDef="let element">
-			{{ element.department.name }}
-		</td>
-	</ng-container>
+      <td *tuiCell="'department'" tuiTd>
+        {{ item.department.name }}
+      </td>
 
-	<ng-container matColumnDef="position">
-		<th mat-header-cell *matHeaderCellDef>Должность</th>
-		<td mat-cell *matCellDef="let element">
-			{{ element.position.name }}
-		</td>
-	</ng-container>
+      <td *tuiCell="'position'" tuiTd>
+        {{ item.position.name }}
+      </td>
 
-	<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-	<tr
-		mat-row
-		*matRowDef="let row; columns: displayedColumns"
-		[routerLink]="'/admin/employee/' + row.id"
-	></tr>
+			<td *tuiCell="'email'" tuiTd>
+				<a *ngIf="item.email" tuiLink [href]="'mailto:' + item.email">
+					{{ item.email }}
+				</a>
+			</td>
+
+			<td *tuiCell="'status'" tuiTd>
+				<div [class]="item.isActive ? 'active' : 'inactive'">
+					{{ item.isActive ? "Активен" : "Неактивен" }}
+				</div>
+			</td>
+		</tr>
+	</tbody>
 </table>

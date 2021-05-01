@@ -1,3 +1,5 @@
+scalar Date
+
 type Roadmap {
   id: ID!
   name: String!
@@ -7,6 +9,7 @@ type Roadmap {
   isActive: Boolean!
   stages: [Stage]
   author: User!
+  startDate: Date!
 }
 
 type Query {

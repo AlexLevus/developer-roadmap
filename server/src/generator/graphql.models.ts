@@ -28,6 +28,7 @@ export class SkillInput {
 export class CreateStageInput {
     name: string;
     path: string;
+    roadmapId: string;
 }
 
 export class CreateUserInput {
@@ -110,7 +111,9 @@ export abstract class IMutation {
 
     abstract createSkill(name: string): boolean | Promise<boolean>;
 
-    abstract createStage(input?: CreateStageInput): Stage | Promise<Stage>;
+    abstract createStage(text: string, roadmapId: string): Stage | Promise<Stage>;
+
+    abstract createSubstage(input?: CreateStageInput): Stage | Promise<Stage>;
 
     abstract registerUser(email: string, password: string): User | Promise<User>;
 
@@ -162,6 +165,7 @@ export class Roadmap {
     isActive: boolean;
     stages?: Stage[];
     author: User;
+    startDate: Date;
 }
 
 export class Skill {

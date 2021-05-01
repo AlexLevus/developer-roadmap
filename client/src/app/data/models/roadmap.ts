@@ -8,4 +8,5 @@ export interface Roadmap {
 	rating: number;
 	stages: Stage[];
 	author: Partial<User>;
+	startDate?: Date;
 }

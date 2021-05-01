@@ -13,4 +13,9 @@
 
     margin-bottom: 18px;
   }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+  }
 }

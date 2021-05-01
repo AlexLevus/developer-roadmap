@@ -121,3 +121,8 @@ $input-text-color: #00244d;
 		background-color: #f5f9ff;
 	}
 }
+
+.success {
+  position: relative;
+  color: var(--tui-success-fill);
+}

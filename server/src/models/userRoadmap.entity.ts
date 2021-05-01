@@ -19,8 +19,8 @@ export class UserRoadmap {
   id: string;
 
   @Expose()
-  @Column({ name: 'start_date', type: 'bigint', default: +new Date() })
-  startDate: number;
+  @Column({ name: 'start_date', type: 'timestamp', default: new Date() })
+  startDate: Date;
 
   @Expose()
   @Column({ name: 'is_completed', default: false })

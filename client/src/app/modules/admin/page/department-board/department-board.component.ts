@@ -30,6 +30,9 @@ export class DepartmentBoardComponent implements OnInit {
 	}
 
 	openCreateDialog() {
-		this.dialog.open(CreateDepartmentComponent);
+		this.dialog.open(CreateDepartmentComponent, {
+			width: "30%",
+			minWidth: "300px"
+		});
 	}
 }

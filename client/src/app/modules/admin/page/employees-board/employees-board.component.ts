@@ -11,9 +11,9 @@ import { CreateEmployeeComponent } from "@modules/admin/page/create-employee/cre
 	styleUrls: ["./employees-board.component.scss"]
 })
 export class EmployeesBoardComponent implements OnInit {
-	displayedColumns: string[] = ["name", "department", "position"];
 	employees!: User[];
 	loading = true;
+	readonly columns = ["name", "department", "position", "email", "status"];
 
 	constructor(private userService: UserService, public dialog: MatDialog) {}
 

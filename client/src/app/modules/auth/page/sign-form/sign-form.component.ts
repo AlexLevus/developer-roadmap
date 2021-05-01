@@ -71,7 +71,6 @@ export class SignFormComponent {
 			.subscribe(
 				(res: ApolloQueryResult<UserResponse>) => {
 					this.loginForm.reset();
-					console.log(res);
 
 					if (res.data.user.orgId) {
 						this.router.navigate(["/dashboard"]);

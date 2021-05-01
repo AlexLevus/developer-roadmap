@@ -1,14 +1,11 @@
 // TODO: временно, позже убрать
+@import '~@taiga-ui/core/styles/taiga-ui-local';
+
+
 .form {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.block {
-  margin: 20px;
-
-  width: 400px;
 }
 
 form {

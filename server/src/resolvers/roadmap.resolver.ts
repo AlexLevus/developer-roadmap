@@ -33,17 +33,20 @@ export class RoadmapResolver {
   }
 
   @Query()
-  async userRoadmaps(@Args('userId') userId: string): Promise<Roadmap[]> {
+  async userRoadmaps(
+    @Args('userId') userId: string
+  ): Promise<(Roadmap & Pick<UserRoadmap, 'startDate'>)[]> {
     const userRoadmaps = await getRepository(UserRoadmap).find({ userId });
 
-    const roadmaps: Roadmap[] = [];
+    const roadmaps: (Roadmap & Pick<UserRoadmap, 'startDate'>)[] = [];
 
     for (const roadmap of userRoadmaps) {
-      roadmaps.push(
-        await getRepository(Roadmap).findOne({
+      roadmaps.push({
+        ...(await getRepository(Roadmap).findOne({
           id: roadmap.roadmapId
-        })
-      );
+        })),
+        startDate: roadmap.startDate
+      });
     }
 
     return roadmaps;
