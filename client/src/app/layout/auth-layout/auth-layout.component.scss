@@ -1,14 +1,24 @@
 .login-page {
   display: flex;
-  gap: 100px;
-
-  padding: 60px;
-  height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 63px 100px;
   overflow: auto;
   background-color: #0073f7;
+  color: #fff;
+  height: 100%;
+
+  &__describe-heading {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+
+    margin-bottom: 40px;
+  }
 
   &__describe-content {
-    color: #fff;
     font-size: 20px;
     line-height: 1.4;
   }

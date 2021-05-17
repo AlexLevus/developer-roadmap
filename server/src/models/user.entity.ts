@@ -8,7 +8,7 @@ import {
   ManyToMany
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { UserRoadmap } from './userRoadmap.entity';
+import { UserRoadmap } from './user-roadmap.entity';
 import { Position } from './position.entity';
 import { Organization } from './organization.entity';
 import { Skill } from './skill.entity';

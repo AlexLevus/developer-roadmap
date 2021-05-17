@@ -63,6 +63,12 @@ export const CREATE_SUBSTAGE = gql`
 	}
 `;
 
+export const TOGGLE_STAGE_PROGRESS = gql`
+	mutation toggleStageProgress($input: ToggleStageProgressInput!) {
+		toggleStageProgress(input: $input)
+	}
+`;
+
 export const CREATE_STAGE = gql`
 	mutation createStage($roadmapId: String!, $text: String!) {
 		createStage(roadmapId: $roadmapId, text: $text) {

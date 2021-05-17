@@ -31,6 +31,12 @@ export class CreateStageInput {
     roadmapId: string;
 }
 
+export class ToggleStageProgressInput {
+    roadmapId: string;
+    stageIds: string[];
+    isCompleted: boolean;
+}
+
 export class CreateUserInput {
     email: string;
     password: string;
@@ -115,6 +121,8 @@ export abstract class IMutation {
 
     abstract createSubstage(input?: CreateStageInput): Stage | Promise<Stage>;
 
+    abstract toggleStageProgress(input?: ToggleStageProgressInput): boolean | Promise<boolean>;
+
     abstract registerUser(email: string, password: string): User | Promise<User>;
 
     abstract updateUser(input: UpdateUserInput): boolean | Promise<boolean>;
@@ -160,12 +168,14 @@ export class Roadmap {
     id: string;
     name: string;
     description: string;
-    content: string;
     rating: number;
     isActive: boolean;
+    isCompleted: boolean;
     stages?: Stage[];
     author: User;
     startDate: Date;
+    userRoadmapId?: string;
+    progress?: number;
 }
 
 export class Skill {
@@ -177,7 +187,12 @@ export class Stage {
     id: string;
     name: string;
     path: string;
+    isCompleted?: boolean;
     roadmapId: string;
+}
+
+export class UserProgressInfo {
+    isCompleted?: boolean;
 }
 
 export class User {

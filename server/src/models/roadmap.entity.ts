@@ -7,7 +7,7 @@ import {
   ManyToOne
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { UserRoadmap } from './userRoadmap.entity';
+import { UserRoadmap } from './user-roadmap.entity';
 import { Stage } from './stage.entity';
 import { User } from './user.entity';
 
@@ -30,6 +30,9 @@ export class Roadmap {
   @Expose()
   @Column({ default: 0 })
   rating: number;
+
+  @Expose()
+  userRoadmapId?: string;
 
   @ManyToOne(() => User, (user) => user.userRoadmaps, { eager: true })
   @JoinColumn({ name: 'author_id' })

@@ -76,23 +76,24 @@ export const sendMail = async (
       verifyEmail: {
         // link: `${req.headers.origin}/verify/${token}`,
         link: `${APP_URL}/verify/${token}`,
-        subject: 'Verify Email',
-        text1: 'To complete your sign up, please verify your email: ',
-        button: 'VERIFY EMAIL',
-        text2: 'Or copy this link and paste in your web	browser',
+        subject: 'Подтверждение регистрации на Sysimate',
+        text1:
+          'Просто нажми на кнопку ниже, чтобы мы были уверены в правильности указанного адреса.',
+        button: 'Подтвердить',
+        text2: 'Или скопируйте эту ссылку и вставьте в свой веб-браузер:',
         ...common
       },
       forgotPassword: {
         // link: `${req.headers.origin}/reset/${token}`,
         link: `${APP_URL}/reset/${token}`,
-        subject: 'Reset Your Password',
+        subject: 'Восстановление пароля',
         text1:
           // tslint:disable-next-line:quotemark
-          "Tap the button below to reset your customer account password. If you didn't request a new password, you can safely delete this email.",
-        button: 'Set New Password',
+          'Нажмите на кнопку ниже, чтобы сбросить старый пароль и установить новый.',
+        button: 'Установить новый пароль',
         text2:
           // tslint:disable-next-line:quotemark
-          "If that doesn't work, copy and paste the following link in your browser:",
+          'Или скопируйте эту ссылку и вставьте в свой веб-браузер:',
         ...common
       }
     };
@@ -100,16 +101,10 @@ export const sendMail = async (
     const htmlToSend = template(replacements[type]);
 
     const mailOptions = {
-      from: 'Developer Roadmap  📮:' + NODEMAILER_USER, // sender address
+      from: 'Sysimate  📮:' + NODEMAILER_USER, // sender address
       to: user.email, // list of receivers
       subject: replacements[type].subject,
-      html: htmlToSend,
-      attachments: [
-        {
-          path: './src/assets/images/logo.png',
-          cid: 'unique@kreata.ee' // same cid value as in the html img src
-        }
-      ]
+      html: htmlToSend
     };
 
     transporter.sendMail(mailOptions, (err, info) => {

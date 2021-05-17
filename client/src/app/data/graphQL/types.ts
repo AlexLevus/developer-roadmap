@@ -85,6 +85,10 @@ export type CreateSubstageResponse = {
 	};
 };
 
+export type ToggleStageProgressResponse = {
+	toggleStageProgress: boolean;
+};
+
 export interface LoginResponse {
 	login: {
 		id: string;

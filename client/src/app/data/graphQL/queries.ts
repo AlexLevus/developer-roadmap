@@ -22,6 +22,21 @@ export const GET_ALL_ROADMAPS = gql`
 	}
 `;
 
+export const GET_ALL_ROADMAPS_INFO = gql`
+	{
+		roadmaps {
+			id
+			name
+			description
+			author {
+				id
+				firstName
+				lastName
+			}
+		}
+	}
+`;
+
 export const GET_ROADMAP = gql`
 	query roadmap($id: String!) {
 		roadmap(id: $id) {
@@ -29,6 +44,7 @@ export const GET_ROADMAP = gql`
 			name
 			description
 			rating
+			userRoadmapId
 			author {
 				id
 				firstName
@@ -40,6 +56,7 @@ export const GET_ROADMAP = gql`
 				name
 				path
 				roadmapId
+				isCompleted
 			}
 		}
 	}
@@ -53,6 +70,8 @@ export const GET_USER_ROADMAPS = gql`
 			description
 			rating
 			startDate
+			isCompleted
+			progress
 		}
 	}
 `;

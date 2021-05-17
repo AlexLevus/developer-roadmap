@@ -9,4 +9,6 @@ export interface Roadmap {
 	stages: Stage[];
 	author: Partial<User>;
 	startDate?: Date;
+	isCompleted?: boolean;
+	progress?: number;
 }

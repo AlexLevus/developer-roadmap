@@ -24,4 +24,12 @@ export class UserRoadmapBoardComponent implements OnInit {
 				console.log(this.roadmaps);
 			});
 	}
+
+	get activeRoadmaps() {
+		return this.roadmaps.filter((item) => !item.isCompleted).length;
+	}
+
+	get completedRoadmaps() {
+		return this.roadmaps.filter((item) => item.isCompleted).length;
+	}
 }

@@ -1,7 +1,7 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
-import { Roadmap, Stage, User, UserRoadmap } from '@models';
+import { Roadmap, Stage, User, UserRoadmap, UserRoadmapStage } from '@models';
 import { ApolloError, ForbiddenError } from 'apollo-server-core';
 
 @Resolver('Roadmap')
@@ -14,18 +14,46 @@ export class RoadmapResolver {
   }
 
   @Query()
-  async roadmap(@Args('id') id: string): Promise<Roadmap> {
+  async roadmap(
+    @Args('id') id: string,
+    @Context('currentUser') currentUser: User
+  ): Promise<Roadmap> {
     try {
       const roadmap = await getRepository(Roadmap).findOne({ id });
-      const stages = await getRepository(Stage).find({
-        roadmapId: roadmap.id
+      const userRoadmap = await getRepository(UserRoadmap).findOne({
+        userId: currentUser.id,
+        roadmapId: id
       });
 
       if (!roadmap) {
         throw new ForbiddenError('План развития не найден');
       }
 
-      roadmap.stages = stages;
+      if (userRoadmap) {
+        const stages = await getRepository(Stage)
+          .createQueryBuilder('stages')
+          .leftJoinAndMapOne(
+            'stages.userProgressInfo',
+            UserRoadmapStage,
+            'user_roadmaps_stages',
+            'stages.id = user_roadmaps_stages.stage_id'
+          )
+          .where('stages.roadmapId = :roadmapId', { roadmapId: id })
+          .getMany();
+
+        roadmap.stages = stages.map((stage) => {
+          return {
+            id: stage.id,
+            name: stage.name,
+            path: stage.path,
+            roadmapId: stage.roadmapId,
+            isCompleted: stage.userProgressInfo?.isCompleted
+          };
+        });
+
+        roadmap.userRoadmapId = userRoadmap.id;
+      }
+
       return roadmap;
     } catch (error) {
       throw new ApolloError(error);
@@ -35,17 +63,46 @@ export class RoadmapResolver {
   @Query()
   async userRoadmaps(
     @Args('userId') userId: string
-  ): Promise<(Roadmap & Pick<UserRoadmap, 'startDate'>)[]> {
+  ): Promise<
+    (Roadmap & Pick<UserRoadmap, 'startDate' | 'isCompleted' | 'progress'>)[]
+  > {
     const userRoadmaps = await getRepository(UserRoadmap).find({ userId });
 
-    const roadmaps: (Roadmap & Pick<UserRoadmap, 'startDate'>)[] = [];
+    const roadmaps: (Roadmap &
+      Pick<UserRoadmap, 'startDate' | 'isCompleted' | 'progress'>)[] = [];
 
     for (const roadmap of userRoadmaps) {
+      const stages = await getRepository(Stage)
+        .createQueryBuilder('stages')
+        .leftJoinAndMapOne(
+          'stages.userProgressInfo',
+          UserRoadmapStage,
+          'user_roadmaps_stages',
+          'stages.id = user_roadmaps_stages.stage_id'
+        )
+        .where('stages.roadmapId = :roadmapId', {
+          roadmapId: roadmap.roadmapId
+        })
+        .getMany();
+
+      const completedStages = stages.filter(
+        (stage) => stage.userProgressInfo?.isCompleted
+      );
+
+      const progress =
+        completedStages.length === 0
+          ? 0
+          : Math.round((completedStages.length / stages.length) * 100);
+
+      console.log(stages, progress);
+
       roadmaps.push({
         ...(await getRepository(Roadmap).findOne({
           id: roadmap.roadmapId
         })),
-        startDate: roadmap.startDate
+        startDate: roadmap.startDate,
+        isCompleted: roadmap.isCompleted,
+        progress
       });
     }
 
@@ -85,9 +142,26 @@ export class RoadmapResolver {
       throw new ForbiddenError('Этот роадмап у пользователя уже есть');
     }
 
-    return !!(await getRepository(UserRoadmap).save(
+    const roadmapStages = await getRepository(Stage).find({ roadmapId });
+
+    const leafStages = this.getLeafStages(roadmapStages);
+
+    const newUserRoadmap = await getRepository(UserRoadmap).save(
       new UserRoadmap({ roadmapId, userId })
-    ));
+    );
+
+    for (const stage of leafStages) {
+      await getRepository(UserRoadmapStage).save(
+        new UserRoadmapStage({
+          userId,
+          roadmapId,
+          stageId: stage.id,
+          userRoadmapId: newUserRoadmap.id
+        })
+      );
+    }
+
+    return !!newUserRoadmap;
   }
 
   @Mutation()
@@ -96,5 +170,15 @@ export class RoadmapResolver {
     @Args('userId') userId: string
   ): Promise<boolean> {
     return !!(await getRepository(UserRoadmap).delete({ userId, roadmapId }));
+  }
+
+  private getLeafStages(stages: Stage[]) {
+    const paths = stages.reduce((acc, cur) => {
+      return [...acc, cur.path];
+    }, []);
+
+    return stages.filter((stage) => {
+      return !paths.some((path) => path.startsWith(stage.path + '.'));
+    });
   }
 }

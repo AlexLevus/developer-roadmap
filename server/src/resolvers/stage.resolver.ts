@@ -1,8 +1,11 @@
-import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
-import { getRepository } from 'typeorm';
+import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
+import { getConnection, getRepository } from 'typeorm';
 
-import { Roadmap, Stage, User } from '@models';
-import { CreateStageInput } from '../generator/graphql.models';
+import { Stage, User, UserRoadmapStage } from '@models';
+import {
+  CreateStageInput,
+  ToggleStageProgressInput
+} from '../generator/graphql.models';
 
 @Resolver('Stage')
 export class StageResolver {
@@ -42,5 +45,35 @@ export class StageResolver {
     };
 
     return await getRepository(Stage).save(new Stage(stageData));
+  }
+
+  @Mutation()
+  async toggleStageProgress(
+    @Args('input') input: ToggleStageProgressInput,
+    @Context('currentUser') currentUser: User
+  ): Promise<boolean> {
+    const { stageIds, isCompleted, roadmapId } = input;
+    const userId = currentUser.id;
+
+    console.log(
+      stageIds.map((stageId) => ({
+        userId,
+        roadmapId,
+        stageId
+      }))
+    );
+
+    return !!(await getConnection()
+      .createQueryBuilder()
+      .update(UserRoadmapStage)
+      .set({ isCompleted })
+      .whereInIds(
+        stageIds.map((stageId) => ({
+          userId,
+          roadmapId,
+          stageId
+        }))
+      )
+      .execute());
   }
 }

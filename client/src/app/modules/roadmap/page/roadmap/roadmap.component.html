@@ -8,6 +8,7 @@
 	<app-tree
 		[dataChange]="treeData$"
 		(saveItem)="createSubstage($event)"
+    (toggleItemProgress)="toggleStageProgress($event)"
 		[isViewMode]="isViewMode"
 		[isEditMode]="canUserEdit"
 	></app-tree>

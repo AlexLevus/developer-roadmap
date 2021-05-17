@@ -43,7 +43,11 @@ export class RoadmapComponent implements OnInit {
 				this.roadmap = roadmap;
 				this.canUserEdit = this.roadmap.author.id === currentUserVar().id;
 				this.treeData$.next(
-					this.arrangeIntoTree(roadmap.stages, ["roadmapId"])
+					this.arrangeIntoTree(roadmap.stages, [
+						"id",
+						"roadmapId",
+						"isCompleted"
+					])
 				);
 				this.loading = loading;
 			});
@@ -123,5 +127,11 @@ export class RoadmapComponent implements OnInit {
 	createStage() {
 		const text = this.stageForm.value.stageText;
 		this.roadmapService.createStage(this.roadmap.id, text).subscribe();
+	}
+
+	toggleStageProgress(stages: { id: string[]; isCompleted: boolean }) {
+		this.roadmapService
+			.toggleStageProgress(this.roadmap.id, stages.id, stages.isCompleted)
+			.subscribe();
 	}
 }

@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card card-1">
 	<div class="card__header">
 		<span class="card__start-date"
 			>Начало: {{ roadmap.startDate | date: "mediumDate" }}</span
@@ -18,11 +18,8 @@
 		<h2 class="card__name">{{ roadmap.name }}</h2>
 		<div class="progress">
 			<label>Прогресс</label>
-			<mat-progress-bar [value]="progress"> </mat-progress-bar>
-			<span class="progress__text">{{ progress }}%</span>
-		</div>
-		<div class="card__footer">
-			<div class="card__deadline">Осталось 2 дня</div>
+			<mat-progress-bar [value]="roadmap.progress"> </mat-progress-bar>
+			<span class="progress__text">{{ roadmap.progress }}%</span>
 		</div>
 	</div>
 </div>

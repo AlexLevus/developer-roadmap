@@ -10,7 +10,6 @@ import { currentUserVar } from "../../../../graphql.module";
 })
 export class UserRoadmapCardComponent {
 	@Input() roadmap!: Roadmap;
-	@Input() progress = 0;
 	@Input() startDate = new Date();
 
 	constructor(private roadmapService: RoadmapService) {}

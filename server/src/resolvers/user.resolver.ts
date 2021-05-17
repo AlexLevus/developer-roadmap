@@ -1,6 +1,6 @@
 import { Mutation, Args, Context, Resolver, Query } from '@nestjs/graphql';
 
-import { Department, Position, Skill, User } from '@models';
+import { Department, Position, Skill, User, UserRoadmap } from '@models';
 import { getRepository } from 'typeorm';
 import {
   ApolloError,

@@ -2,7 +2,12 @@ type Stage {
   id: ID!
   name: String!
   path: String!
+  isCompleted: Boolean
   roadmapId: String!
+}
+
+type UserProgressInfo {
+  isCompleted: Boolean
 }
 
 type Query {
@@ -12,10 +17,17 @@ type Query {
 type Mutation {
   createStage(text: String!, roadmapId: String!): Stage
   createSubstage(input: CreateStageInput): Stage
+  toggleStageProgress(input: ToggleStageProgressInput): Boolean
 }
 
 input CreateStageInput {
   name: String!
   path: String!
   roadmapId: String!
+}
+
+input ToggleStageProgressInput {
+  roadmapId: String!
+  stageIds: [String]!
+  isCompleted: Boolean!
 }

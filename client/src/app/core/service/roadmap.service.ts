@@ -7,11 +7,13 @@ import {
 	CREATE_ROADMAP,
 	CREATE_STAGE,
 	CREATE_SUBSTAGE,
-	REMOVE_USER_ROADMAP
+	REMOVE_USER_ROADMAP,
+	TOGGLE_STAGE_PROGRESS
 } from "@data/graphQL/mutations";
 import { Stage } from "@data/models/stage";
 import {
 	GET_ALL_ROADMAPS,
+	GET_ALL_ROADMAPS_INFO,
 	GET_ROADMAP,
 	GET_USER_ROADMAPS
 } from "@data/graphQL/queries";
@@ -21,6 +23,7 @@ import {
 	CreateSubstageResponse,
 	RoadmapResponse,
 	RoadmapsResponse,
+	ToggleStageProgressResponse,
 	UserRoadmapsResponse
 } from "@data/graphQL/types";
 
@@ -65,9 +68,28 @@ export class RoadmapService {
 		});
 	}
 
+	toggleStageProgress(
+		roadmapId: string,
+		stageIds: string[],
+		isCompleted: boolean
+	) {
+		return this.apollo.mutate<ToggleStageProgressResponse>({
+			mutation: TOGGLE_STAGE_PROGRESS,
+			variables: {
+				input: { roadmapId, stageIds, isCompleted }
+			}
+		});
+	}
+
 	getRoadmaps() {
 		return this.apollo.watchQuery<RoadmapsResponse>({
 			query: GET_ALL_ROADMAPS
+		});
+	}
+
+	getRoadmapsInfo() {
+		return this.apollo.watchQuery<RoadmapsResponse>({
+			query: GET_ALL_ROADMAPS_INFO
 		});
 	}
 

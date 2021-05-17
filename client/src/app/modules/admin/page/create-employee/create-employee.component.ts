@@ -61,7 +61,6 @@ export class CreateEmployeeComponent implements OnInit {
 	}
 
 	createEmployee() {
-		console.log(this.employeeForm.value);
 		if (this.employeeForm.invalid) {
 			this.employeeForm.markAllAsTouched();
 			return;
