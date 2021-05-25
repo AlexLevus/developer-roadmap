@@ -79,7 +79,7 @@ export const verifyToken = async (
   await verify(token, common[type].privateKey, async (err, data) => {
     if (err) {
       throw new AuthenticationError(
-        'Authentication token is invalid, please try again.'
+        'Неверный токен аутентификации, попробуйте снова'
       );
     }
 
@@ -93,7 +93,7 @@ export const verifyToken = async (
   }
 
   if (currentUser && !currentUser.isActive) {
-    throw new ForbiddenError('Please verify your email.');
+    throw new ForbiddenError('Пожалуйста, подтвердите вашу почту');
   }
 
   return currentUser;
@@ -103,7 +103,7 @@ export const tradeToken = async (
   user: User
 ): Promise<Partial<LoginResponse>> => {
   if (!user.isActive) {
-    throw new ForbiddenError('Please verify your email.');
+    throw new ForbiddenError('Пожалуйста, подтвердите вашу почту');
   }
 
   const accessToken = await generateToken(user, 'accessToken');

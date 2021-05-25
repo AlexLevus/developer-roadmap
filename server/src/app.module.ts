@@ -19,9 +19,6 @@ import { join } from 'path';
     })
   ],
   controllers: [],
-  providers: [
-    ...Object.values(Resolvers),
-    ...Object.values(Scalars)
-  ]
+  providers: [...Object.values(Resolvers), ...Object.values(Scalars)]
 })
 export class AppModule {}
