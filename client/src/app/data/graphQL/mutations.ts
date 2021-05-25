@@ -69,6 +69,12 @@ export const TOGGLE_STAGE_PROGRESS = gql`
 	}
 `;
 
+export const DELETE_STAGE = gql`
+	mutation deleteStage($input: DeleteStageInput!) {
+		deleteStage(input: $input)
+	}
+`;
+
 export const CREATE_STAGE = gql`
 	mutation createStage($roadmapId: String!, $text: String!) {
 		createStage(roadmapId: $roadmapId, text: $text) {

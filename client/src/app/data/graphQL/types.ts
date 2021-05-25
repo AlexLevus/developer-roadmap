@@ -89,6 +89,10 @@ export type ToggleStageProgressResponse = {
 	toggleStageProgress: boolean;
 };
 
+export type DeleteStageResponse = {
+	deleteStage: boolean;
+};
+
 export interface LoginResponse {
 	login: {
 		id: string;

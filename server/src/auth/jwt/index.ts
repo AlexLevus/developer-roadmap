@@ -46,19 +46,6 @@ const common = {
   }
 };
 
-/**
- * Returns token.
- *
- * @remarks
- * This method is part of the {@link auth/jwt}.
- *
- * @param user - 1st input
- * @param type - 2nd input
- *
- * @returns The access token mean of `user`
- *
- * @beta
- */
 export const generateToken = async (
   user: User,
   type: TokenType
@@ -83,19 +70,6 @@ export const generateToken = async (
   );
 };
 
-/**
- * Returns user by verify token.
- *
- * @remarks
- * This method is part of the {@link auth/jwt}.
- *
- * @param token - 1st input
- * @param type - 2nd input
- *
- * @returns The user mean of `token`
- *
- * @beta
- */
 export const verifyToken = async (
   token: string,
   type: TokenType
@@ -125,18 +99,6 @@ export const verifyToken = async (
   return currentUser;
 };
 
-/**
- * Returns login response by trade token.
- *
- * @remarks
- * This method is part of the {@link auth/jwt}.
- *
- * @param user - 1st input
- *
- * @returns The login response mean of `user`
- *
- * @beta
- */
 export const tradeToken = async (
   user: User
 ): Promise<Partial<LoginResponse>> => {

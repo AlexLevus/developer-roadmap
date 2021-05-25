@@ -7,6 +7,7 @@ import {
 	CREATE_ROADMAP,
 	CREATE_STAGE,
 	CREATE_SUBSTAGE,
+	DELETE_STAGE,
 	REMOVE_USER_ROADMAP,
 	TOGGLE_STAGE_PROGRESS
 } from "@data/graphQL/mutations";
@@ -21,6 +22,7 @@ import {
 	CreateRoadmapResponse,
 	CreateStageResponse,
 	CreateSubstageResponse,
+	DeleteStageResponse,
 	RoadmapResponse,
 	RoadmapsResponse,
 	ToggleStageProgressResponse,
@@ -77,6 +79,15 @@ export class RoadmapService {
 			mutation: TOGGLE_STAGE_PROGRESS,
 			variables: {
 				input: { roadmapId, stageIds, isCompleted }
+			}
+		});
+	}
+
+	deleteStage(stageIds: string[]) {
+		return this.apollo.mutate<DeleteStageResponse>({
+			mutation: DELETE_STAGE,
+			variables: {
+				input: { stageIds }
 			}
 		});
 	}

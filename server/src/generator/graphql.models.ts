@@ -31,6 +31,10 @@ export class CreateStageInput {
     roadmapId: string;
 }
 
+export class DeleteStageInput {
+    stageIds: string[];
+}
+
 export class ToggleStageProgressInput {
     roadmapId: string;
     stageIds: string[];
@@ -120,6 +124,8 @@ export abstract class IMutation {
     abstract createStage(text: string, roadmapId: string): Stage | Promise<Stage>;
 
     abstract createSubstage(input?: CreateStageInput): Stage | Promise<Stage>;
+
+    abstract deleteStage(input?: DeleteStageInput): boolean | Promise<boolean>;
 
     abstract toggleStageProgress(input?: ToggleStageProgressInput): boolean | Promise<boolean>;
 

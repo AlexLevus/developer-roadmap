@@ -124,9 +124,15 @@ export class RoadmapComponent implements OnInit {
 		this.roadmapService.createSubstage(stage, this.roadmap.id).subscribe();
 	}
 
+	deleteStage(stageIds: string[]) {
+		this.roadmapService.deleteStage(stageIds).subscribe();
+	}
+
 	createStage() {
 		const text = this.stageForm.value.stageText;
-		this.roadmapService.createStage(this.roadmap.id, text).subscribe();
+		this.roadmapService.createStage(this.roadmap.id, text).subscribe(() => {
+			this.stageForm.reset();
+		});
 	}
 
 	toggleStageProgress(stages: { id: string[]; isCompleted: boolean }) {

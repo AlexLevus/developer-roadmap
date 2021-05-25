@@ -4,4 +4,12 @@
 	&__content {
 		height: 83%;
 	}
+
+  &__description {
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

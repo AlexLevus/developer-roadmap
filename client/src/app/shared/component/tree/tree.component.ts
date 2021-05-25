@@ -20,6 +20,7 @@ export class TreeComponent implements OnInit {
 		id: string[];
 		isCompleted: boolean;
 	}> = new EventEmitter();
+	@Output() deleteItems: EventEmitter<string[]> = new EventEmitter();
 	@Input() isViewMode = true;
 	@Input() isEditMode = true;
 	@Input() dataChange: BehaviorSubject<TreeNode[]> = new BehaviorSubject<
@@ -80,6 +81,7 @@ export class TreeComponent implements OnInit {
 			existingNode && existingNode.name === node.name
 				? existingNode
 				: ({} as TreeFlatNode);
+		flatNode.path = node.path;
 		flatNode.name = node.name;
 		flatNode.level = level;
 		flatNode.expandable = !!node.children?.length;
@@ -90,12 +92,16 @@ export class TreeComponent implements OnInit {
 			this.checklistSelection.select(flatNode);
 		}
 
-		const isAllChildrenCompleted = this.flatten(flatNode.children).every(
-			(item) => item.isCompleted || item.children.length !== 0
-		);
+		if (flatNode.children) {
+			const isAllChildrenCompleted = this.flatten(flatNode.children).every(
+				(item) => item.isCompleted || item.children?.length !== 0
+			);
 
-		if (node.children.length !== 0 && isAllChildrenCompleted) {
-			this.todoLeafItemSelectionToggle(flatNode);
+			console.log(isAllChildrenCompleted);
+
+			if (flatNode.children.length !== 0 && isAllChildrenCompleted) {
+				this.todoLeafItemSelectionToggle(flatNode);
+			}
 		}
 
 		return flatNode;
@@ -134,20 +140,32 @@ export class TreeComponent implements OnInit {
 
 		descendants.forEach((child) => this.checklistSelection.isSelected(child));
 		this.checkAllParentsSelection(flatNode);
-		console.log(flatNode);
 		this.toggleProgress(
 			flatNode.children.length === 0
 				? [this.flatNodeMap.get(flatNode)]
 				: this.flatten(flatNode.children),
 			this.checklistSelection.isSelected(flatNode)
 		);
+
+		console.log(flatNode);
+
+		if (flatNode.children) {
+			const isAllChildrenCompleted = this.flatten(flatNode.children).every(
+				(item) => item.isCompleted || item.children?.length !== 0
+			);
+
+			console.log(isAllChildrenCompleted);
+
+			if (flatNode.children.length !== 0 && isAllChildrenCompleted) {
+				this.todoLeafItemSelectionToggle(flatNode);
+			}
+		}
 	}
 
 	todoLeafItemSelectionToggle(flatNode: TreeFlatNode): void {
 		this.checklistSelection.toggle(flatNode);
 		this.checkAllParentsSelection(flatNode);
 		const node = this.flatNodeMap.get(flatNode);
-		console.log(node);
 		this.toggleProgress([node], this.checklistSelection.isSelected(flatNode));
 	}
 
@@ -231,6 +249,34 @@ export class TreeComponent implements OnInit {
 		this.treeControl.expand(node);
 	}
 
+	deleteItem(node: TreeFlatNode) {
+		const parentNode = this.getParentNode(node);
+		const flatNode = this.flatNodeMap.get(node);
+
+		console.log(node);
+		if (parentNode) {
+			const parentFlat = this.flatNodeMap.get(parentNode);
+
+			if (parentFlat?.children) {
+				parentFlat.children = parentFlat.children.filter(
+					(item) => item.path !== node.path
+				);
+				this.dataChange.next(this.dataChange.value);
+			}
+		} else {
+			this.dataChange.next(
+				this.dataChange.value.filter((item) => item.path !== node.path)
+			);
+		}
+
+		const stageIds = [
+			flatNode?.id!,
+			...this.flatten(flatNode?.children || []).map((item) => item.id)
+		];
+
+		this.deleteItems.emit(stageIds);
+	}
+
 	save(flatNode: TreeFlatNode, value: string) {
 		const node = this.flatNodeMap.get(flatNode);
 		if (node) {
@@ -241,10 +287,8 @@ export class TreeComponent implements OnInit {
 	}
 
 	toggleProgress(node: Array<TreeNode | undefined>, isCompleted: boolean) {
-		console.log(node);
 		if (node) {
 			const id = node.map((item) => item!.id);
-			console.log(id);
 			this.toggleItemProgress.emit({ id, isCompleted });
 		}
 	}

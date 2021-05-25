@@ -6,6 +6,7 @@ import { User } from "@data/models/user";
 import { Router } from "@angular/router";
 import { mergeMap } from "rxjs/operators";
 import { Position } from "@data/models/position";
+import { currentUserVar } from "../../../../graphql.module";
 
 @Component({
 	selector: "app-registration",
@@ -45,7 +46,6 @@ export class RegistrationComponent implements OnInit {
 			companyName,
 			position
 		} = this.registrationForm.value;
-		const userId = localStorage.getItem("userId")!;
 
 		if (this.registrationForm.invalid) {
 			this.registrationForm.markAllAsTouched();
@@ -53,11 +53,11 @@ export class RegistrationComponent implements OnInit {
 		}
 
 		this.organizationService
-			.createOrganization(companyName, userId)
+			.createOrganization(companyName, currentUserVar().id)
 			.pipe(
 				mergeMap(({ data }) => {
 					const user: Partial<User> = {
-						id: userId,
+						id: currentUserVar().id,
 						orgId: data?.createOrganization.id,
 						positionId: position,
 						firstName,

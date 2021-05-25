@@ -14,22 +14,6 @@ import {
 
 type Type = 'verifyEmail' | 'forgotPassword';
 
-/**
- * Returns any by send email.
- *
- * @remarks
- * This method is part of the {@link shared/mail}.
- *
- * @param type - 1st input
- * @param user - 2nd input
- * @param req - 3rd input
- * @param token - 4th input
- * @param id - 5th input
- *
- * @returns The any mean of `type`, `user`, `req`, `token` and `id`
- *
- * @beta
- */
 export const sendMail = async (
   type: Type,
   user: User,

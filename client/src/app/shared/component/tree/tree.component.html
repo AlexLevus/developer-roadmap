@@ -55,5 +55,8 @@
 		<button *ngIf="isEditMode" mat-icon-button (click)="addNewItem(node)">
 			<mat-icon>add</mat-icon>
 		</button>
+    <button *ngIf="isEditMode" mat-icon-button color="warn" aria-label="Удалить этап" (click)="deleteItem(node)">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
 	</mat-tree-node>
 </mat-tree>

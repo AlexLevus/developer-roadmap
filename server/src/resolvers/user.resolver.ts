@@ -296,7 +296,7 @@ export class UserResolver {
     });
 
     if (!user) {
-      throw new ForbiddenError('User not found.');
+      throw new ForbiddenError('Пользователь не найден');
     }
 
     const resetPassToken = await generateToken(user, 'resetPassToken');
@@ -339,18 +339,18 @@ export class UserResolver {
     }
 
     if (!user) {
-      throw new ForbiddenError('Token is invalid.');
+      throw new ForbiddenError('Неверный токен');
     }
 
     if (user.resetPasswordExpires < Date.now()) {
       throw new AuthenticationError(
-        'Reset password token is invalid, please try again.'
+        'Неверный токен сброса пароля, попробуйте еще раз'
       );
     }
 
     if (await comparePassword(password, user.password)) {
       throw new ForbiddenError(
-        'Your new password must be different from your previous password.'
+        'Ваш новый пароль должен отличаться от предыдущего'
       );
     }
 

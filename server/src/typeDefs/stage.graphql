@@ -17,6 +17,7 @@ type Query {
 type Mutation {
   createStage(text: String!, roadmapId: String!): Stage
   createSubstage(input: CreateStageInput): Stage
+  deleteStage(input: DeleteStageInput): Boolean
   toggleStageProgress(input: ToggleStageProgressInput): Boolean
 }
 
@@ -24,6 +25,10 @@ input CreateStageInput {
   name: String!
   path: String!
   roadmapId: String!
+}
+
+input DeleteStageInput {
+  stageIds: [String]!
 }
 
 input ToggleStageProgressInput {
