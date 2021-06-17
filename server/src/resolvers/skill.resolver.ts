@@ -12,7 +12,6 @@ export class SkillResolver {
     });
   }
 
-  // Есть пул навыков. Если нет нужного, то пользователь может создать свой, при этом он не будет предложен другим
   @Mutation()
   async createSkill(@Args('name') name: string): Promise<Skill> {
     const existedSkill = await getRepository(Skill).findOne({

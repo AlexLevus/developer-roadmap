@@ -12,7 +12,7 @@ export class DepartmentResolver {
       const department = await getRepository(Department).findOne({ id });
 
       if (!department) {
-        throw new ForbiddenError('Roadmap not found.');
+        throw new ForbiddenError('План развития не найден');
       }
 
       return department;

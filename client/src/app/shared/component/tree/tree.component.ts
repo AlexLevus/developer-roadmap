@@ -97,8 +97,6 @@ export class TreeComponent implements OnInit {
 				(item) => item.isCompleted || item.children?.length !== 0
 			);
 
-			console.log(isAllChildrenCompleted);
-
 			if (flatNode.children.length !== 0 && isAllChildrenCompleted) {
 				this.todoLeafItemSelectionToggle(flatNode);
 			}
@@ -147,14 +145,10 @@ export class TreeComponent implements OnInit {
 			this.checklistSelection.isSelected(flatNode)
 		);
 
-		console.log(flatNode);
-
 		if (flatNode.children) {
 			const isAllChildrenCompleted = this.flatten(flatNode.children).every(
 				(item) => item.isCompleted || item.children?.length !== 0
 			);
-
-			console.log(isAllChildrenCompleted);
 
 			if (flatNode.children.length !== 0 && isAllChildrenCompleted) {
 				this.todoLeafItemSelectionToggle(flatNode);
@@ -253,7 +247,6 @@ export class TreeComponent implements OnInit {
 		const parentNode = this.getParentNode(node);
 		const flatNode = this.flatNodeMap.get(node);
 
-		console.log(node);
 		if (parentNode) {
 			const parentFlat = this.flatNodeMap.get(parentNode);
 

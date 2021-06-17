@@ -17,8 +17,6 @@ export class UserRoadmapCardComponent {
 	removeUserRoadmap() {
 		this.roadmapService
 			.removeRoadmapFromUser(this.roadmap.id, currentUserVar().id)
-			.subscribe((data) => {
-				console.log(data);
-			});
+			.subscribe((data) => {});
 	}
 }
