@@ -32,7 +32,9 @@ export class Stage {
   @Expose()
   userProgressInfo?: UserProgressInfo;
 
-  @ManyToOne(() => Roadmap, (roadmap) => roadmap.stages)
+  @ManyToOne(() => Roadmap, (roadmap) => roadmap.stages, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'roadmap_id' })
   roadmap?: Roadmap;
 

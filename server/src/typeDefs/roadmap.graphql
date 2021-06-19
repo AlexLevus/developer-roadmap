@@ -22,4 +22,5 @@ type Mutation {
   createRoadmap(name: String!, description: String!, authorId: ID): Roadmap
   addRoadmapToUser(roadmapId: ID!, userId: ID!): Boolean
   removeUserRoadmap(roadmapId: ID!, userId: ID!): Boolean
+  deleteRoadmap(id: ID!): Boolean
 }

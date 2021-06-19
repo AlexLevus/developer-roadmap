@@ -1,5 +1,8 @@
 <div *ngIf="roadmap" class="roadmap">
 	<h1 class="tui-text_h5">{{ roadmap.name }}</h1>
+  <div *ngIf="canUserEdit" class="roadmap__controls">
+    <button mat-raised-button color="warn" (click)="deleteRoadmap()">Удалить план развития</button>
+  </div>
 	<form *ngIf="canUserEdit" [formGroup]="stageForm" class="roadmap__form" (ngSubmit)="createStage()">
 		<tui-input tuiTextfieldSize="m" formControlName="stageText">
 			Введите название главы

@@ -119,6 +119,8 @@ export abstract class IMutation {
 
     abstract removeUserRoadmap(roadmapId: string, userId: string): boolean | Promise<boolean>;
 
+    abstract deleteRoadmap(id: string): boolean | Promise<boolean>;
+
     abstract createSkill(name: string): boolean | Promise<boolean>;
 
     abstract createStage(text: string, roadmapId: string): Stage | Promise<Stage>;

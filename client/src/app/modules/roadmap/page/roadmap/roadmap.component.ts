@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RoadmapService } from "@app/service/roadmap.service";
 import { BehaviorSubject } from "rxjs";
 import { TreeNode } from "@data/models/treeNode";
@@ -16,7 +16,8 @@ import { FormControl, FormGroup } from "@angular/forms";
 export class RoadmapComponent implements OnInit {
 	constructor(
 		private roadmapService: RoadmapService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private router: Router
 	) {}
 
 	treeData$: BehaviorSubject<TreeNode[]> = new BehaviorSubject<TreeNode[]>([]);
@@ -126,6 +127,14 @@ export class RoadmapComponent implements OnInit {
 
 	deleteStage(stageIds: string[]) {
 		this.roadmapService.deleteStage(stageIds).subscribe();
+	}
+
+	deleteRoadmap() {
+		this.roadmapService.deleteRoadmap(this.roadmap.id).subscribe((data) => {
+			if (data.data?.deleteRoadmap) {
+				this.router.navigate(["/roadmaps"]);
+			}
+		});
 	}
 
 	createStage() {

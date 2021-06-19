@@ -172,6 +172,11 @@ export class RoadmapResolver {
     return !!(await getRepository(UserRoadmap).delete({ userId, roadmapId }));
   }
 
+  @Mutation()
+  async deleteRoadmap(@Args('id') id: string): Promise<boolean> {
+    return !!(await getRepository(Roadmap).delete({ id }));
+  }
+
   private getLeafStages(stages: Stage[]) {
     const paths = stages.reduce((acc, cur) => {
       return [...acc, cur.path];

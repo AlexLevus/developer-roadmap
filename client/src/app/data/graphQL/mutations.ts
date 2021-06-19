@@ -75,6 +75,12 @@ export const DELETE_STAGE = gql`
 	}
 `;
 
+export const DELETE_ROADMAP = gql`
+	mutation deleteRoadmap($id: ID!) {
+		deleteRoadmap(id: $id)
+	}
+`;
+
 export const CREATE_STAGE = gql`
 	mutation createStage($roadmapId: String!, $text: String!) {
 		createStage(roadmapId: $roadmapId, text: $text) {

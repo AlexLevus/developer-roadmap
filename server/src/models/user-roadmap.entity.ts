@@ -42,7 +42,9 @@ export class UserRoadmap {
   @JoinColumn({ name: 'user_id' })
   user!: User;
 
-  @ManyToOne(() => Roadmap, (roadmap) => roadmap.userRoadmaps)
+  @ManyToOne(() => Roadmap, (roadmap) => roadmap.userRoadmaps, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'roadmap_id' })
   roadmap!: Roadmap;
 

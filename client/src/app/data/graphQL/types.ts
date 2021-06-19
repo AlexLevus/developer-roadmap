@@ -93,6 +93,10 @@ export type DeleteStageResponse = {
 	deleteStage: boolean;
 };
 
+export type DeleteRoadmapResponse = {
+	deleteRoadmap: boolean;
+};
+
 export interface LoginResponse {
 	login: {
 		id: string;

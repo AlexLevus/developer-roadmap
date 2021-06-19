@@ -7,6 +7,7 @@ import {
 	CREATE_ROADMAP,
 	CREATE_STAGE,
 	CREATE_SUBSTAGE,
+	DELETE_ROADMAP,
 	DELETE_STAGE,
 	REMOVE_USER_ROADMAP,
 	TOGGLE_STAGE_PROGRESS
@@ -22,6 +23,7 @@ import {
 	CreateRoadmapResponse,
 	CreateStageResponse,
 	CreateSubstageResponse,
+	DeleteRoadmapResponse,
 	DeleteStageResponse,
 	RoadmapResponse,
 	RoadmapsResponse,
@@ -89,6 +91,16 @@ export class RoadmapService {
 			variables: {
 				input: { stageIds }
 			}
+		});
+	}
+
+	deleteRoadmap(id: string) {
+		return this.apollo.mutate<DeleteRoadmapResponse>({
+			mutation: DELETE_ROADMAP,
+			variables: {
+				id
+			},
+			refetchQueries: [{ query: GET_ALL_ROADMAPS }]
 		});
 	}
 
