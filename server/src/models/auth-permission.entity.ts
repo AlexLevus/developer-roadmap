@@ -6,7 +6,7 @@ import {
   JoinTable
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
-import { AuthGroup } from './authGroup.entity';
+import { AuthGroup } from './auth-group.entity';
 
 @Entity({
   name: 'auth_permission'

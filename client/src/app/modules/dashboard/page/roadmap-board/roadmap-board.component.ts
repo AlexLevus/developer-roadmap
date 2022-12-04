@@ -35,13 +35,14 @@ export class RoadmapBoardComponent implements OnInit {
 						);
 					}
 
-					return this.roadmapService.getRoadmaps().valueChanges;
+					return this.roadmapService.getRoadmapsInfo().valueChanges;
 				})
 			)
 			.subscribe((res: ApolloQueryResult<RoadmapsResponse>) => {
 				this.roadmaps = [...res.data.roadmaps].sort((a) => {
 					return a.author.id === currentUserVar().id ? -1 : 1;
 				});
+
 				this.loading = res.loading;
 			});
 	}

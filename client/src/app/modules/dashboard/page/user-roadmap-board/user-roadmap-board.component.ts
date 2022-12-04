@@ -21,7 +21,14 @@ export class UserRoadmapBoardComponent implements OnInit {
 			.getUserRoadmaps(currentUserVar().id)
 			.valueChanges.subscribe(({ data }) => {
 				this.roadmaps = data.userRoadmaps;
-				console.log(this.roadmaps);
 			});
+	}
+
+	get activeRoadmaps() {
+		return this.roadmaps.filter((item) => !item.isCompleted).length;
+	}
+
+	get completedRoadmaps() {
+		return this.roadmaps.filter((item) => item.isCompleted).length;
 	}
 }

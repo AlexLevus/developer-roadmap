@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Expose, plainToClass } from 'class-transformer';
 import { Roadmap } from './roadmap.entity';
+import { UserProgressInfo } from '../generator/graphql.models';
 
 @Entity({
   name: 'stages'
@@ -28,9 +29,14 @@ export class Stage {
   @Column({ name: 'roadmap_id' })
   roadmapId: string;
 
-  @ManyToOne(() => Roadmap, (roadmap) => roadmap.stages)
+  @Expose()
+  userProgressInfo?: UserProgressInfo;
+
+  @ManyToOne(() => Roadmap, (roadmap) => roadmap.stages, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'roadmap_id' })
-  roadmap: Roadmap;
+  roadmap?: Roadmap;
 
   constructor(stage: Partial<Stage>) {
     if (stage) {

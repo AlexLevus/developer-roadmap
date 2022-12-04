@@ -26,7 +26,7 @@ export class EmailResolver {
     });
 
     if (!email) {
-      throw new ForbiddenError('Email not found.');
+      throw new ForbiddenError('Почта не найдена');
     }
 
     email.isOpened = true;

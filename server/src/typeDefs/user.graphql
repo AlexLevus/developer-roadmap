@@ -41,6 +41,7 @@ input UpdateUserInput {
   firstName: String!
   lastName: String!
   middleName: String!
+  isAdmin: Boolean!
   orgId: String!
   positionId: String!
 }
@@ -62,7 +63,7 @@ type RefreshTokenResponse {
 
 type Mutation {
   registerUser(email: String!, password: String!): User
-  updateUser(input: UpdateUserInput!): Boolean
+  updateUser(input: UpdateUserInput!): User
   createUser(input: CreateUserInput): Boolean
   verifyEmail(emailToken: String!): Boolean
   login(input: LoginUserInput!): LoginResponse

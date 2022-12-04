@@ -5,6 +5,7 @@ import { AuthGuard } from "@app/guard/auth.guard";
 import { CompleteRegistrationGuard } from "@app/guard/complete-registration.guard";
 import { NoAuthGuard } from "@app/guard/noauth.guard";
 import { RoadmapBoardComponent } from "@modules/dashboard/page/roadmap-board/roadmap-board.component";
+import { AdminGuard } from "@app/guard/admin.guard";
 
 const routes: Routes = [
 	{
@@ -21,6 +22,7 @@ const routes: Routes = [
 			},
 			{
 				path: "admin",
+				canActivate: [AdminGuard],
 				loadChildren: () =>
 					import("@modules/admin/admin.module").then((m) => m.AdminModule)
 			},

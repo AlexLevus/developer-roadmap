@@ -7,11 +7,15 @@ import {
 	CREATE_ROADMAP,
 	CREATE_STAGE,
 	CREATE_SUBSTAGE,
-	REMOVE_USER_ROADMAP
+	DELETE_ROADMAP,
+	DELETE_STAGE,
+	REMOVE_USER_ROADMAP,
+	TOGGLE_STAGE_PROGRESS
 } from "@data/graphQL/mutations";
 import { Stage } from "@data/models/stage";
 import {
 	GET_ALL_ROADMAPS,
+	GET_ALL_ROADMAPS_INFO,
 	GET_ROADMAP,
 	GET_USER_ROADMAPS
 } from "@data/graphQL/queries";
@@ -19,8 +23,11 @@ import {
 	CreateRoadmapResponse,
 	CreateStageResponse,
 	CreateSubstageResponse,
+	DeleteRoadmapResponse,
+	DeleteStageResponse,
 	RoadmapResponse,
 	RoadmapsResponse,
+	ToggleStageProgressResponse,
 	UserRoadmapsResponse
 } from "@data/graphQL/types";
 
@@ -65,9 +72,47 @@ export class RoadmapService {
 		});
 	}
 
+	toggleStageProgress(
+		roadmapId: string,
+		stageIds: string[],
+		isCompleted: boolean
+	) {
+		return this.apollo.mutate<ToggleStageProgressResponse>({
+			mutation: TOGGLE_STAGE_PROGRESS,
+			variables: {
+				input: { roadmapId, stageIds, isCompleted }
+			}
+		});
+	}
+
+	deleteStage(stageIds: string[]) {
+		return this.apollo.mutate<DeleteStageResponse>({
+			mutation: DELETE_STAGE,
+			variables: {
+				input: { stageIds }
+			}
+		});
+	}
+
+	deleteRoadmap(id: string) {
+		return this.apollo.mutate<DeleteRoadmapResponse>({
+			mutation: DELETE_ROADMAP,
+			variables: {
+				id
+			},
+			refetchQueries: [{ query: GET_ALL_ROADMAPS }]
+		});
+	}
+
 	getRoadmaps() {
 		return this.apollo.watchQuery<RoadmapsResponse>({
 			query: GET_ALL_ROADMAPS
+		});
+	}
+
+	getRoadmapsInfo() {
+		return this.apollo.watchQuery<RoadmapsResponse>({
+			query: GET_ALL_ROADMAPS_INFO
 		});
 	}
 

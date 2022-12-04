@@ -9,7 +9,7 @@ import {
 import { Expose, plainToClass } from 'class-transformer';
 import { User } from './user.entity';
 import { Roadmap } from './roadmap.entity';
-import { UserRoadmapStage } from './userRoadmapStage.entity';
+import { UserRoadmapStage } from './user-roadmap-stage.entity';
 
 @Entity({
   name: 'user_roadmaps'
@@ -42,15 +42,20 @@ export class UserRoadmap {
   @JoinColumn({ name: 'user_id' })
   user!: User;
 
-  @ManyToOne(() => Roadmap, (roadmap) => roadmap.userRoadmaps)
+  @ManyToOne(() => Roadmap, (roadmap) => roadmap.userRoadmaps, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'roadmap_id' })
   roadmap!: Roadmap;
 
   @OneToMany(
     () => UserRoadmapStage,
-    (userRoadmapStage) => userRoadmapStage.userRoadmap
+    (userRoadmapStage) => userRoadmapStage.userRoadmap,
+    { eager: true }
   )
   userRoadmapStages!: UserRoadmapStage[];
+
+  progress: number;
 
   constructor(userRoadmap: Partial<UserRoadmap>) {
     if (UserRoadmap) {

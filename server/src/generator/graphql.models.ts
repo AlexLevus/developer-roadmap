@@ -31,6 +31,16 @@ export class CreateStageInput {
     roadmapId: string;
 }
 
+export class DeleteStageInput {
+    stageIds: string[];
+}
+
+export class ToggleStageProgressInput {
+    roadmapId: string;
+    stageIds: string[];
+    isCompleted: boolean;
+}
+
 export class CreateUserInput {
     email: string;
     password: string;
@@ -48,6 +58,7 @@ export class UpdateUserInput {
     firstName: string;
     lastName: string;
     middleName: string;
+    isAdmin: boolean;
     orgId: string;
     positionId: string;
 }
@@ -61,7 +72,7 @@ export class Department {
     id: string;
     name: string;
     description: string;
-    manager: User;
+    manager?: User;
     org?: Organization;
     isActive: boolean;
 }
@@ -95,7 +106,7 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
-    abstract createDepartment(name: string, description: string, orgId: string, managerId: string): Department | Promise<Department>;
+    abstract createDepartment(name: string, description: string, orgId: string, managerId?: string): Department | Promise<Department>;
 
     abstract createEmail(input: CreateEmailInput): Email | Promise<Email>;
 
@@ -109,15 +120,21 @@ export abstract class IMutation {
 
     abstract removeUserRoadmap(roadmapId: string, userId: string): boolean | Promise<boolean>;
 
+    abstract deleteRoadmap(id: string): boolean | Promise<boolean>;
+
     abstract createSkill(name: string): boolean | Promise<boolean>;
 
     abstract createStage(text: string, roadmapId: string): Stage | Promise<Stage>;
 
     abstract createSubstage(input?: CreateStageInput): Stage | Promise<Stage>;
 
+    abstract deleteStage(input?: DeleteStageInput): boolean | Promise<boolean>;
+
+    abstract toggleStageProgress(input?: ToggleStageProgressInput): boolean | Promise<boolean>;
+
     abstract registerUser(email: string, password: string): User | Promise<User>;
 
-    abstract updateUser(input: UpdateUserInput): boolean | Promise<boolean>;
+    abstract updateUser(input: UpdateUserInput): User | Promise<User>;
 
     abstract createUser(input?: CreateUserInput): boolean | Promise<boolean>;
 
@@ -160,12 +177,14 @@ export class Roadmap {
     id: string;
     name: string;
     description: string;
-    content: string;
     rating: number;
     isActive: boolean;
+    isCompleted: boolean;
     stages?: Stage[];
     author: User;
     startDate: Date;
+    userRoadmapId?: string;
+    progress?: number;
 }
 
 export class Skill {
@@ -177,7 +196,12 @@ export class Stage {
     id: string;
     name: string;
     path: string;
+    isCompleted?: boolean;
     roadmapId: string;
+}
+
+export class UserProgressInfo {
+    isCompleted?: boolean;
 }
 
 export class User {

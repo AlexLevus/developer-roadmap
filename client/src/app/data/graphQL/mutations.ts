@@ -35,7 +35,14 @@ export const CREATE_USER = gql`
 
 export const UPDATE_USER = gql`
 	mutation updateUser($input: UpdateUserInput!) {
-		updateUser(input: $input)
+		updateUser(input: $input) {
+			id
+			isAdmin
+			firstName
+			lastName
+			orgId
+			positionId
+		}
 	}
 `;
 
@@ -60,6 +67,24 @@ export const CREATE_SUBSTAGE = gql`
 			path
 			roadmapId
 		}
+	}
+`;
+
+export const TOGGLE_STAGE_PROGRESS = gql`
+	mutation toggleStageProgress($input: ToggleStageProgressInput!) {
+		toggleStageProgress(input: $input)
+	}
+`;
+
+export const DELETE_STAGE = gql`
+	mutation deleteStage($input: DeleteStageInput!) {
+		deleteStage(input: $input)
+	}
+`;
+
+export const DELETE_ROADMAP = gql`
+	mutation deleteRoadmap($id: ID!) {
+		deleteRoadmap(id: $id)
 	}
 `;
 
@@ -100,7 +125,7 @@ export const CREATE_DEPARTMENT = gql`
 		$name: String!
 		$description: String!
 		$orgId: ID!
-		$managerId: ID!
+		$managerId: ID
 	) {
 		createDepartment(
 			name: $name

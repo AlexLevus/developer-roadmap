@@ -1,3 +1,7 @@
+<div class="department__controls">
+  <button mat-raised-button color="primary">Редактировать</button>
+  <button mat-raised-button color="warn">Удалить</button>
+</div>
 <div *ngIf="user">
 	<p>Название: {{ user.firstName }} {{ user.lastName }}</p>
 	<p>Департамент: {{ user.department.name }}</p>

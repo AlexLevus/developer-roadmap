@@ -26,10 +26,12 @@
 					<p class="tui-island__paragraph roadmap-card__description">
 						{{ department.description }}
 					</p>
-					<p class="tui-island__paragraph">
-						Директор: {{ department.manager.firstName }}
-						{{ department.manager.lastName }}
+					<p *ngIf="department.manager" class="tui-island__paragraph">
+						Директор: {{ department.manager.firstName }} {{ department.manager.lastName }}
 					</p>
+          <p *ngIf="!department.manager" class="tui-island__paragraph">
+            Директор: не назначен
+          </p>
 				</div>
 			</tui-island>
 		</mat-grid-tile>

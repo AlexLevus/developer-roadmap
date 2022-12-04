@@ -1,6 +1,6 @@
 <div class="page">
 	<div class="sidebar">
-		<div class="logo">LOGO</div>
+      <img src="assets/images/logo.png" alt="logo" height="150">
 		<nav class="sidebar__nav-list">
 			<div class="sidebar__common-links">
 				<div class="sidebar__nav-item nav-item" [routerLink]="['/dashboard']">
@@ -12,30 +12,32 @@
 					/>
 					<a class="nav-item__link">Главная</a>
 				</div>
-				<div
-					class="sidebar__nav-item nav-item"
-					[routerLink]="['/admin/department-board']"
-				>
-					<img
-						class="nav-item__icon"
-						height="22"
-						src="assets/svg/statistic-icon.svg"
-						alt="Statistic icon"
-					/>
-					<a class="nav-item__link">Департаменты</a>
-				</div>
-				<div
-					class="sidebar__nav-item nav-item"
-					[routerLink]="['/admin/employees-board']"
-				>
-					<img
-						class="nav-item__icon"
-						height="22"
-						src="assets/svg/statistic-icon.svg"
-						alt="Statistic icon"
-					/>
-					<a class="nav-item__link">Сотрудники</a>
-				</div>
+        <ng-container *ngIf="isAdmin">
+          <div
+            class="sidebar__nav-item nav-item"
+            [routerLink]="['/admin/department-board']"
+          >
+            <img
+              class="nav-item__icon"
+              height="22"
+              src="assets/svg/statistic-icon.svg"
+              alt="Statistic icon"
+            />
+            <a class="nav-item__link">Департаменты</a>
+          </div>
+          <div
+            class="sidebar__nav-item nav-item"
+            [routerLink]="['/admin/employees-board']"
+          >
+            <img
+              class="nav-item__icon"
+              height="22"
+              src="assets/svg/statistic-icon.svg"
+              alt="Statistic icon"
+            />
+            <a class="nav-item__link">Сотрудники</a>
+          </div>
+        </ng-container>
 				<div class="sidebar__nav-item nav-item" [routerLink]="['/roadmaps']">
 					<img
 						class="nav-item__icon"
@@ -43,7 +45,7 @@
 						src="assets/svg/statistic-icon.svg"
 						alt="Statistic icon"
 					/>
-					<a class="nav-item__link">Роадмапы</a>
+					<a class="nav-item__link">Планы развития</a>
 				</div>
 			</div>
 			<div class="sidebar__system-links">
@@ -70,13 +72,6 @@
 	</div>
 	<div class="main">
 		<div class="header">
-			<div class="header__search">
-				<input
-					type="text"
-					class="header__search-input"
-					placeholder="What are you looking for?"
-				/>
-			</div>
 			<div class="header__notification"></div>
 			<div class="header__avatar"></div>
 		</div>

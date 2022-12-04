@@ -61,7 +61,6 @@ export class CreateEmployeeComponent implements OnInit {
 	}
 
 	createEmployee() {
-		console.log(this.employeeForm.value);
 		if (this.employeeForm.invalid) {
 			this.employeeForm.markAllAsTouched();
 			return;
@@ -96,7 +95,8 @@ export class CreateEmployeeComponent implements OnInit {
 	}
 
 	generatePassword(): void {
-		// const password = Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
-		this.employeeForm.controls.password.setValue("15091992");
+		const password =
+			Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
+		this.employeeForm.controls.password.setValue(password);
 	}
 }

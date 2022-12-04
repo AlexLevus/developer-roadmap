@@ -8,7 +8,7 @@
 		<span *ngIf="isViewMode; else checkboxBlock">{{ node.name }}</span>
 		<ng-template #checkboxBlock>
 			<mat-checkbox
-				class="checklist-leaf-node"
+        color="accent"
 				[checked]="checklistSelection.isSelected(node)"
 				(change)="todoLeafItemSelectionToggle(node)"
 				>{{ node.name }}</mat-checkbox
@@ -45,7 +45,8 @@
 		<span *ngIf="isViewMode; else checkboxBlock">{{ node.name }}</span>
 		<ng-template #checkboxBlock>
 			<mat-checkbox
-				[checked]="descendantsAllSelected(node)"
+        color="primary"
+        [checked]="checklistSelection.isSelected(node)"
 				[indeterminate]="descendantsPartiallySelected(node)"
 				(change)="todoItemSelectionToggle(node)"
 				>{{ node.name }}</mat-checkbox
@@ -54,5 +55,8 @@
 		<button *ngIf="isEditMode" mat-icon-button (click)="addNewItem(node)">
 			<mat-icon>add</mat-icon>
 		</button>
+    <button *ngIf="isEditMode" mat-icon-button color="warn" aria-label="Удалить этап" (click)="deleteItem(node)">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
 	</mat-tree-node>
 </mat-tree>

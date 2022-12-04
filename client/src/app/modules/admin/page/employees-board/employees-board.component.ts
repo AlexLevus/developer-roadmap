@@ -22,7 +22,7 @@ export class EmployeesBoardComponent implements OnInit {
 			.getOrganizationUsers(currentUserVar().orgId)
 			.valueChanges.subscribe(({ data, loading }) => {
 				const { organizationUsers } = data;
-				this.employees = organizationUsers;
+				this.employees = organizationUsers.filter((item) => item.department);
 				this.loading = loading;
 			});
 	}

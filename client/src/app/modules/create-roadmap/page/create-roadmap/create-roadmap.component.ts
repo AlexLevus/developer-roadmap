@@ -53,7 +53,7 @@ export class CreateRoadmapComponent implements OnInit {
 				this.dialogRef.close();
 
 				this.notificationsService
-					.show("Роадмап успешно создан!", {
+					.show("План развития успешно создан!", {
 						status: TuiNotification.Success
 					})
 					.subscribe();

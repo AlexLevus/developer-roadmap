@@ -1,15 +1,15 @@
-scalar Date
-
 type Roadmap {
   id: ID!
   name: String!
   description: String!
-  content: String!
   rating: Int!
   isActive: Boolean!
+  isCompleted: Boolean!
   stages: [Stage]
   author: User!
   startDate: Date!
+  userRoadmapId: String
+  progress: Int
 }
 
 type Query {
@@ -22,4 +22,5 @@ type Mutation {
   createRoadmap(name: String!, description: String!, authorId: ID): Roadmap
   addRoadmapToUser(roadmapId: ID!, userId: ID!): Boolean
   removeUserRoadmap(roadmapId: ID!, userId: ID!): Boolean
+  deleteRoadmap(id: ID!): Boolean
 }

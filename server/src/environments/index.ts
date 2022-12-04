@@ -1,9 +1,14 @@
 // author
-const AUTHOR: string = process.env.AUTHOR || 'Aleksandr';
+const AUTHOR: string = process.env.AUTHOR || 'Sysimate';
+
+// environment
+const NODE_ENV: string = process.env.NODE_ENV || 'development';
 
 // application
 const END_POINT: string = process.env.END_POINT || 'graphql';
 const APP_URL: string = process.env.APP_URL || 'http://localhost:4200';
+const GRAPHQL_DEPTH_LIMIT: number = +process.env.GRAPHQL_DEPTH_LIMIT || 3;
+const PRIMARY_COLOR: string = process.env.PRIMARY_COLOR || '#87e8de';
 
 // jsonwebtoken
 const ISSUER: string = process.env.ISSUER || 'Aleksandr Levus';
@@ -26,7 +31,7 @@ const BCRYPT_SALT: number = +process.env.BCRYPT_SALT || 10;
 
 // nodemailer
 const NODEMAILER_USER: string = process.env.NODEMAILER_USER || 'alexislevus';
-const NODEMAILER_PASS: string = process.env.NODEMAILER_PASS || '18051999sanya';
+const NODEMAILER_PASS: string = process.env.NODEMAILER_PASS || 'nluxppyyhleyycja';
 
 export {
   APP_URL,
@@ -43,5 +48,8 @@ export {
   EMAIL_TOKEN_SECRET,
   BCRYPT_SALT,
   NODEMAILER_USER,
-  NODEMAILER_PASS
+  NODEMAILER_PASS,
+  GRAPHQL_DEPTH_LIMIT,
+  PRIMARY_COLOR,
+  NODE_ENV
 };

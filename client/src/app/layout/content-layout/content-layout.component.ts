@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { currentUserVar } from "../../graphql.module";
 
 @Component({
 	selector: "app-content-layout",
@@ -8,6 +9,8 @@ import { Router } from "@angular/router";
 })
 export class ContentLayoutComponent implements OnInit {
 	constructor(private router: Router) {}
+
+	isAdmin = currentUserVar().isAdmin;
 
 	ngOnInit(): void {}
 

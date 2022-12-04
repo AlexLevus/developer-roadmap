@@ -1,6 +1,6 @@
 import { Mutation, Args, Context, Resolver, Query } from '@nestjs/graphql';
 
-import { Department, Position, Skill, User } from '@models';
+import { Department, Position, Skill, User, UserRoadmap } from '@models';
 import { getRepository } from 'typeorm';
 import {
   ApolloError,
@@ -79,7 +79,7 @@ export class UserResolver {
   }
 
   @Mutation()
-  async updateUser(@Args('input') input: UpdateUserInput): Promise<boolean> {
+  async updateUser(@Args('input') input: UpdateUserInput): Promise<User> {
     const { id, orgId, positionId } = input;
 
     const existedUser = await getRepository(User).findOne({
@@ -92,17 +92,18 @@ export class UserResolver {
       throw new ForbiddenError('Пользователь не найден');
     }
 
-    const updateUser = await getRepository(User).update(
-      id,
-      new User({
-        ...existedUser,
-        ...input,
-        orgId,
-        positionId
-      })
-    );
+    const user = new User({
+      ...existedUser,
+      ...input,
+      orgId,
+      positionId
+    });
 
-    return !!updateUser;
+    await getRepository(User).update(id, user);
+
+    console.log(user);
+
+    return user;
   }
 
   @Mutation()
@@ -128,6 +129,7 @@ export class UserResolver {
   async registerUser(
     @Args('email') email: string,
     @Args('password') password: string,
+    @Args('sendPassword') sendPassword?: boolean,
     @Context('req') req: any = 'localhost'
   ): Promise<User> {
     const existedUser = await getRepository(User).findOne({
@@ -158,7 +160,8 @@ export class UserResolver {
       createdUser,
       req,
       emailToken,
-      existedEmail.id
+      existedEmail.id,
+      sendPassword ? password : null
     );
 
     return createdUser;
@@ -178,7 +181,7 @@ export class UserResolver {
       positionId
     } = input;
 
-    const newUser = await this.registerUser(email, password);
+    const newUser = await this.registerUser(email, password, true);
 
     skills.map((skill) => ({
       id: +skill.id,
@@ -296,7 +299,7 @@ export class UserResolver {
     });
 
     if (!user) {
-      throw new ForbiddenError('User not found.');
+      throw new ForbiddenError('Пользователь не найден');
     }
 
     const resetPassToken = await generateToken(user, 'resetPassToken');
@@ -339,18 +342,18 @@ export class UserResolver {
     }
 
     if (!user) {
-      throw new ForbiddenError('Token is invalid.');
+      throw new ForbiddenError('Неверный токен');
     }
 
     if (user.resetPasswordExpires < Date.now()) {
       throw new AuthenticationError(
-        'Reset password token is invalid, please try again.'
+        'Неверный токен сброса пароля, попробуйте еще раз'
       );
     }
 
     if (await comparePassword(password, user.password)) {
       throw new ForbiddenError(
-        'Your new password must be different from your previous password.'
+        'Ваш новый пароль должен отличаться от предыдущего'
       );
     }
 

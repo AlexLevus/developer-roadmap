@@ -10,7 +10,6 @@ import { currentUserVar } from "../../../../graphql.module";
 })
 export class UserRoadmapCardComponent {
 	@Input() roadmap!: Roadmap;
-	@Input() progress = 0;
 	@Input() startDate = new Date();
 
 	constructor(private roadmapService: RoadmapService) {}
@@ -18,8 +17,6 @@ export class UserRoadmapCardComponent {
 	removeUserRoadmap() {
 		this.roadmapService
 			.removeRoadmapFromUser(this.roadmap.id, currentUserVar().id)
-			.subscribe((data) => {
-				console.log(data);
-			});
+			.subscribe((data) => {});
 	}
 }

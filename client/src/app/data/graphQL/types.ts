@@ -65,6 +65,10 @@ export type SkillResponse = {
 	skills: Skill[];
 };
 
+export type UpdateUserResponse = {
+	updateUser: User;
+};
+
 export type CreateRoadmapResponse = {
 	createRoadmap: Roadmap;
 };
@@ -83,6 +87,18 @@ export type CreateSubstageResponse = {
 		path: string;
 		roadmapId: string;
 	};
+};
+
+export type ToggleStageProgressResponse = {
+	toggleStageProgress: boolean;
+};
+
+export type DeleteStageResponse = {
+	deleteStage: boolean;
+};
+
+export type DeleteRoadmapResponse = {
+	deleteRoadmap: boolean;
 };
 
 export interface LoginResponse {
