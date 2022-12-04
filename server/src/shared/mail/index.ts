@@ -19,7 +19,8 @@ export const sendMail = async (
   user: User,
   req: any,
   token: string,
-  id: string
+  id: string,
+  password?: string
 ): Promise<any> => {
   const transporter = await nodemailer.createTransport({
     service: 'gmail',
@@ -61,8 +62,9 @@ export const sendMail = async (
         // link: `${req.headers.origin}/verify/${token}`,
         link: `${APP_URL}/verify/${token}`,
         subject: 'Подтверждение регистрации на Sysimate',
-        text1:
-          'Просто нажми на кнопку ниже, чтобы мы были уверены в правильности указанного адреса.',
+        text1: 'Просто нажми на кнопку ниже, чтобы мы были уверены в правильности указанного адреса. '.concat(
+          password ? 'Твой пароль в Sysimate: ' + password : ''
+        ),
         button: 'Подтвердить',
         text2: 'Или скопируйте эту ссылку и вставьте в свой веб-браузер:',
         ...common

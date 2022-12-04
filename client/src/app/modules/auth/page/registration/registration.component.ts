@@ -60,16 +60,22 @@ export class RegistrationComponent implements OnInit {
 						id: currentUserVar().id,
 						orgId: data?.createOrganization.id,
 						positionId: position,
+						isAdmin: true,
 						firstName,
 						middleName,
 						lastName
 					};
+
 					return this.userService.updateUser(user);
 				})
 			)
 			.subscribe(({ data }) => {
+				if (data) {
+					currentUserVar(data.updateUser);
+				}
 				this.registrationForm.reset();
 				this.router.navigate(["/dashboard"]);
+				console.log(data);
 			})
 			.add(() => (this.submitted = false));
 	}

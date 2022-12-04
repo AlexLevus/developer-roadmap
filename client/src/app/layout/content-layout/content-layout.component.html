@@ -12,30 +12,32 @@
 					/>
 					<a class="nav-item__link">Главная</a>
 				</div>
-				<div
-					class="sidebar__nav-item nav-item"
-					[routerLink]="['/admin/department-board']"
-				>
-					<img
-						class="nav-item__icon"
-						height="22"
-						src="assets/svg/statistic-icon.svg"
-						alt="Statistic icon"
-					/>
-					<a class="nav-item__link">Департаменты</a>
-				</div>
-				<div
-					class="sidebar__nav-item nav-item"
-					[routerLink]="['/admin/employees-board']"
-				>
-					<img
-						class="nav-item__icon"
-						height="22"
-						src="assets/svg/statistic-icon.svg"
-						alt="Statistic icon"
-					/>
-					<a class="nav-item__link">Сотрудники</a>
-				</div>
+        <ng-container *ngIf="isAdmin">
+          <div
+            class="sidebar__nav-item nav-item"
+            [routerLink]="['/admin/department-board']"
+          >
+            <img
+              class="nav-item__icon"
+              height="22"
+              src="assets/svg/statistic-icon.svg"
+              alt="Statistic icon"
+            />
+            <a class="nav-item__link">Департаменты</a>
+          </div>
+          <div
+            class="sidebar__nav-item nav-item"
+            [routerLink]="['/admin/employees-board']"
+          >
+            <img
+              class="nav-item__icon"
+              height="22"
+              src="assets/svg/statistic-icon.svg"
+              alt="Statistic icon"
+            />
+            <a class="nav-item__link">Сотрудники</a>
+          </div>
+        </ng-container>
 				<div class="sidebar__nav-item nav-item" [routerLink]="['/roadmaps']">
 					<img
 						class="nav-item__icon"

@@ -65,6 +65,10 @@ export type SkillResponse = {
 	skills: Skill[];
 };
 
+export type UpdateUserResponse = {
+	updateUser: User;
+};
+
 export type CreateRoadmapResponse = {
 	createRoadmap: Roadmap;
 };

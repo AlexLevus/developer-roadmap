@@ -13,7 +13,7 @@
     </tr>
 	</thead>
 	<tbody tuiTbody [data]="employees">
-		<tr *tuiRow="let item of employees; let index = index" tuiTr>
+		<tr *tuiRow="let item of employees; let index = index" tuiTr [routerLink]="['/admin/employee/' + item.id]">
 			<td *tuiCell="'name'" tuiTd>
 				{{ index + 1 }}. {{ item.firstName }} {{ item.lastName }}
 			</td>

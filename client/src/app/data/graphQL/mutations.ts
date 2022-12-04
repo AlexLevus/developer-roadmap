@@ -35,7 +35,14 @@ export const CREATE_USER = gql`
 
 export const UPDATE_USER = gql`
 	mutation updateUser($input: UpdateUserInput!) {
-		updateUser(input: $input)
+		updateUser(input: $input) {
+			id
+			isAdmin
+			firstName
+			lastName
+			orgId
+			positionId
+		}
 	}
 `;
 
@@ -118,7 +125,7 @@ export const CREATE_DEPARTMENT = gql`
 		$name: String!
 		$description: String!
 		$orgId: ID!
-		$managerId: ID!
+		$managerId: ID
 	) {
 		createDepartment(
 			name: $name

@@ -4,6 +4,7 @@ import {
 	OrganizationUsersResponse,
 	PositionResponse,
 	SkillResponse,
+	UpdateUserResponse,
 	UserResponse
 } from "@data/graphQL/types";
 import {
@@ -88,7 +89,7 @@ export class UserService {
 	}
 
 	updateUser(user: Partial<User>) {
-		return this.apollo.mutate<boolean>({
+		return this.apollo.mutate<UpdateUserResponse>({
 			mutation: UPDATE_USER,
 			variables: {
 				input: user

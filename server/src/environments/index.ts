@@ -31,7 +31,7 @@ const BCRYPT_SALT: number = +process.env.BCRYPT_SALT || 10;
 
 // nodemailer
 const NODEMAILER_USER: string = process.env.NODEMAILER_USER || 'alexislevus';
-const NODEMAILER_PASS: string = process.env.NODEMAILER_PASS || '18051999sanya';
+const NODEMAILER_PASS: string = process.env.NODEMAILER_PASS || 'nluxppyyhleyycja';
 
 export {
   APP_URL,

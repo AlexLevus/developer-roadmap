@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: developer-roadmap
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - data:/var/lib/postgresql
+  api:
+    image: levis38/dev-roadmap-api
+    environment:
+      APP_URL: localhost:8080
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: developer-roadmap
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+  client:
+    image: levis38/dev-roadmap-client
+    ports:
+      - 8080:80
+
+volumes:
+  data:

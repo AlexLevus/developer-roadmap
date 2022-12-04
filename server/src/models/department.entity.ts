@@ -38,7 +38,7 @@ export class Department {
   @OneToMany(() => User, (user) => user.department)
   users: User[];
 
-  @OneToOne(() => User, { eager: true })
+  @OneToOne(() => User, { eager: true, nullable: true })
   @JoinColumn({ name: 'manager_id' })
   manager: User;
 

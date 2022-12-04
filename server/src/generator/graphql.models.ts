@@ -58,6 +58,7 @@ export class UpdateUserInput {
     firstName: string;
     lastName: string;
     middleName: string;
+    isAdmin: boolean;
     orgId: string;
     positionId: string;
 }
@@ -71,7 +72,7 @@ export class Department {
     id: string;
     name: string;
     description: string;
-    manager: User;
+    manager?: User;
     org?: Organization;
     isActive: boolean;
 }
@@ -105,7 +106,7 @@ export abstract class IQuery {
 }
 
 export abstract class IMutation {
-    abstract createDepartment(name: string, description: string, orgId: string, managerId: string): Department | Promise<Department>;
+    abstract createDepartment(name: string, description: string, orgId: string, managerId?: string): Department | Promise<Department>;
 
     abstract createEmail(input: CreateEmailInput): Email | Promise<Email>;
 
@@ -133,7 +134,7 @@ export abstract class IMutation {
 
     abstract registerUser(email: string, password: string): User | Promise<User>;
 
-    abstract updateUser(input: UpdateUserInput): boolean | Promise<boolean>;
+    abstract updateUser(input: UpdateUserInput): User | Promise<User>;
 
     abstract createUser(input?: CreateUserInput): boolean | Promise<boolean>;
 

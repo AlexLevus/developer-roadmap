@@ -1,4 +1,4 @@
-import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { getRepository } from 'typeorm';
 
 import { Department, Organization, User } from '@models';
@@ -37,7 +37,7 @@ export class DepartmentResolver {
     @Args('name') name: string,
     @Args('description') description: string,
     @Args('orgId') orgId: string,
-    @Args('managerId') managerId: string
+    @Args('managerId') managerId: string | null
   ): Promise<Department> {
     const existedDepartment = await getRepository(Department).findOne({
       where: {
@@ -57,6 +57,12 @@ export class DepartmentResolver {
 
     if (!organization) {
       throw new ForbiddenError('Неправильно указана организация');
+    }
+
+    if (managerId === null) {
+      return getRepository(Department).save(
+        new Department({ name, description, orgId, isActive: true })
+      );
     }
 
     const manager = await getRepository(User).findOne({

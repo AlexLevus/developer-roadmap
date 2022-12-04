@@ -2,7 +2,7 @@ type Department {
   id: ID!
   name: String!
   description: String!
-  manager: User!
+  manager: User
   org: Organization
   isActive: Boolean!
 }
@@ -17,6 +17,6 @@ type Mutation {
     name: String!
     description: String!
     orgId: ID!
-    managerId: ID!
+    managerId: ID
   ): Department
 }

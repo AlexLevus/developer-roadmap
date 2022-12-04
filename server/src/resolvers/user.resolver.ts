@@ -79,7 +79,7 @@ export class UserResolver {
   }
 
   @Mutation()
-  async updateUser(@Args('input') input: UpdateUserInput): Promise<boolean> {
+  async updateUser(@Args('input') input: UpdateUserInput): Promise<User> {
     const { id, orgId, positionId } = input;
 
     const existedUser = await getRepository(User).findOne({
@@ -92,17 +92,18 @@ export class UserResolver {
       throw new ForbiddenError('Пользователь не найден');
     }
 
-    const updateUser = await getRepository(User).update(
-      id,
-      new User({
-        ...existedUser,
-        ...input,
-        orgId,
-        positionId
-      })
-    );
+    const user = new User({
+      ...existedUser,
+      ...input,
+      orgId,
+      positionId
+    });
 
-    return !!updateUser;
+    await getRepository(User).update(id, user);
+
+    console.log(user);
+
+    return user;
   }
 
   @Mutation()
@@ -128,6 +129,7 @@ export class UserResolver {
   async registerUser(
     @Args('email') email: string,
     @Args('password') password: string,
+    @Args('sendPassword') sendPassword?: boolean,
     @Context('req') req: any = 'localhost'
   ): Promise<User> {
     const existedUser = await getRepository(User).findOne({
@@ -158,7 +160,8 @@ export class UserResolver {
       createdUser,
       req,
       emailToken,
-      existedEmail.id
+      existedEmail.id,
+      sendPassword ? password : null
     );
 
     return createdUser;
@@ -178,7 +181,7 @@ export class UserResolver {
       positionId
     } = input;
 
-    const newUser = await this.registerUser(email, password);
+    const newUser = await this.registerUser(email, password, true);
 
     skills.map((skill) => ({
       id: +skill.id,

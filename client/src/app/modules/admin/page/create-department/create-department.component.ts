@@ -23,7 +23,7 @@ export class CreateDepartmentComponent implements OnInit {
 	submitted = false;
 	loading = false;
 
-	users: SelectItem[] = [];
+	users: SelectItem[] = [{ id: "0", name: "Не выбрано" }];
 
 	constructor(
 		private userService: UserService,
@@ -45,7 +45,7 @@ export class CreateDepartmentComponent implements OnInit {
 				})
 			)
 			.subscribe((users) => {
-				this.users = users;
+				this.users = [...this.users, ...users];
 			});
 	}
 
@@ -60,7 +60,12 @@ export class CreateDepartmentComponent implements OnInit {
 		const { name, description, manager } = this.departmentForm.value;
 
 		this.departmentService
-			.createDepartment(name, description, currentUserVar().orgId, manager)
+			.createDepartment(
+				name,
+				description,
+				currentUserVar().orgId,
+				manager === "0" ? null : manager
+			)
 			.subscribe(({ data }) => {
 				this.dialogRef.close();
 				this.notificationsService
