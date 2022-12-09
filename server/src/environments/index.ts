@@ -6,7 +6,7 @@ const NODE_ENV: string = process.env.NODE_ENV || 'development';
 
 // application
 const END_POINT: string = process.env.END_POINT || 'graphql';
-const APP_URL: string = process.env.APP_URL || 'https://common-morning-production.up.railway.app';
+const APP_URL: string = process.env.APP_URL || 'http://localhost:4200';
 const GRAPHQL_DEPTH_LIMIT: number = +process.env.GRAPHQL_DEPTH_LIMIT || 3;
 const PRIMARY_COLOR: string = process.env.PRIMARY_COLOR || '#87e8de';
 
