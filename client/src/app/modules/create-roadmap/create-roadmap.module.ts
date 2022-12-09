@@ -5,7 +5,6 @@ import { SharedModule } from "@shared/shared.module";
 
 @NgModule({
 	declarations: [CreateRoadmapComponent],
-	entryComponents: [CreateRoadmapComponent],
 	imports: [SharedModule, CreateRoadmapRouting]
 })
 export class CreateRoadmapModule {}
