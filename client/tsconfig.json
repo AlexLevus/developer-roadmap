@@ -30,8 +30,5 @@
 			"@modules/*": ["app/modules/*"],
 			"@data/*": ["app/data/*"]
 		}
-	},
-	"angularCompilerOptions": {
-		"enableIvy": false
 	}
 }
