@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { GqlOptionsFactory, GqlModuleOptions } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import * as depthLimit from 'graphql-depth-limit';
-import chalk from 'chalk';
 
 import schemaDirectives from './schemaDirectives';
 import { verifyToken } from '@auth';
@@ -64,9 +63,7 @@ export class GraphqlService implements GqlOptionsFactory {
           (depths) => {
             if (depths[''] === GRAPHQL_DEPTH_LIMIT! - 1) {
               Logger.warn(
-                `⚠️  You can only descend ${chalk
-                  .hex(PRIMARY_COLOR!)
-                  .bold(`${GRAPHQL_DEPTH_LIMIT!}`)} levels.`,
+                `⚠️  You can only descend ${GRAPHQL_DEPTH_LIMIT!} levels.`,
                 'GraphQL',
                 false
               );
