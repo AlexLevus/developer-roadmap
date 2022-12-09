@@ -1,4 +1,4 @@
-FROM node:12.7-alpine AS build
+FROM node:12.7-alpine
 
 USER root
 
@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --force
 
 COPY . .
 
