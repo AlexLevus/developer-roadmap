@@ -29,6 +29,7 @@
     "@taiga-ui/icons": "^2.7.0",
     "@taiga-ui/kit": "^2.7.0",
     "@tinkoff/ng-event-plugins": "^2.2.0",
+    "@taiga-ui/i18n": "2.71.0",
     "apollo-angular": "^2.0.4",
     "graphql": "^15.0.0",
     "jwt-decode": "^3.1.2",
