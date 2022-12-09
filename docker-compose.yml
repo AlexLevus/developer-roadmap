@@ -14,10 +14,11 @@ services:
     image: levis38/dev-roadmap-api
     environment:
       APP_URL: localhost:8080
-      POSTGRES_HOST: postgres
-      POSTGRES_DB: developer-roadmap
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: developer-roadmap
+      PGUSER: postgres
+      PGPASSWORD: postgres
     ports:
       - 3000:3000
     depends_on:
