@@ -9,7 +9,7 @@ import { HttpLink } from "apollo-angular/http";
 import { User } from "@data/models/user";
 import jwt_decode from "jwt-decode";
 
-const uri = "http://localhost:3000/graphql";
+const uri = `${process.env.API_URL}/graphql`;
 
 const getUserInfo = (): User => {
 	const token = localStorage.getItem("access");
